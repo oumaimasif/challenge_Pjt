@@ -1,7 +1,7 @@
 import React from 'react'
 import Hero from '../components/Hero'
 import NoorWays from '../components/NoorWays'
-import Numbers from '../components/Chiffres/Numbers'
+// import Numbers from '../components/Chiffres/Numbers'
 
 
 function Acceuil() {
@@ -10,7 +10,7 @@ function Acceuil() {
         <>
             <Hero/>
             <NoorWays/> 
-            <Numbers/> 
+            {/* <Numbers/>  */}
         </>
 
     )
