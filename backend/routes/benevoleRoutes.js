@@ -44,6 +44,7 @@ router.delete("/:id",async(req,res)=>
     }
 })
 
+
 router.put('/update/:id', async (req, res) => {
     try {
       const updatedBenevole = await Benevole.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -56,5 +57,8 @@ router.put('/update/:id', async (req, res) => {
       res.status(500).json({ success: false, message: "Erreur lors de la mise a jour" });
     }
   });
+
+
+//
   
 module.exports = router;
