@@ -5,7 +5,7 @@ function FormBenevol() {
 
   const [formbenevole, setFormbenevole] = useState({
     civilite: "", nom: "", prenom: "", email: "", numeTelephone: "", competence: "", dateDeNaissance: "",
-  });
+  role:"Benevole",disponible:"Flexible"});
 
 
 
@@ -19,14 +19,28 @@ function FormBenevol() {
     e.preventDefault();
     console.log("Données envoyées :", formbenevole);
     try {
+      console.log("A envoyées en server :", JSON.stringify(formbenevole));
+
       const res = await axios.post("http://localhost:5000/benevoles/add_benevole", formbenevole)
       console.log("bien ajoutée", res.data);
       alert("Bénévole ajoutée avec succès !");
 
       // vider les champes
+      // setFormbenevole({
+      //   civilite: "", nom: "", prenom: "", email: "", numeTelephone: "", competence: "", dateDeNaissance: "",
+      // })
+      // vider les champes
       setFormbenevole({
-        civilite: "", nom: "", prenom: "", email: "", numeTelephone: "", competence: "", dateDeNaissance: "",
-      })
+        civilite: "", 
+        nom: "", 
+        prenom: "", 
+        email: "", 
+        numeTelephone: "", 
+        competence: "", 
+        dateDeNaissance: "",
+        role: "Benevole",
+        disponible: "Flexible"
+      });
     } catch (error) {
       console.error("Erreur lors de l'ajout", error);
     }
@@ -70,7 +84,7 @@ function FormBenevol() {
 
           {/* Adresse Email */}
           <div className="relative z-0 w-full mb-5 pt-1 group">
-            <input type="email" name="email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent 
+            <input  type="email" name="email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent 
             border-0 border-b-2 border-gray-300 appearance-none    focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required
               onChange={handleChange}
               value={formbenevole.email}

@@ -23,7 +23,7 @@ const Hero = () => {
             btn: "Rejoignez les bénévoles !",
             // bg:"bg-orange-100 ",
             theme:"bg-orange-500  shadow-orange-400 hover:bg-orange-600",
-            path:"/formBenevol",
+            path:"/formBenevole",
 
         },
         {

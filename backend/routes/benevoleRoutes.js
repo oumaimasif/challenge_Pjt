@@ -59,6 +59,7 @@ router.put('/update/:id', async (req, res) => {
   });
 
 
-//
+// afficher les information d'un id benevole 
+// router.get("profileBenevole/:id")
   
 module.exports = router;
