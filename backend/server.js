@@ -4,6 +4,21 @@ const connectDB= require("./dataBase/db");
 const cors= require("cors");
 const port=5000;
 
+
+//todo: importation les routes des associations
+const associationRoutes=require("./routes/associationRoutes");
+
+
+//todo impotation pour les benevoles
+const benevoleRoutes=require("./routes/benevoleRoutes");
+
+//todo importation pour les particuliers
+const particulierRoutes= require("./routes/particulierRoutes");
+
+
+//todo ; importaion pour les categories
+const categorieRoutes = require('./routes/categorieRoutes');
+
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -20,18 +35,14 @@ app.use(cors());
 connectDB();
 
 //il faut qu on lies les routes ds le serveur pour les ecouter
+app.use("/associations",associationRoutes);// lier les routes /nomprincipale/nome_du_routes /association/:id
 
-//todo: importation les routes des associations
-const associationRoutes=require("./routes/associationRoutes");
-app.use("/associations",associationRoutes);// Lier les routes avec le bon préfixe /association_api/nome_du_routes
-
-//todo impotation pour les benevoles
-const benevoleRoutes=require("./routes/benevoleRoutes");
 app.use("/benevoles",benevoleRoutes);
 
-// importation pour les particuliers
-const particulierRoutes= require("./routes/particulierRoutes");
 app.use("/particuliers",particulierRoutes);
+
+app.use('/categories', categorieRoutes);
+
 
 app.listen(port,()=>{
     console.log("serveur ecoutant sur http://localhost:" + port);

@@ -21,7 +21,7 @@ const particulierSchema = new mongoose.Schema({
         default:"En attente"
       },
       etreContacter :{type: Boolean,default:false},
-},{timestamps:true});
+})
 
 const Particulier= mongoose.model("Particulier",particulierSchema);
 module.exports=Particulier;

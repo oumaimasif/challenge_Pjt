@@ -11,6 +11,7 @@ import FormBenevol from "./components/FormBenevol"
 import FormAssociation from "./components/FormAssociation"
 import FormParticulier from "./components/FormParticulier"
 import Apropos from "./mespages/Apropos"
+import ProfileBenevole from "./components/benevolesdoc/ProfileBenevole"
 
 
 
@@ -25,13 +26,21 @@ function App() {
       <Routes>
         <Route path="/" element={<Acceuil />} />
         <Route path="/about" element={<Apropos />} />
+
         <Route path="/association" element={<Associations />} />
-        <Route path="/benevole" element={<Benevole />} />
-        <Route path="/particulier" element={<Particulier />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/formBenevol" element={<FormBenevol />} />
         <Route path="/formAssociation" element={<FormAssociation />} />
+
+        <Route path="/benevole" element={<Benevole />} />
+        <Route path="/formBenevol" element={<FormBenevol />} />
+        <Route path="/profileBenevole/:id" element={<ProfileBenevole />} />
+
+        <Route path="/particulier" element={<Particulier />} />
         <Route path="/formParticulier" element={<FormParticulier />} />
+
+        <Route path="/login" element={<Login />} />
+
+        {/* <Route path="/annonces/categorie/:id" element={<AnnoncesCategorie />} /> */}
+
       </Routes>
       {
         !hideforLogin.includes(location.pathname) && <Footer />

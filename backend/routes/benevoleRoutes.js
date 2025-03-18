@@ -21,10 +21,10 @@ router.post("/add_benevole",async(req,res)=>
     try {
         const newBenevole= new Benevole(req.body);
         await newBenevole.save();
-        res.status(200).json({message :"Benevole enregistré avec succès "});
+        res.status(201).json({message :"Benevole enregistré avec succès ",newBenevole});
 
     } catch (error) {
-        res.status(400).json({error: error.message});
+        res.status(400).json({message: "Erreur lors de l'ajout", error});
     }
 })
 
@@ -43,4 +43,18 @@ router.delete("/:id",async(req,res)=>
         res.status(400).json({error: error.message});
     }
 })
+
+router.put('/update/:id', async (req, res) => {
+    try {
+      const updatedBenevole = await Benevole.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      if (!updatedBenevole) {
+        return res.status(404).json({ success: false, message: "undefind" });
+      }
+      res.status(200).json({ success: true, message: "update avec succée", data: updatedBenevole });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: "Erreur lors de la mise a jour" });
+    }
+  });
+  
 module.exports = router;
