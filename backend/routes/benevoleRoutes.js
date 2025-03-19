@@ -35,7 +35,7 @@ router.delete("/:id",async(req,res)=>
         //id exist ou pas 
         if(!benevole)
             {
-             return res.status(404).json({error:"Ce Benevole non touvée"});
+             return res.status(404).json({error:"Ce Benevole non touvée: ", benevole});
             }
         res.json({message:"Benevole supprimé avec succès "})
 
@@ -45,21 +45,23 @@ router.delete("/:id",async(req,res)=>
 })
 
 
-router.put('/update/:id', async (req, res) => {
-    try {
-      const updatedBenevole = await Benevole.findByIdAndUpdate(req.params.id, req.body, { new: true });
-      if (!updatedBenevole) {
-        return res.status(404).json({ success: false, message: "undefind" });
-      }
-      res.status(200).json({ success: true, message: "update avec succée", data: updatedBenevole });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ success: false, message: "Erreur lors de la mise a jour" });
-    }
-  });
 
 
 // afficher les information d'un id benevole 
-// router.get("profileBenevole/:id")
+router.get("/profil/:id",async (req,res)=>
+{
+    try {
+        const profil= await Benevole.findById(req.params.id);
+        if(!profil)
+        {
+            console.log("Non trouvée ", profil)
+        }
+        res.status(200).json( profil)
+
+    } catch (error) {
+        res.status(400).json({error: error.message});
+
+    }
+})
   
 module.exports = router;

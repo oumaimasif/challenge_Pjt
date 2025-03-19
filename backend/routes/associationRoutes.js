@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
 });
 
 //ajouter une association
-router.post("/add_association", async (req, res) => {
+router.post("/add", async (req, res) => {
   try {
     const newAssociation = new Association(req.body);
     await newAssociation.save();

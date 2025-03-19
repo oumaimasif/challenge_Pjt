@@ -8,24 +8,20 @@ const ProfileBenevole = () => {
 
   const { id } = useParams();
   console.log("voila l'id :" ,id)
-  const { profile, setProfile } = useState([]);
+  const { profil, setProfil } = useState([]);
  
   useEffect(() => {
     const getInfo = async() => {
-      const response= await axios.get(`http://localhost:5000/benevoles/${id}`);
+      const response= await axios.get(`http://localhost:5000/benevoles/profil/${id}`);
       console.log("le resultat APi :" ,response.data)
-
-      setProfile(response.data)
+      
+      setProfil(response.data)
     }
     getInfo();
   }, [])
   return (
     <div>
-     <p>helooooooooooooooooooooooooooooo</p>
-     <p>helooooooooooooooooooooooooooooo</p>
-     <p>helooooooooooooooooooooooooooooo</p>
-     <p>helooooooooooooooooooooooooooooo</p>
-     <p>heloooooooooooo{id}ooooooooooooooooo</p>
+
 
     </div>
   )
