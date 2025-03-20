@@ -1,123 +1,50 @@
-// import React from 'react';
-// import { MapIcon } from "lucide-react"
-
-
-// const AssociationCard = ({ association }) => {
-//     return (
-//         <div className=' bg-white px-5 pt-2 '>
-//             <div className='flex items-center'>
-
-//                 <div className="h-14 w-14 mr-3 bg-black rounded-md border">
-//                     {/* <img src={association.logo} alt={association.name} /> */}
-//                 </div>
-
-
-
-//                 <div className=''>
-//                     <h2 className='font-semibold text-lg line-clamp-1'>{association.nomAssociation}</h2>
-//                     <div className='flex items-center  text-sm '>
-//                         <MapIcon className='mr-1 h-3 w-3' />
-//                         <span className=' text-sm'>{association.VilleAssociation}</span>
-//                     </div>
-//                 </div>
-
-
-//             </div>
-
-//             <div className=''>
-//                 <p className='my-3 text-sm line-clamp-2 text-gray-600'>{association.description}</p>
-//             </div>
-
-//             <span className="px-2 py-0.5  bg-blue-100 rounded-lg  ">
-//                     {association.categorie}
-//             </span>
-
-//             <div className=" text-gray-600 text-sm  mt-2">
-//                 <span>8 missions</span>
-//             </div>
-//             <div className=" h-full flex flex-col ">
-//                     <button onClick={() => navigate(`/associations/${association._id}`)}
-//                         className="w-full hover:scale-[1.01] ease-in-out active:scale-[.98] active my-5">
-//                         Afficher plus
-//                     </button>
-//             </div>
-//         </div>
-//     )
-// }
-
-// export default AssociationCard
-
 import React from 'react';
-import { MapIcon } from "lucide-react";
-import { useNavigate } from "react-router-dom"; // Assure-toi que ceci est bien importé
+import { MapIcon } from "lucide-react"
+import { useNavigate } from 'react-router-dom';
+
 
 const AssociationCard = ({ association }) => {
-    const navigate = useNavigate(); // Hook pour gérer la navigation
-
+    const navigate = useNavigate();
     return (
-        <div className='bg-white rounded-lg shadow-md p-5 flex flex-col justify-between h-full'>
-            {/* Section Haut : Logo et Nom */}
+        <div className=' bg-white h-full rounded-lg shadow-md flex p-5 flex-col justify-between '>
+            {/* image nn indique sur db */}
+
             <div className='flex items-center mb-3'>
-                {/* Image ou Logo */}
-                <div className="h-14 w-14 mr-4 bg-gray-200 rounded-md border flex items-center justify-center">
-                    {/* Ajoute l'image du logo ici si disponible */}
-                    {/* <img src={association.logo} alt={association.nomAssociation} className="w-full h-full object-cover" /> */}
-                    <span className="text-sm text-gray-500">Logo</span>
+
+                <div className=" bg-gray-200 h-14 w-14 mr-4  border flex rounded-md items-centre justify-center">
+                    <span className='bg-black text-slate-300'>hello</span>
                 </div>
 
-                {/* Nom de l'Association et Ville */}
-                <div className='flex-1'>
+                <div className=''>
                     <h2 className='font-semibold text-lg line-clamp-1 text-gray-900'>{association.nomAssociation}</h2>
-                    <div className='flex items-center text-sm text-gray-600 mt-1'>
+                    <div className='flex items-center text-gray-700 text-sm mt-1.5'>
                         <MapIcon className='mr-1 h-4 w-4 text-gray-500' />
-                        <span>{association.VilleAssociation}</span>
+                        <span className=' text-sm'>{association.VilleAssociation}</span>
                     </div>
                 </div>
             </div>
 
-            {/* Description */}
             <div className='mb-4'>
-                <p className='text-sm text-gray-600 line-clamp-2'>
-                    {association.description || "Pas de description disponible."}
-                </p>
+                <p className='text-sm line-clamp-2 text-gray-600'>{association.description || "Aucun description n'est disponible."}</p>
             </div>
 
-            {/* Catégories */}
-            <div className='mb-4'>
-                {Array.isArray(association.categorie) ? (
-                    <div className="flex flex-wrap gap-2">
-                        {association.categorie.map((cat) => (
-                            <span
-                                key={cat._id || cat}
-                                className="px-3 py-0.5 bg-blue-100 text-blue-700 text-xs rounded-full"
-                            >
-                                {cat.nom || cat} {/* Affiche le nom de la catégorie */}
-                            </span>
-                        ))}
-                    </div>
-                ) : (
-                    <span className="px-3 py-0.5 bg-blue-100 text-blue-700 text-xs rounded-full">
-                        {association.categorie}
-                    </span>
-                )}
-            </div>
+<div >
+<span className="px-3 py-0.5 bg-blue-100 text-blue-700 text-xs rounded-full ">
+                {association.categorie}
+            </span>
+</div>
 
-            {/* Nombre de missions */}
-            <div className="text-sm text-gray-600 mb-4">
-                <span>{association.missions || 0} missions</span>
+            <div className=" text-gray-600 text-sm  mt-2">
+                <span>{association.mission || 0} missions</span>
             </div>
-
-            {/* Bouton */}
             <div>
-                <button
-                    onClick={() => navigate(`/associations/${association._id}`)}
-                    className="w-full bg-purple-500 text-white py-2 px-4 rounded-lg font-semibold shadow-md hover:bg-purple-600 active:bg-purple-700 transition duration-150"
-                >
+                <button onClick={() => navigate(`/associations/${association._id}`)}
+                    className="w-full rounded-lg font-semibold hover:scale-[1.01] ease-in-out active:scale-[.98] active my-5 bg-purple-500 text-white shadow-md hover:bg-purple-600 active:bg-purple-800 py-2 px-4 ">
                     Afficher plus
                 </button>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default AssociationCard;
+export default AssociationCard

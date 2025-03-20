@@ -9,9 +9,9 @@ const particulierSchema = new mongoose.Schema({
       nom: { type: String, required: true },
       prenom: { type: String, required: true },
       profession: { type: String, required: true },//etudient , parent ....
-      email: { type: String, required: true ,  match: [/^\S+@\S+\.\S+$/, "Adresse email invalide"] },
+      email: { type: String, required: true },
       // passeword: { type: String, required: true },
-      numeTelephone: { type: String, required: true ,  match: [/^\d{10}$/, "Numéro de téléphone invalide"] },
+      numeTelephone: { type: String, required: true },
       dateDeNaissance: { type: Date, required: true }, //YYYY-MM-DD
       ville: { type: String, required: true },
       besoins:{ type:String ,required:true,} ,
@@ -21,7 +21,7 @@ const particulierSchema = new mongoose.Schema({
         default:"En attente"
       },
       priorite: { type: String,
-        enum: ["Haute", "Normale", "Faible"], default: "Normale" }, // Priorité de la demande
+        enum: ["Urgent ", "Normale", "Faible"], default: "Normale" }, // Priorité de la demande
       fichier: { type: String, required: false },//une photo ou un fichier
       etreContacter :{type: Boolean,default:false},// Si le particulier souhaite être contacté
 })

@@ -30,7 +30,7 @@ function Benevole() {
         console.log(response.data.dataBenevole);
 
         if (isMounted) {
-          setBenevoles(response.data.dataBenevole || []);
+           setBenevoles(response.data.dataBenevole);
           setLoading(false);
         }
       } catch (error) {

@@ -48,7 +48,7 @@ router.delete("/:id",async(req,res)=>
 
 
 // afficher les information d'un id benevole 
-router.get("/profil/:id",async (req,res)=>
+router.get("/profileBenevole/:id",async (req,res)=>
 {
     try {
         const profil= await Benevole.findById(req.params.id);
