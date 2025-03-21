@@ -9,7 +9,7 @@ function Header() {
     return (
         <nav className="bg-white z-50 fixed w-full flex justify-around py-6 gap-8 items-center shadow-custom ">
             <Link to="/">
-                <img src="/images/nlog.png" alt="NoorWays Logo" className="w-52" />
+                <img src="/images/logorange.png" alt="NoorWays Logo" className="w-52" />
             </Link>
 
             {/* Menu Prinsipale */}
@@ -22,6 +22,7 @@ function Header() {
 
                     </Link>
                 </li>
+
                 <li className="relative group">
                     <Link to="/association" className={`text-xl lg:text-2xl font-semibold  py-2 ${location.pathname === "/association" ? "text-purple-700" : "text-gray-700 hover-text-purple-700"}`}>
                         Association
@@ -31,21 +32,33 @@ function Header() {
 
                     </Link>
                 </li>
+
                 <li className="relative group">
-                    <Link to="/benevole" className={`text-xl lg:text-2xl font-semibold  py-2 ${location.pathname === "/benevole" ? "text-purple-700" : "text-gray-700 hover-text-purple-700"}`}>
+                    <Link to="/benevole" className={`text-xl lg:text-2xl font-semibold  py-2 ${ location.pathname.includes("/benevole") || location.pathname.includes("/profileBenevole/") ? "text-purple-700" : "text-gray-700 hover-text-purple-700"}`}>
                         Bénévoles
                         <span className={`absolute left-0 top-9 w-full  h-1 bg-[#f7932e] 
                           transition-transform duration-200 rounded-full origin-left
-                          ${location.pathname === "/benevole" ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"} `}></span>
+                          ${location.pathname.includes("/benevole") || location.pathname.includes("/profileBenevole/") ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"} `}></span>
 
                     </Link>
                 </li >
+
                 <li className="relative group">
-                    <Link to="/particulier" className={`text-xl lg:text-2xl font-semibold  py-2 ${location.pathname === "/particulier" ? "text-purple-700" : "text - gray - 700 hover-text-purple-700"}`}>
+                    <Link to="/particulier" className={`text-xl lg:text-2xl font-semibold  py-2 ${location.pathname === "/particulier" ? "text-purple-700" : "text-gray-700 hover-text-purple-700"}`}>
                         Particuliers
                         <span className={`absolute left-0 top-9 w-full  h-1 bg-[#f7932e] 
                           transition-transform duration-200 rounded-full origin-left
                           ${location.pathname === "/particulier" ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"} `}></span>
+
+                    </Link>
+                </li >
+
+                <li className="relative group">
+                    <Link to="/annonces" className={`text-xl lg:text-2xl font-semibold  py-2 ${location.pathname === "/annonces" ? "text-purple-700" : "text-gray-700 hover-text-purple-700"}`}>
+                        Annonces
+                        <span className={`absolute left-0 top-9 w-full  h-1 bg-[#f7932e] 
+                          transition-transform duration-200 rounded-full origin-left
+                          ${location.pathname === "/annonces" ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"} `}></span>
 
                     </Link>
                 </li >

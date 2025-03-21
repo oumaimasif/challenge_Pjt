@@ -19,6 +19,9 @@ const particulierRoutes= require("./routes/particulierRoutes");
 //todo ; importaion pour les categories
 const categorieRoutes = require('./routes/categorieRoutes');
 
+//todo ; importaion pour les annonces
+const annonceRoutes = require('./routes/annonceRoutes');
+
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -42,6 +45,8 @@ app.use("/benevoles",benevoleRoutes);
 app.use("/particuliers",particulierRoutes);
 
 app.use('/categories', categorieRoutes);
+
+app.use('/annonces', annonceRoutes);
 
 
 app.listen(port,()=>{

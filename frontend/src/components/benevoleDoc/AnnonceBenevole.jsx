@@ -2,12 +2,14 @@ import React from 'react';
 
 const AnnonceBenevole = () => {
   return (
-    <div className="bg-white shadow-lg w-full rounded-lg p-6">
-      <h2 className="text-2xl font-bold text-purple-700 mb-4">Mes annonces disponibles</h2>
-      <div className="bg-gray-100 p-4 rounded-lg mb-4">
-        <p className="text-lg font-medium text-purple-600">Aucune annonce disponible pour le moment.</p>
+     <div className='bg-white shadow-lg w-2/4 relative -top-12 rounded-lg p-6'>
+      <h1 className='text-2xl font-bold text-purple-700 mb-4'>Decouvrire Mes annonces</h1>
+      <div>
+        <p>Aucune Annonce pour le moment</p>
       </div>
-    </div>
+      <div>les annonce terminer </div>
+      <div>les annonce en coure </div>
+     </div>
       );
 };
 

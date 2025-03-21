@@ -14,6 +14,9 @@ import Apropos from "./mespages/Apropos"
 import ProfileBenevole from "./components/benevoleDoc/ProfileBenevole"
 import AnnonceBenevole from "./components/benevoleDoc/AnnonceBenevole"
 import RecomendationBenevole from "./components/benevoleDoc/RecomendationBenevole"
+import InfoProfile from "./components/benevoleDoc/InfoProfile"
+import Annonces from "./mespages/Annonces"
+
 
 
 
@@ -33,11 +36,12 @@ function App() {
         <Route path="/formBenevole" element={<FormBenevol />} />
 
         <Route path="/benevole" element={<Benevole />} />
-        
-        <Route path="profileBenevole/:id" element={<ProfileBenevole />} />
-         <Route >
-         <Route path="annonces/:id" element={<AnnonceBenevole />} />
-         <Route path="recomendation/:id" element={<RecomendationBenevole />} />
+         <Route path="/annonces" element ={<Annonces/>}/>
+
+        <Route path="profileBenevole/:id" element={<ProfileBenevole />} >
+         <Route index element={<InfoProfile />}/> 
+         <Route path="annonces" element={<AnnonceBenevole />} />
+         <Route path="recomendation" element={<RecomendationBenevole />} />
         </Route>
 
         <Route path="/particulier" element={<Particulier />} />

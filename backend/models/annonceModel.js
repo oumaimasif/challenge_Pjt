@@ -1,14 +1,10 @@
 const mongoose = require("mongoose");
 
-const annoceSchema = new mongoose.Schema({
+const annonceSchema = new mongoose.Schema({
   titre: { type: String, required: true },
   description: { type: String, required: true },
-  //  associationID:{ type: mongoose.Schema.Types.ObjectId ,    required: true  },
-  createby: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    refPath:"role"
-  },
+  associationID:{ type: mongoose.Schema.Types.ObjectId ,    required: false ,ref:"Association" },
+  benevoleID:{ type: mongoose.Schema.Types.ObjectId ,    required: false ,ref:"Benevole" },
   role: {
     type: String, required: true,
     enum: ['benevole', 'association']
@@ -18,7 +14,8 @@ const annoceSchema = new mongoose.Schema({
     enum: ["Service", "Besoin"], // Soit un service offert, soit un besoin exprimé
     required: true 
   },
-  categories: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category", required: true }],  
+  // categories: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category", required: true }],  
+  categories:[{type:String}],
   ville: { type: String,required:true },
   date: { type: Date, default: Date.now }, // Date de publication
   // dateDebut: { type: Date },
@@ -26,7 +23,7 @@ const annoceSchema = new mongoose.Schema({
   statut: {
     type: String,
     default: "brouillon",
-    enum: ["brouillon", "publié", "terminé", "annulé"],
+    enum: ["brouillon", "publié", "terminé", "en coure"],
   },
   images: [{ type: String }],
   dateCreation: { type: Date, default: Date.now },
