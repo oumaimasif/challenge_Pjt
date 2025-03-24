@@ -22,7 +22,7 @@ const benevoleSchema = new mongoose.Schema({
 
   competence: { type: String, required: false }, // required: true
 
-  // missionARealiser: { type: String, required: false },
+  // missionARealiser: { type: Number, required: false },
   formationExperiences: { type: String, required: false }, // required: true
   description: { type: String, required: false },
   commentaires: { type: String, required: false }, // required: true

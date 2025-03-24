@@ -52,21 +52,21 @@ router.get("/", async (req, res) => {
   console.log(" voila la list des annonces ", dataAnnonce)
 });
 */
-router.get("/", async (req, res) => {
+router.get("/lists", async (req, res) => {
   const data = await Annonce.find();
   res.json(data);
 });
 
 //afficher les annonces avec leur associations en utilise aggregate
 
-router.get("/user_annonces", async (req, res) => {
+router.get("/", async (req, res) => {
   const result = await Annonce.aggregate([
     {
       $lookup: {
         from: "associations",//nom de la collection (db )
         localField: "associationID",//champe qui fait refference a id de l'association(annonce)
         foreignField: "_id",//champe qui fait la ref dans la collection mere (associationss)
-        as: "annonce_Association",//ici en affiche les resulta de joiture $lookup
+        as: "Association",//ici en affiche les resulta de joiture $lookup
       },
     },
     {
@@ -74,13 +74,15 @@ router.get("/user_annonces", async (req, res) => {
         from: "benevoles",
         localField: "benevoleID",
         foreignField: "_id",
-        as: "annonce_Association",
+        as: "Benevoles",
       },
     },
+
   ]);
   res.json(result);
   console.log("la list des annonces publier par les associations : ", result);
 });
+
 
 //ajouter une association
 router.post("/add", async (req, res) => {
