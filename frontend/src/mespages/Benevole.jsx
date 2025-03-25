@@ -47,7 +47,7 @@ function Benevole() {
   }, []);
 
   return (
-    <div className="pt-24  bg-purple-100 px-6  md:px-12  md:pt-26  min-h-screen">
+    <div className="pt-24  bg-purple-200 px-6  md:px-12  md:pt-26  min-h-screen">
       {loading ? (
         <div className="flex justify-center items-center mt-20 sm:mt-32 md:mt-40 lg:mt-52">
           <img src="/images/Spinner.svg" alt="Chargement..." className="w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-40 lg:h-40" />

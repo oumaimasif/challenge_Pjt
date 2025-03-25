@@ -1,9 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { MapPinned, Briefcase, UserRoundCheck, Clock3, CalendarHeart, MessageSquare } from "lucide-react"
 import { useParams, Outlet, Link } from 'react-router-dom';
 import CarteProfil from './CarteProfil';
-import InfoProfile from './InfoProfile';
+
 
 
 console.log("Partie Profile Benevole")
@@ -26,36 +25,34 @@ const ProfileBenevole = () => {
   }, [id]) //!fixer les 4 fois afficher
 
   return (
-    <div className='pt-32  min-h-screen'>
-      <div className='m-auto  mb-32'>
+    <div className='bg-purple-100'>
+      <div className='pt-32 m-auto min-h-screen'>
+        <div>
 
-        {/* *******!fixe Profile par defaut *********/}
-        <div className='flex flex-col  '>
-          <div className=' h-40 w-10/12  bg-gradient-to-r from-orange-200 to-purple-300  flex flex-col  mb-6 justify-center items-center  shadow-md relative rounded-br-[40px] rounded-tl-[40px] mx-auto'>
-            <nav className=''>
-              <Link className="text-xl mx-4 bg-white rounded-lg translate-x-3 duration-300 hover:shadow-lg text-orange-600 p-2" to=""> Profile </Link>
-              <Link className="text-xl mx-4 bg-white rounded-lg translate-x-3 duration-300 hover:shadow-lg  text-orange-600 p-2" to={`annonces`}> Annonces </Link>
-              <Link className="text-xl mx-4 bg-white  rounded-lg translate-x-3 duration-300 hover:shadow-lg  text-orange-600 p-2" to={`recomendation`}> Recommandations </Link>
-            </nav>
+          {/* *******!fixe Profile par defaut *********/}
+          {/* navigation  */}
+          <div className='w-full'>
+            <div className=' h-40 md:w-10/12 w-full bg-gradient-to-r from-orange-200 to-purple-300  flex flex-col  mb-6 justify-center items-center  shadow-md relative rounded-br-[40px] rounded-tl-[40px] mx-auto'>
+              <nav className=' flex flex-wrap justify-center items-center gap-y-2 md:gap-4'>
+                <Link className="md:text-xl  text-lg md:mx-4 mx-3  bg-white rounded-lg translate-x-3 duration-300 hover:shadow-lg text-orange-600 px-2 py-1  md:p-2" to=""> Profile </Link>
+                <Link className="md:text-xl  text-lg md:mx-4 mx-3  bg-white rounded-lg translate-x-3 duration-300 hover:shadow-lg text-orange-600 px-2 py-1  md:p-2" to={`annonces`}> Annonces </Link>
+                <Link className="md:text-xl  text-lg md:mx-4 mx-3  bg-white rounded-lg translate-x-3 duration-300 hover:shadow-lg text-orange-600 px-3 py-1  md:p-2" to={`recomendation`}> Recommandations </Link>
+              </nav>
+
+            </div>
+            
+            {/* contenu principale */}
+            <div className='md:flex md:items-start gap-8 ml-6 md:ml-44'>
+              <CarteProfil profil={profil} className="self-center " />
+              <Outlet context={{ profil }} />
+            </div>
 
           </div>
-
-          <div className=' flex gap-20  ml-44'>
-            <CarteProfil profil={profil} />
-            <Outlet  context={{profil}}/>
-
-          </div>
-
-
         </div>
-
-
-
       </div>
-
-
     </div>
   )
 }
 
 export default ProfileBenevole
+

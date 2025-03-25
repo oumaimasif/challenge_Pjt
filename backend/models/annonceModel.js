@@ -20,18 +20,20 @@ const annonceSchema = new mongoose.Schema({
   dateDebut: { type: Date },
   dateFin: { type: Date },
   nbrBenevole:{type:Number},
-  aideReçu:{type:Boolean,default:false},//en attend
+  aideReçu:{type:Boolean,default:false},//en attente
   statut: {
     type: String,
     default: "brouillon",
-    enum: ["brouillon", "publié", "terminé", "en coure"],
+    enum: ["brouillon", "Publié", "Terminé","En cours"],
   },
-  niveauDurgence:{type:String,enum:["Moyen - Dans les Prochaines semaines," ,
+  niveauDurgence:{type:String,enum:["Moyen - Dans les Prochaines semaines" ,
     "Fiable - Dans les prochains mois",
     "Élevé - Besion immédiat" 
   ]},
   infoContact:{type:String},
-  images: [{ type: String }],
+  image: { type: String },
+  // video:{type:String},
+  //formulaire:{type:String},//peux etre formul d'inscription fait par ass ou benev
   dateCreation: { type: Date, default: Date.now },
 });
 

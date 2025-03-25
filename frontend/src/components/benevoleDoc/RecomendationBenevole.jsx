@@ -4,7 +4,7 @@ const RecomendationBenevole = () => {
   console.log('je suis dans la partie recomendation')
   return (
     <>
-     <div className='bg-white shadow-lg w-2/4 relative -top-12 rounded-lg p-6'>
+     <div className='bg-white mt-4 shadow-lg w-[340px] md:w-[800px] relative -top-12 rounded-lg p-6'>
       <h1 className='text-2xl font-bold text-purple-700 mb-4'>Commentaires</h1>
       <div>
         <p>Aucune commentaires pour l instant</p>

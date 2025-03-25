@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const Annonce = require("../models/annonceModel");
+const upload = require("../multerconfig");
+const { default: mongoose } = require("mongoose");
 // const Association = require("../models/associationModel");
 // const Benevole = require("../models/benevoleModel");
 
@@ -56,8 +58,23 @@ router.get("/lists", async (req, res) => {
   const data = await Annonce.find();
   res.json(data);
 });
+//afficher annonces un benevoleID
+router.get("/benevole/:id",async (req,res) =>{
+    try {
+        const Id = new mongoose.Types.ObjectId(req.params.id);//convertire l'id en objectId
+        const annonceBenevole = await Annonce.find({benevoleID:Id});
+        res.json(annonceBenevole);
+        console.log("Requête avec benevoleID :", annonceBenevole);
+    
+    } catch (error) {
 
-//afficher les annonces avec leur associations en utilise aggregate
+    res.status(500).json({ message: "Erreur serveur", error });
+
+    }
+})
+
+
+//afficher les annonces avec leur associations et benevoles en utilise aggregate
 
 router.get("/", async (req, res) => {
   const result = await Annonce.aggregate([
@@ -87,11 +104,43 @@ router.get("/", async (req, res) => {
 //ajouter une association
 router.post("/add", async (req, res) => {
   try {
-    const newAnnonces = new Annonce(req.body);
-    await newAnnonces.save();
-    res.status(200).json({ message: "Bien ajoutée" });
+    const newAnnonce = new Annonce(req.body);
+    await newAnnonce.save();
+    res.status(200).json({ message: "Bien ajoutée" },newAnnonce);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 });
+
+//Route pour gerer une annonce (av image)
+router.post("/add_annonces",upload.single("image"),async (req, res)=>{
+
+    try {
+         const newAnnonce=new  Annonce({
+            titre: req.body.titre,
+            description: req.body.description,
+            associationID: req.body.associationID,
+            benevoleID:req.body.benevoleID,
+            role: req.body.role,
+            type:req.body.type,
+            categories: req.body.categories ? req.body.categories.split(","):[],//convertit en tableau
+            ville:req.body.ville,
+            dateDebut: req.body.dateDebut,
+            nbrBenevole:req.body.nbrBenevole,
+            aideReçu:req.body.aideReçu,
+            statut:req.body.statut,
+            niveauDurgence:req.body.niveauDurgence,
+            infoContact:req.body.infoContact,
+            image:req.file?req.file.path:"uploads/avatar_annonce.jpg" ,//stocke le chemin de l'image (bd)(par defaut avatar_annonce)
+         });
+         await newAnnonce.save();
+         res.status(201).json({message: "Annonce ajoutée avec succès "});
+
+    } catch (error) {
+        res.status(400).json({error: error.message});
+    }
+})
+
+//
+
 module.exports = router;

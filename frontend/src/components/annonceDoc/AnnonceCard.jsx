@@ -3,13 +3,7 @@ import React, { useEffect } from 'react'
 
 export default function AnnonceCard({ annonce }) {
 
-  // useEffect(() => { 
-  //   const fetshinfo = async () => {
-  //     const res = await axios.get("http://localhost:5000/annonces/user_annonces");
-  //     console.log("voila la liste des annoces avec plus de detaile sur le createurs : ", res.data)
-  //   }
-  //   fetshinfo();
-  // }, [])
+
   const typeAnnance = {
     Besoin:"bg-orange-300",
     Service:"bg-amber-200",
@@ -25,10 +19,10 @@ export default function AnnonceCard({ annonce }) {
 
          )}
         {/* Image des association */}
-        {/* <div className='relative h-48 overflow-hidden '>
-          {annonce.image}
-
-        </div> */}
+        <div className='relative h-48 overflow-hidden '>
+<img src={`http://localhost:5000/${annonce.image}`} alt="Image de l'annonce" 
+className='w-full h-full object-cover'/>
+        </div>
         <h1 className='text-purple-900 '> {annonce.titre}</h1>
       <p className='text-xl font-medium text-black line-clamp-2 text-balance'>{annonce.description}</p>
      <div className=''>

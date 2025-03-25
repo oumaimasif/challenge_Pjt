@@ -23,6 +23,8 @@ const categorieRoutes = require('./routes/categorieRoutes');
 const annonceRoutes = require('./routes/annonceRoutes');
 
 const app = express();
+
+app.use("/uploads", express.static("uploads"));//autoriser les fichiers statique (si nn les imgs ne seront ps accessibles  depuis le frontend)
 app.use(express.json());
 app.use(cors());
 
