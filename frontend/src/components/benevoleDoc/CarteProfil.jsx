@@ -10,7 +10,7 @@ export default function CarteProfil({ profil }) {
         maxWidth: '340px',
         minWidth: '250px',
 
-      }} className='relative rounded-lg -top-12 md:p-0 p-1.5 bg-purple-400'>
+      }} className=' sticky top-[96px] rounded-lg   md:p-0 p-1.5 bg-purple-400'>
         <img src="/images/image.png" alt="" className='h-42 w-42  md:border-none border-white shadow-lg md:rounded-tl-lg  md:rounded-none md:rounded-tr-lg  ' />
         {/* <div className='bg-black absolute top-1 text-center text-orange-500 p-1'>Follow</div> */}
         {/* <img src={profil.image} className='h-60 w-52'/> */}

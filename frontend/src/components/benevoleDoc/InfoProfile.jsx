@@ -4,9 +4,9 @@ import { useOutletContext } from 'react-router-dom'
 export default function InfoProfile() {
     const {profil}=useOutletContext();
     return (
-        <div className='w-[335px] mt-3 md:w-[800px]'>
+        <div className='w-[340px] mt-3 md:w-[800px]'>
 
-            <div className=" relative -top-12 space-y-4  bg-white shadow-lg w-full rounded-lg p-6">
+            <div className=" relative -top-2 space-y-4  bg-white shadow-lg w-full rounded-lg p-6">
                 <h1 className='font-bold text-xl text-gray-700 mb-4'>À propos de moi</h1>
                 <p className='bg-purple-400 p-5 text-white rounded-lg mb-6'>{profil.description || "Aucune description disponible "}</p>
                 <h1 className='font-bold text-xl text-gray-700 mb-4'>Mes compétences</h1>

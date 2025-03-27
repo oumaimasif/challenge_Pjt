@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Association = require("../models/associationModel");
+const { default: mongoose } = require("mongoose");
 
 
 //test 
@@ -25,6 +26,23 @@ router.post("/add", async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 });
+
+//afficher profile
+
+router.get("/association/:id", async(req,res)=>{
+ try {
+  const Id= new mongoose.Types.ObjectId(req.params.id);
+   const association = await Association.findOne(Id);
+   if (!association) {
+     return res.status(404).json({ message: "association non trouvée" });
+   }
+   res.json(association);
+ } catch (error) {
+  res.status(500).json({ message: "Erreur serveur", error });
+
+ }
+})
+
 
 //supprimer une association
 router.delete("/:id",async(req,res)=>

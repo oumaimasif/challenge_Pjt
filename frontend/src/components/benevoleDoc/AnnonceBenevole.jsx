@@ -23,7 +23,7 @@ const AnnonceBenevole = () => {
   }, [id])
   console.log("les info ",annoncebenevole)
   return (
-    <div className='bg-zinc-100 mt-4 border-2 shadow-xl w-[340px] md:w-[800px] relative -top-12 rounded-lg p-6'>
+    <div className='bg-zinc-100 mt-4 border-2 shadow-xl w-[340px] md:w-[800px] relative -top-2 rounded-lg p-6'>
       <h1 className='text-2xl font-bold text-purple-700 mb-4'>Decouvrire Mes annonces</h1>
       {annoncebenevole.length > 0 ? (
 

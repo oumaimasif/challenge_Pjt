@@ -26,9 +26,13 @@ const annonceSchema = new mongoose.Schema({
     default: "brouillon",
     enum: ["brouillon", "Publié", "Terminé","En cours"],
   },
-  niveauDurgence:{type:String,enum:["Moyen - Dans les Prochaines semaines" ,
-    "Fiable - Dans les prochains mois",
-    "Élevé - Besion immédiat" 
+  // niveauDurgence:{type:String,enum:["Moyen - Dans les Prochaines semaines" ,
+  //   "Fiable - Dans les prochains mois",
+  //   "Urgen - Besion immédiat" 
+  // ]},
+  niveauDurgence:{type:String,enum:["Moyen" ,
+    "Fiable",
+    "Urgent" 
   ]},
   infoContact:{type:String},
   image: { type: String },

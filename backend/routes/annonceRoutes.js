@@ -3,7 +3,8 @@ const router = express.Router();
 const Annonce = require("../models/annonceModel");
 const upload = require("../multerconfig");
 const { default: mongoose } = require("mongoose");
-// const Association = require("../models/associationModel");
+const Association = require("../models/associationModel");
+const Benevole = require("../models/benevoleModel");
 // const Benevole = require("../models/benevoleModel");
 
 //test
@@ -58,12 +59,12 @@ router.get("/lists", async (req, res) => {
   const data = await Annonce.find();
   res.json(data);
 });
-//afficher annonces un benevoleID
+//afficher annonces par benevoleID
 router.get("/benevole/:id",async (req,res) =>{
     try {
-        const Id = new mongoose.Types.ObjectId(req.params.id);//convertire l'id en objectId
-        const annonceBenevole = await Annonce.find({benevoleID:Id});
-        res.json(annonceBenevole);
+        const Id = new mongoose.Types.ObjectId(req.params.id); //convertire l'id en objectId
+        const annonceBenevole = await Benevole.find({_id:Id});
+        res.json(annonceBenevole[0]);
         console.log("Requête avec benevoleID :", annonceBenevole);
     
     } catch (error) {
@@ -73,6 +74,31 @@ router.get("/benevole/:id",async (req,res) =>{
     }
 })
 
+//afficher annonces par associationID
+
+router.get("/association/:id",async (req,res) =>{
+  try {
+      const Id = new mongoose.Types.ObjectId(req.params.id);//convertire l'id en objectId
+      const annonceAss = await Association.find({_id:Id});
+      res.json(annonceAss[0]);
+      console.log("Requête avec associationID :", annonceAss);
+  } catch (error) {
+  res.status(500).json({ message: "Erreur serveur", error });
+  }
+})
+
+router.get("/annonceDetail/:id", async(req,res)=>{
+ try {
+   const annonceId = await Annonce.findById(req.params.id);
+   if (!annonceId) {
+     return res.status(404).json({ message: "Annonce non trouvée" });
+   }
+   res.json(annonceId);
+ } catch (error) {
+  res.status(500).json({ message: "Erreur serveur", error });
+
+ }
+})
 
 //afficher les annonces avec leur associations et benevoles en utilise aggregate
 
@@ -112,7 +138,7 @@ router.post("/add", async (req, res) => {
   }
 });
 
-//Route pour gerer une annonce (av image)
+//Route pour ajouter une annonce (av image stock partie serveur)
 router.post("/add_annonces",upload.single("image"),async (req, res)=>{
 
     try {

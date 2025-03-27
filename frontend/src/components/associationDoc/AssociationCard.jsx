@@ -38,7 +38,7 @@ const AssociationCard = ({ association }) => {
                 <span>{association.mission || 0} missions</span>
             </div>
             <div>
-                <button onClick={() => navigate(`/associations/${association._id}`)}
+                <button onClick={() => navigate(`/association/${association._id}`)}
                     className="w-full rounded-lg font-semibold hover:scale-[1.01] ease-in-out active:scale-[.98] active my-5 border-blue-700 border bg-white text-indigo-700 shadow-md hover:bg-blue-600 hover:text-white active:text-white active:bg-blue-800 py-2 px-4 ">
                     Afficher plus
                 </button>
