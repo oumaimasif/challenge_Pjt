@@ -91,19 +91,6 @@ export default Hero;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 // {/* <section className="h-svh ">
 //             {/* <div className=" bg-gradient-to-r from-purple-500 via-purple-700 to-purple-900 text-white flex flex-col justify-center items-center text-center py-20">
 //                 <h1 className="text-4xlfont-bold mb-6"> Faites une différence avec NoorWays</h1>

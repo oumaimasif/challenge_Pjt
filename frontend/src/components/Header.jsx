@@ -1,11 +1,10 @@
-import React, {useEffect, useState } from "react";
+import React, {useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { MdMenu, MdClose } from "react-icons/md";
 
 function Header() {
     const [isOpen, setIsOpen] = useState(false);
     const location = useLocation();
-
     return (
         <nav className="bg-white z-50 fixed w-full flex justify-around py-6 gap-8 items-center shadow-custom ">
             {/* //!responcive logo et btn connexion */}
@@ -16,7 +15,7 @@ function Header() {
             {/* Menu Prinsipale */}
             <ul className="hidden md:flex space-x-4 lg:space-x-9">
                 <li className="relative group">
-                    <Link to="/" className={`text-xl lg:text-2xl font-semibold px-1 py-2 ${location.pathname === "/" ? "text-purple-700" : "text-gray-700 hover-text-purple-700"}`}>
+                    <Link to="/" className={`text-xl lg:text-2xl font-semibold px-1 py-2 ${location.pathname === "/" ? "text-purple-700" : "text-gray-700 hover:text-purple-700"}`}>
                         Accueil
                         <span className={`absolute left-0 top-9 w-full  h-1 bg-[#f7932e] transition-transform duration-200 rounded-full origin-left ${location.pathname === "/" ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"} `}></span>
 
@@ -25,7 +24,7 @@ function Header() {
                 </li>
 
                 <li className="relative group">
-                    <Link to="/association" className={`text-xl lg:text-2xl font-semibold  py-2 ${location.pathname === "/association" ? "text-purple-700" : "text-gray-700 hover-text-purple-700"}`}>
+                    <Link to="/association" className={`text-xl lg:text-2xl font-semibold  py-2 ${location.pathname === "/association" ? "text-purple-700" : "text-gray-700 hover:text-purple-700"}`}>
                         Association
                         <span className={`absolute left-0 top-9 w-full  h-1 bg-[#f7932e] 
                           transition-transform duration-200 rounded-full origin-left
@@ -35,7 +34,7 @@ function Header() {
                 </li>
 
                 <li className="relative group">
-                    <Link to="/benevole" className={`text-xl lg:text-2xl font-semibold  py-2 ${location.pathname.includes("/benevole") || location.pathname.includes("/profileBenevole/") ? "text-purple-700" : "text-gray-700 hover-text-purple-700"}`}>
+                    <Link to="/benevole" className={`text-xl lg:text-2xl font-semibold  py-2 ${location.pathname.includes("/benevole") || location.pathname.includes("/profileBenevole/") ? "text-purple-700" : "text-gray-700 hover:text-purple-700"}`}>
                         Bénévoles
                         <span className={`absolute left-0 top-9 w-full  h-1 bg-[#f7932e] 
                           transition-transform duration-200 rounded-full origin-left
@@ -45,7 +44,7 @@ function Header() {
                 </li >
 
                 <li className="relative group">
-                    <Link to="/particulier" className={`text-xl lg:text-2xl font-semibold  py-2 ${location.pathname === "/particulier" ? "text-purple-700" : "text-gray-700 hover-text-purple-700"}`}>
+                    <Link to="/particuliers" className={`text-xl lg:text-2xl font-semibold  py-2 ${location.pathname === "/particulier" ? "text-purple-700" : "text-gray-700 hover:text-purple-700"}`}>
                         Particuliers
                         <span className={`absolute left-0 top-9 w-full  h-1 bg-[#f7932e] 
                           transition-transform duration-200 rounded-full origin-left
@@ -55,7 +54,7 @@ function Header() {
                 </li >
 
                 <li className="relative group">
-                    <Link to="/annonces" className={`text-xl lg:text-2xl font-semibold  py-2 ${location.pathname === "/annonces" ? "text-purple-700" : "text-gray-700 hover-text-purple-700"}`}>
+                    <Link to="/annonces" className={`text-xl lg:text-2xl font-semibold  py-2 ${location.pathname === "/annonces" ? "text-purple-700" : "text-gray-700 hover:text-purple-700"}`}>
                         Annonces
                         <span className={`absolute left-0 top-9 w-full  h-1 bg-[#f7932e] 
                           transition-transform duration-200 rounded-full origin-left
@@ -65,8 +64,6 @@ function Header() {
                 </li >
 
             </ul >
-
-
             <div className="md:ml-4 hidden md:block">
                 <Link to="/login" className="bg-purple-700 text-white px-4 py-2 text-base lg:text-xl font-bold rounded-full hover:bg-[#872078] duration-500">
                     Connexion
@@ -90,7 +87,7 @@ function Header() {
 
                 {
                     isOpen && (
-                        <div className="absolute w-4/5 mt-6 sm:-mt-5 sm:top-24 right-0  h-svh bg-white rounded-b-2xl shadow-lg md:hidden z-40">
+                        <div className="absolute w-4/5 mt-6 sm:-mt-5 sm:top-24 right-0  bg-white rounded-b-2xl shadow-lg md:hidden z-40">
 
                             <ul className="flex flex-col p-4 ">
                                 <li className="border-b border-purple-500 py-2">
@@ -136,5 +133,4 @@ function Header() {
         </nav >
     )
 }
-
 export default Header;

@@ -75,13 +75,10 @@ function Benevole() {
                 // whileHover={{ scale: 1.03 }}//ci en hover sur la carte
                 // whileTap={{ scale: 0.95 }}// si en click il n ouvre pas mais il fair un mouvement
                 >
+                  //1743806964317.jpg
                   <div>
                     <div className='flex justify-center items-center'>
-                      {benevole.image ? (
                         <img src={benevole.image} alt={benevole.nom} className="rounded-full w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 object-cover" />
-                      ) : (
-                        <div className='rounded-full w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-black'></div>
-                      )}
                     </div>
 
                     <div>

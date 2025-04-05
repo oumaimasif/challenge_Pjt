@@ -35,11 +35,11 @@ function NoorWays() {
             <li>Trouvez des bénévoles prêts à vous aider rapidement.</li>
             <li>Participez à des actions solidaires et créez des liens avec la communauté.</li>
           </ul>
-          <button className='bg-purple-800 text-white p-2 rounded-lg'></button>
+          <button className='bg-purple-800 text-white p-2 rounded-lg'>Commencer maintenant
+          </button>
         </div>
       </div>
     </div>
-    <button> PLUS + +</button>
       </section>
      
     </>

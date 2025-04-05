@@ -15,7 +15,7 @@ const associationSchema = new mongoose.Schema({
   VilleAssociation: { type: String, required: true },
   categorie: { type: String, required: true },
   mission: { type: String, required: true },//Objectif ou mission principale
-  
+  image:{type:String}
   // website:{type:String, required:false },
 }                                                                                                                                                
  ,{timestamps: true});/* evite de gérer manuellement les dates/ suivre l'historique des modifications / ideale pour afficher "Ajouté le..." ou "Mis à jour il y a... */

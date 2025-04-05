@@ -12,7 +12,7 @@ router.get("/me", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const categories = await Categorie.find();
-    res.status(200).json({ message: "Voila la list des categories  ", categories });
+    res.status(200).json({ message: "Voila la list des categories  ", categories });//frontend res.data.categories
     // console.log("list categories: ",categories);
   } catch (error) {
     res.status(500).json({ message: "Erreur lors de la récupération des catégories" });

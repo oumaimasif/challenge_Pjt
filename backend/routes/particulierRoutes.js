@@ -3,8 +3,8 @@ const router = express.Router();
 const Particulier = require("../models/particulierModel");
 
 //test
-router.get("/me", async (req, res) => {
-  await res.send("Liste des particulier");
+router.get("/me",  (req, res) => {
+  res.send("Liste des particulier");
 });
 
 //ajouter
@@ -14,16 +14,17 @@ router.post("/add_particulier", async (req, res) => {
     await newParticulier.save();
     res.status(200).json({ message: "Particulier bien ajoutée" });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: "ERReur "+error.message });
   }
 });
 
+//ajouter avec image (uploadParticlier)
 //get all
 
 router.get("/", async (req, res) => {
   try {
     const data = await Particulier.find();
-    res.json({ message: "lists des particulier ", data });
+    res.send( data);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

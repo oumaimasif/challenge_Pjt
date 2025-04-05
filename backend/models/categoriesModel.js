@@ -1,11 +1,5 @@
 const mongoose = require("mongoose");
 
-
-/*
-associations: [
-  { type: mongoose.Schema.Types.ObjectId, ref: 'Association' }
-]
- */
 const categorieSchema = new mongoose.Schema({
   nom: { type: String, required: true, unique: true },
   description: { type: String,required: true },

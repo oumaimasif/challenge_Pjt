@@ -18,7 +18,7 @@ const benevoleSchema = new mongoose.Schema({
   dateDeNaissance: { type: Date, required: true }, //YYYY-MM-DD
   ville: { type: String, required: false }, // required: true
 
-  categorie: { type: String, required: false }, // required: true la categorie de compétences
+  categorie: [{ type: String, required: true ,default:[]}], // required: true la categorie de compétences
 
   competence: { type: String, required: false }, // required: true
 

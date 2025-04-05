@@ -1,12 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const Association = require("../models/associationModel");
+const upload = require("../multerconfig");
 const { default: mongoose } = require("mongoose");
 
 
 //test 
-router.get("/me", async(req, res) => {
-    await res.send("Liste des associations");
+router.get("/me", (req, res) => {
+     res.send("Liste des associations");
     console.log('liste des associaton ici console')
 });
 
@@ -27,8 +28,25 @@ router.post("/add", async (req, res) => {
   }
 });
 
-//afficher profile
+//add avec image
+router.post("/add_association", upload.single("image"),async (req,res)=>{
+  try{
+    const pathImage = req.file ? req.file.path : "uploadsAssociation/avatar_association.png"
+    const newAssociation = new Association({
+      ...req.body,image:pathImage,
+    })
 
+    await newAssociation.save();
+    res.status(201).json({message:"Association enregistrée avec succès ",newAssociation})
+  }catch(err)
+  {
+    res.status(400).json(err)
+  }
+})
+
+
+
+//afficher profile
 router.get("/association/:id", async(req,res)=>{
  try {
   const Id= new mongoose.Types.ObjectId(req.params.id);

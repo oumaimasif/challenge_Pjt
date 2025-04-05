@@ -18,6 +18,7 @@ import InfoProfile from "./components/benevoleDoc/InfoProfile"
 import Annonces from "./mespages/Annonces"
 import PlusInfo from "./components/annonceDoc/PlusInfo"
 import Association from "./components/associationDoc/Association"
+import FormAnnonce from "./components/annonceDoc/FormAnnonce"
 
 
 
@@ -34,13 +35,15 @@ function App() {
 
         <Route path="/association" element={<Associations />} />
         <Route path="/formAssociation" element={<FormAssociation />} />
-        {/* <Route path="/association/:id" element={<Association />} /> */}
+        <Route path="/association/:id" element={<Association />} />
 
         <Route path="/formBenevole" element={<FormBenevol />} />
+        <Route path="/formAnnonce" element ={<FormAnnonce/>}/>
+        <Route path="/add_annonces" element={<FormAnnonce />} />
 
         <Route path="/benevole" element={<Benevole />} />
          <Route path="/annonces" element ={<Annonces/>}/>
-         {/* <Route path="/benevole/:id" element ={<Benevole/>}/> */}
+         <Route path="/benevole/:id" element ={<Benevole/>}/>
          <Route path="/annonceDetail/:id" element={<PlusInfo/>}/>
 
         <Route path="profileBenevole/:id" element={<ProfileBenevole />} >
@@ -49,7 +52,7 @@ function App() {
          <Route path="recomendation" element={<RecomendationBenevole />} />
         </Route>
 
-        <Route path="/particulier" element={<Particulier />} />
+        <Route path="/particuliers" element={<Particulier />} />
         <Route path="/formParticulier" element={<FormParticulier />} />
 
         <Route path="/login" element={<Login />} />

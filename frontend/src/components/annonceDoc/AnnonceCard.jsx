@@ -14,7 +14,7 @@ export default function AnnonceCard({ annonce }) {
 
   const niveau = {
     Fiable: { bg: "bg-green-200 text-green-800", icon: CheckCircle },
-    Moyen: { bg: "bg-yellow-20 text-yellow-800", icon: Info },
+    Moyen: { bg: "bg-blue-200 text-yellow-800", icon: Info },
     Urgent: { bg: "bg-red-200 text-red-800", icon: AlertTriangle }
 
   }
@@ -27,7 +27,7 @@ export default function AnnonceCard({ annonce }) {
     "En cours": "bg-yellow-300 test-yellow-800",
   }
   const TypeIcon = typeAnnonce[annonce.type]?.icon || Info
-  const NiveauIcon = niveau[annonce.niveauUrgence]?.icon || Info
+  const NiveauIcon = niveau[annonce.niveauDurgence]?.icon || Info
 
   return (
     <div className='relative bg-white rounded-2xl  shadow-lg  hover:shadow-xl transition-all duration-300 overflow-hidden'>{/* un effet de zoom pour les image *** */}
@@ -46,26 +46,27 @@ export default function AnnonceCard({ annonce }) {
         <h1 className='text-purple-900 line-clamp-2 font-bold text-xl '> {annonce.titre}</h1>
         <p className='text-sm  text-gray-700 line-clamp-3 '>{annonce.description}</p>
 
-        <div>
+        <div className='space-y-1'>
           <div className=' flex items-center gap-2'>
-            <Tag className='w-4 h-4 text-purple-500 ml-3' />
+            <Tag className='w-4 h-4  text-purple-500 ml-3' />
             <span className=''>{annonce.role}</span>
             {annonce.Association && annonce.Association.length > 0 ? (
 
-              <span className='text-sm  text-gray-700 '> : {annonce.Association[0].nomAssociation}</span>
+              <span className='text-sm py-1 text-gray-700 '> : {annonce.Association[0].nomAssociation}</span>
 
             ) : annonce.Benevoles && annonce.Benevoles.length > 0 ? (
-              <span className='text-sm  text-gray-700 '>: {annonce.Benevoles[0].nom} {annonce.Benevoles[0].prenom}</span>
+              <span className='text-sm py-1  text-gray-700 '>: {annonce.Benevoles[0].nom} {annonce.Benevoles[0].prenom}</span>
 
             ) : (
-              <span className='text-sm  text-gray-700 '> Créateur inconnu</span>
+              <span className='text-sm py-1 text-gray-700 '> Créateur inconnu</span>
             )
 
             }
           </div>
-          <div className={`flex items-center gap-2 py-1 rounded-xl ${niveau[annonce.niveauUrgence]?.bg}`}>
-            <NiveauIcon className='w-4 h-4 text-violet-500 ml-3' />
-            <span className="font-medium text-sm">{annonce.niveauUrgence || "Niveaus d'urgence Non spécifié"} </span>
+          <div className={`flex items-center gap-2 py-1 w-fit pr-3 rounded-xl ${niveau[annonce.niveauDurgence]?.bg}`}>
+            {NiveauIcon &&
+              <NiveauIcon className='w-4 h-4 text-violet-500 ml-3'  />}
+            <span className="font-medium text-sm">{annonce.niveauDurgence || "Niveaus d'urgence Non spécifié"} </span>
           </div>
         </div>
         {/* Bouton de détails avec effet */}
