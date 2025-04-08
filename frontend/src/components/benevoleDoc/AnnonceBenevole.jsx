@@ -14,9 +14,6 @@ const AnnonceBenevole = () => {
     const fetchData = async () => {
       try {
         console.log("benevoleId :", id);
-        // const info = await axios.get(`http://localhost:5000/annonces/benevoleProfil/${id}`)
-        // console.log("Annonce Info : ", info.data)
-
         const res = await axios.get(`http://localhost:5000/annonces/benevoleProfil/${id}`)
         setAnnonces(res.data);
         console.log("Annonces récupérées: ", res.data);
@@ -29,7 +26,7 @@ const AnnonceBenevole = () => {
   console.log("les info ", annonces)
   return (
     <div className='bg-zinc-100 mt-4 border-2 shadow-xl w-[340px] md:w-[800px] relative -top-2 rounded-lg p-6'>
-      <h1 className='text-2xl font-bold text-purple-700 mb-4'>Découvrir Nos annonces</h1>
+      <h1 className='text-2xl font-bold text-purple-700 mb-4'>Découvrir Mes annonces</h1>
       {annonces.length > 0 ? (
 
         <div className='grid  md:grid-cols-2 gap-4'>

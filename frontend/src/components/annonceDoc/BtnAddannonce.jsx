@@ -1,20 +1,17 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Plus } from 'lucide-react';
 
 function BtnAddannonce() {
-  const navigate = useNavigate();
-
-  const handleCreateAnnonce = () => {
-    // Navigue vers le formulaire de création d'annonce
-    navigate('/formAnnonce');
-  }
+    const navigate = useNavigate();
+    const handleAddAnnonce = () => {
+        navigate('/formAnnonce');
+    }
 
   return (
-    <div className="flex flex-col items-center justify-center p-6 my-12 bg-gray-50">
-      <div className="text-center mb-4">
-        <h2 className="text-xl md:text-2xl font-semibold text-gray-800 mb-3">
-          Vous avez un projet ou un besoin en bénévoles ?
+    <div className=' flex flex-col ml-12 items-center justify-center p-6 my-12 bg-gradient-to-b from-blue-50 to-white rounded-xl shadow-md'>
+        <div className='text-centre mb-4'>
+        <h2 className="mb-3 text-xl md:text-2xl font-bold text-orange-600">Vous avez un projet ou un besoin en bénévoles ?
         </h2>
         <p className="text-gray-600 mb-5 max-w-2xl mx-auto">
           Publiez votre annonce et trouvez des bénévoles motivés qui peuvent vous aider à réaliser votre mission. 
@@ -24,7 +21,7 @@ function BtnAddannonce() {
       </div>
       
       <button 
-        onClick={handleCreateAnnonce}
+        onClick={handleAddAnnonce}
         className="flex items-center justify-center 
         bg-orange-500 hover:bg-orange-600 
         text-white font-bold py-3 px-6 

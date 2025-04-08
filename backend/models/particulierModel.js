@@ -1,7 +1,7 @@
 const mongoose = require ("mongoose");
 
 const particulierSchema = new mongoose.Schema({
-    civilité: {
+  civilite: {
         type: String,
         enum: ["Femme", "Homme"], // pour lister des valeurs possibles || autorisée il faut ajouter enum []
         required: true,
@@ -14,17 +14,8 @@ const particulierSchema = new mongoose.Schema({
       numeTelephone: { type: String, required: true },
       dateDeNaissance: { type: Date, required: true }, //YYYY-MM-DD
       ville: { type: String, required: true },
-      titrebesoin:{ type:String ,required:true} ,
-      description:{type:String,required:true},
-      dateBesoin:{type:Date} ,
-      statutDemende:{type :String,enum:["En attente", "Accepté","Refusé"],
-        default:"En attente"
-      },
-      image:{type:String,required: false},
-      priorite: { type: String,
-        enum: ["Urgent ", "Normale", "Faible"], default: "Normale" }, // Priorité de la demande
-      fichier: { type: String, required: false },//une photo ou un fichier
-      etreContacter :{type: Boolean,default:false},// Si le particulier souhaite être contacté
+      image: { type: String }, 
+      role:{type:String, default:"Particulier",enum:["Particulier"]}
 })
 
 const Particulier = mongoose.model("Particulier",particulierSchema);

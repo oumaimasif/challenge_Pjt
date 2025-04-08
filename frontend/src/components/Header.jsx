@@ -44,11 +44,11 @@ function Header() {
                 </li >
 
                 <li className="relative group">
-                    <Link to="/particuliers" className={`text-xl lg:text-2xl font-semibold  py-2 ${location.pathname === "/particulier" ? "text-purple-700" : "text-gray-700 hover:text-purple-700"}`}>
+                    <Link to="/particuliers" className={`text-xl lg:text-2xl font-semibold  py-2 ${location.pathname === "/particuliers" ? "text-purple-700" : "text-gray-700 hover:text-purple-700"}`}>
                         Particuliers
                         <span className={`absolute left-0 top-9 w-full  h-1 bg-[#f7932e] 
                           transition-transform duration-200 rounded-full origin-left
-                          ${location.pathname === "/particulier" ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"} `}></span>
+                          ${location.pathname === "/particuliers" ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"} `}></span>
 
                     </Link>
                 </li >

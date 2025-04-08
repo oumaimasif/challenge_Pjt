@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const Particulier = require("../models/particulierModel");
+const upload = require("../multerconfig");
+
 
 //test
 router.get("/me",  (req, res) => {
@@ -8,17 +10,40 @@ router.get("/me",  (req, res) => {
 });
 
 //ajouter
-router.post("/add_particulier", async (req, res) => {
+// router.post("/add", async (req, res) => {
+//   try {
+//     const newParticulier = new Particulier(req.body);
+//     await newParticulier.save();
+//     res.status(200).json({ message: "Particulier bien ajoutée" });
+//   } catch (error) {
+//     res.status(400).json({ error: "ERReur "+error.message });
+//   }
+// });
+
+//ajouter avec image (uploadParticlier)
+router.post("/add_particulier", upload.single("image"), async (req, res) => {
   try {
-    const newParticulier = new Particulier(req.body);
+    console.log("Données reçues:", req.body);
+    console.log("Fichier reçu:", req.header);
+    const pathImage= req.file ? req.file.path : "uploads/uploadsParticulier/avatar_particulier.jpg";
+    const newParticulier = new Particulier({
+      ...req.body,
+      image: pathImage,});
+
+      const validationError = newParticulier.validateSync();
+      if (validationError) {
+        console.error("Erreur de validation:", validationError);
+        return res.status(400).json({ error: validationError.message });
+      }
+      
     await newParticulier.save();
+
     res.status(200).json({ message: "Particulier bien ajoutée" });
   } catch (error) {
     res.status(400).json({ error: "ERReur "+error.message });
   }
 });
 
-//ajouter avec image (uploadParticlier)
 //get all
 
 router.get("/", async (req, res) => {

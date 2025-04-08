@@ -10,16 +10,15 @@ export default function AnnonceCard({ annonce }) {
     Service: { bg: "bg-amber-200 ", icon: CheckCircle },
   }
 
-  //affichet  niveaux de l'urgence
-
+  //affichet les niveaux de l'urgence
   const niveau = {
     Fiable: { bg: "bg-green-200 text-green-800", icon: CheckCircle },
     Moyen: { bg: "bg-blue-200 text-yellow-800", icon: Info },
     Urgent: { bg: "bg-red-200 text-red-800", icon: AlertTriangle }
 
   }
-  //les statut des annonces termine...
 
+  //les statut des annonces termine...
   const statutEncouleur = {
     brouillon: "bg-gray-300 test-gray-800",
     Publié: "bg-blue-300 test-blue-800",

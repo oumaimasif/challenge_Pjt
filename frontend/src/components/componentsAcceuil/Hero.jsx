@@ -42,7 +42,7 @@ const Hero = () => {
             image: "/images/about-us.svg",
             btn: "Demander de l'aide !",
             theme:"bg-[#18b710]  shadow-bg-[#18b710] hover:bg-[#16a30e]",
-            path:"/formPArticulier",
+            path:"/formParticulier",
 
         }
 

@@ -1,29 +1,18 @@
-// import React ,{useState} from 'react'
-// import axios from 'axios';
-// import Notification from '../Notification';
-// import Confirmation from '../Confirmation';
-
-
-
-// export default function FormBenevol() {
-
-//     const [formbenevole,setFormBenevole]=useState({
-//       civilite:"",nom:"", prenom:"",email:"", numeTelephone:"", dateNaissance:"", profession:"", 
-//       ville:"",categorie:"" 
-//     })
-//   return (
-//     <>
-
-//     </>
-//   )
-// }
-
-
-
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import Notification from '../Notification';
 import Confirmation from '../Confirmation';
+import CategoriesDropDown from '../CategoriesDropDown';
+//formComponants
+import BtnSubmit from '../formComponents/BtnSubmit';
+import CiviliteRadio from '../formComponents/CiviliteRadio';
+import FormInput from '../formComponents/FormInput';
+import GroupChamps from '../formComponents/GroupChamps';
+import ImageUploads from '../formComponents/ImageUploads';
+import SelectInput from '../formComponents/SelectInput';
+import TextArea from '../formComponents/TextArea';
+
+
 
 function FormBenevol() {
   // const categories = [
@@ -37,7 +26,6 @@ function FormBenevol() {
   //   { _id: "8", nom: "Humanitaire" },
   // ];
 
-
   const [formbenevole, setFormbenevole] = useState({
     civilite: "", nom: "", prenom: "", email: "", numeTelephone: "", dateDeNaissance: "", profession: "", ville: "",
     competence: "", formationExperiences: "", description: "", commentaires: "",
@@ -47,23 +35,7 @@ function FormBenevol() {
   const [image, setImage] = useState(null);
   const [notification, setNotification] = useState({ type: '', msg: '' });
   const [isConfirme, setIsConfirme] = useState(false);
-  const [selectedCategories, setSelectedCategories] = useState([]);
-  const [categories, setCategories] = useState([]);
-
-
-  // Charger les catégories depuis la base de données au chargement du composant
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/categories");
-        setCategories(response.data.categories);
-      } catch (error) {
-        console.error("Erreur lors du chargement des catégories", error);
-      }
-    };
-
-    fetchCategories();
-  }, []);
+  const [selectedCtg, setSelectedCtg] = useState([]);
 
   // Mettre à jour les valeurs des inputs
   const handleChange = (e) => {
@@ -88,7 +60,7 @@ function FormBenevol() {
         formData.append(key, formbenevole[key]);
       }
       //on ajoute les categories selectionées comme une chaine JSon; en envoie un tab via fromData il faut donc convertir en string JSON pour que le backend puisse le lire correctement. */
-      formData.append("categorie", JSON.stringify(selectedCategories))
+      formData.append("categorie", JSON.stringify(selectedCtg))
 
       // Ajouter l'image si elle existe
       if (image) {
@@ -114,10 +86,10 @@ function FormBenevol() {
         civilite: "", nom: "", prenom: "", email: "", numeTelephone: "", dateDeNaissance: "", profession: "", ville: "",
         competence: "", formationExperiences: "", description: "", commentaires: "", disponible: "Flexible", heure: "", role: "Benevole"
       });
-      setSelectedCategories([]);
+      setSelectedCtg([]);
       setImage(null);
 
-      // Réinitialiser le champ de fichier (pour l'interface utilisateur)
+      // Réinitialiser le champ de fichier(img..)
       const fileInput = document.querySelector('input[type="file"]');
       if (fileInput) fileInput.value = '';
 
@@ -125,11 +97,10 @@ function FormBenevol() {
       console.error("Erreur lors de l'ajout", error);
       setNotification({
         type: 'error',
-        message: "Erreur lors de l'ajout du bénévole. Veuillez réessayer."
+        msg: "Erreur lors de l'ajout du bénévole. Veuillez réessayer."
       });
     }
   }
-
   return (
     <div className="flex justify-center items-center min-h-screen pt-32 pb-36">
       <div className="w-full md:w-2/3 bg-white p-8 rounded-lg shadow-lg drop-shadow-xl">
@@ -140,215 +111,63 @@ function FormBenevol() {
         {/* la confirmation  */}
         <Confirmation isOpen={isConfirme} onCancel={() => setIsConfirme(false)} onConfirm={handleSubmit}
           msg="Veuillez vérifier que toutes vos informations sont correctes avant de finaliser votre inscription." />
-        <form onSubmit={(e) => {e.preventDefault();setIsConfirme(true);}}  // la verification des info avant soumission
-        className="space-y-4" encType="multipart/form-data"> {/*// !encType="multipart/form-data" =obligatoire pour que le fichier soit bien envoyé au backend. */}
-          {/* Image Upload */}
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Photo de profil
-            </label>
-            <input
-              type="file"
-              accept="image/*"
-              name="image"
-              onChange={(e) => setImage(e.target.files[0])}
-              className="w-full p-2 border rounded"
+
+        <form onSubmit={(e) => { e.preventDefault(); setIsConfirme(true); }}  // la verification des info avant soumission
+          className="space-y-4" encType="multipart/form-data"> {/*// !encType="multipart/form-data" =obligatoire pour que le fichier soit bien envoyé au backend. */}
+          {/* image Upload */}
+          <ImageUploads onChange={setImage} />
+          {/*civilité */}
+          <CiviliteRadio value={formbenevole.civilite} onChange={handleChange} required />
+
+          {/* Input pour Nom et prenom + Grouper les 2 champs*/}
+          <GroupChamps>
+            <FormInput label="Prénom" name="prenom" value={formbenevole.prenom} onChange={handleChange} placeholder="Votre Prénom" required />
+            <FormInput label="Nom de famille" name="nom" value={formbenevole.nom} onChange={handleChange} placeholder="Votre nom" required />
+          </GroupChamps>
+
+          {/* Contact & email */}
+
+          <GroupChamps>
+            <FormInput label="Email" name="email" type="email" value={formbenevole.email} onChange={handleChange} placeholder="votre.email@exemple.com" required />
+            <FormInput label="Numéro de téléphone" name="numeTelephone" type="tel" value={formbenevole.numeTelephone} onChange={handleChange} placeholder="0600000000 & 0700000000" required />
+          </GroupChamps>
+
+          {/* Date de naissance & profession  */}
+          <GroupChamps>
+            <FormInput label="Date de naissance" name="dateDeNaissance" type="date" value={formbenevole.dateDeNaissance} onChange={handleChange} required />
+            <FormInput label="Profession" name="profession" value={formbenevole.profession} onChange={handleChange} placeholder="Votre profession " required />
+          </GroupChamps>
+
+          {/* listes des categories */}
+          <CategoriesDropDown setSelectedCtg={setSelectedCtg} selectedCtg={selectedCtg} />
+
+          {/* Partie compétences & Adresse */}
+          <GroupChamps>
+            <FormInput label="Compétence principale" name="competence" value={formbenevole.competence} onChange={handleChange} placeholder="votre compétence principale" required />
+            <FormInput label="Ville" name="ville" value={formbenevole.ville} onChange={handleChange} placeholder="Votre adresse principale" />
+
+          </GroupChamps>
+
+          {/* Disponibilité & heures */}
+          <GroupChamps>
+            <SelectInput
+              label="Disponibilité" name="disponible" value={formbenevole.disponible} onChange={handleChange}
+              options={[{ value: "Flexible", label: "Flexible" }, { value: "Temps Partiel", label: "Temps partiel" }, { value: "Temps plein", label: "Temps plein" }]}
             />
-          </div>
+            <FormInput label="Disponibilité (heures)" name="heure" value={formbenevole.heure} onChange={handleChange} placeholder="Ex: 2h-3h par jr " />
+          </GroupChamps>
 
-          {/* Rest of the form remains the same */}
-          {/* Civilité */}
-          <div className="flex items-center space-x-4">
-            <span className="text-gray-600">Civilité</span>
-            <label className="text-gray-800 flex items-center">
-              <input
-                type="radio" name="civilite" value="Homme"
-                onChange={handleChange}
-                checked={formbenevole.civilite === "Homme"}
-                required
-              />
-              <span className="ml-2">Homme</span>
-            </label>
-            <label className="text-gray-900 flex items-center">
-              <input
-                type="radio"
-                name="civilite"
-                value="Femme"
-                onChange={handleChange}
-                checked={formbenevole.civilite === "Femme"}
-                required
-              />
-              <span className="ml-2">Femme</span>
-            </label>
-          </div>
+          {/* plus info sur formation et experiences  */}
+          <TextArea label="Formations et Expériences" name="formationExperiences" value={formbenevole.formationExperiences} onChange={handleChange} placeholder="Décrivez vos formations et expériences pertinentes" />
 
-          {/* Nom & Prénom */}
-          <div className="grid md:grid-cols-2 md:gap-6">
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">Prénom</label>
-              <input
-                type="text" name="prenom"
-                value={formbenevole.prenom} onChange={handleChange}
-                required className="w-full p-2 border rounded"
-                placeholder="Votre prénom"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">Nom de famille</label>
-              <input
-                type="text" name="nom"
-                value={formbenevole.nom} onChange={handleChange}
-                required className="w-full p-2 border rounded" placeholder="Votre nom"
-              />
-            </div>
-          </div>
+          {/* Description personnelle */}
+          <TextArea label="Description personnelle" name="description" value={formbenevole.description} onChange={handleChange} placeholder="Parlez-nous un peu de vous" />
 
-          {/* Contact & Naissance */}
-          <div className="grid md:grid-cols-2 md:gap-6">
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">Email</label>
-              <input
-                type="email" name="email"
-                value={formbenevole.email} onChange={handleChange}
-                required className="w-full p-2 border rounded" placeholder="votre.email@exemple.com"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">Numéro de téléphone</label>
-              <input
-                type="tel"
-                name="numeTelephone"
-                pattern="0[6-7][0-9]{8}" value={formbenevole.numeTelephone}
-                onChange={handleChange} required className="w-full p-2 border rounded" placeholder="0600000000"
-              />
-            </div>
-          </div>
+          {/* Commentaire */}
+          <TextArea label="Commentaire" name="Commentaires" value={formbenevole.commentaires} onChange={handleChange} placeholder="Avez-vous des commentaires ou des attentes particulières ?" />
 
-          <div className="grid md:grid-cols-2 md:gap-6">
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">Date de naissance</label>
-              <input
-                type="date" name="dateDeNaissance"
-                value={formbenevole.dateDeNaissance} onChange={handleChange}
-                required className="w-full p-2 border rounded"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">Profession</label>
-              <input
-                type="text" name="profession"
-                value={formbenevole.profession} onChange={handleChange}
-                className="w-full p-2 border rounded" placeholder="Votre profession (optionnel)" />
-            </div>
-          </div>
-
-          {/* Dropdown pour les catégories */}
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Catégories qui vous intéressent
-            </label>
-            <select
-              className="w-full p-2 border rounded mb-2"
-              onChange={(e) => {
-                if (e.target.value && !selectedCategories.includes(e.target.value)) {
-                  setSelectedCategories([...selectedCategories, e.target.value]);
-                }
-              }}
-              value=""
-            >
-              <option value="" disabled>Sélectionnez une catégorie</option>
-              {categories.map((cat) => (
-                <option key={cat._id} value={cat.nom} disabled={selectedCategories.includes(cat.nom)}>
-                  {cat.nom}
-                </option>
-              ))}
-            </select>
-
-            {/* Afficher les catégories sélectionnées */}
-            <div className="flex flex-wrap gap-2 mt-2">
-              {selectedCategories.map((cat, index) => (
-                <div key={index} className="bg-orange-500 text-white px-3 py-1 rounded-lg flex items-center">
-                  {cat}
-                  <button
-                    type="button"
-                    onClick={() => setSelectedCategories(selectedCategories.filter(c => c !== cat))}
-                    className="ml-2 text-white font-bold"
-                  >
-                    ×
-                  </button>
-                </div>
-              ))}
-            </div>
-            <p className="text-xs text-gray-500 mt-1">
-              Sélectionnez plusieurs catégories dans la liste déroulante
-            </p>
-          </div>
-          {/* Compétences & Disponibilité */}
-          <div className="grid md:grid-cols-2 md:gap-6">
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">Compétence principale</label>
-              <input
-                type="text" name="competence" value={formbenevole.competence}
-                onChange={handleChange} className="w-full p-2 border rounded"
-                placeholder="Votre compétence principale"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">Disponibilité</label>
-              <select name="disponible" value={formbenevole.disponible} onChange={handleChange} className="w-full p-2 border rounded">
-                <option value="Flexible">Flexible</option>
-                <option value="Temps partiel">Temps partiel</option>
-                <option value="Temps plein">Temps plein</option>
-              </select>
-            </div>
-
-          </div>
-
-          {/* Adresse et heure */}
-          <div className="grid md:grid-cols-2 md:gap-6">
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">Adresse</label>
-              <input type="text" name="ville"
-                value={formbenevole.ville} onChange={handleChange} className="w-full p-2 border rounded" placeholder="Votre adresse principale"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">Disponibilité (heures)</label>
-              <input
-                type="text"
-                name="heure" value={formbenevole.heure}
-                onChange={handleChange} className="w-full p-2 border rounded" placeholder="Ex: 2-3 heures par jour"
-              />
-            </div>
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">Formations et Expériences</label>
-            <textarea
-              name="formationExperiences" value={formbenevole.formationExperiences}
-              onChange={handleChange} className="w-full p-2 border rounded"
-              placeholder="Décrivez vos formations et expériences pertinentes" rows="3" />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">Description personnelle</label>
-            <textarea name="description"
-              value={formbenevole.description} onChange={handleChange}
-              className="w-full p-2 border rounded"
-              placeholder="Parlez-nous un peu de vous" rows="3" />
-          </div>
-
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">Commentaires</label>
-            <textarea
-              name="commentaires" value={formbenevole.commentaires} onChange={handleChange}
-              className="w-full p-2 border rounded" placeholder="Avez-vous des commentaires ou des attentes particulières ?"
-              rows="3" />
-          </div>
-
-          <button
-            type="submit"
-            className="w-full bg-orange-500 text-white py-3 rounded hover:bg-orange-600 transition duration-300">
-            S'inscrire comme Bénévole
-          </button>
+          {/* Btn */}
+       <BtnSubmit text="S'inscrire comme Particulier" locationf="benevole"/>
         </form>
       </div>
     </div>

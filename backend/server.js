@@ -22,6 +22,7 @@ const categorieRoutes = require('./routes/categorieRoutes');
 //todo ; importaion pour les annonces
 const annonceRoutes = require('./routes/annonceRoutes');
 
+const demandeAideRoutes = require("./routes/demandeAideRoutes")
 const app = express();
 
 app.use("/uploads", express.static("uploads"));//autoriser les fichiers statique (si nn les imgs ne seront ps accessibles  depuis le frontend)
@@ -44,11 +45,13 @@ app.use("/associations",associationRoutes);// lier les routes /nomprincipale/nom
 
 app.use("/benevoles",benevoleRoutes);
 
-app.use("/particuliers",particulierRoutes);
+app.use('/particuliers', particulierRoutes);
 
 app.use('/categories', categorieRoutes);
 
 app.use('/annonces', annonceRoutes);
+
+app.use('/demandeAide', demandeAideRoutes);
 
 
 app.listen(port,()=>{

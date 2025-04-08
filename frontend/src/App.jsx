@@ -19,6 +19,8 @@ import Annonces from "./mespages/Annonces"
 import PlusInfo from "./components/annonceDoc/PlusInfo"
 import Association from "./components/associationDoc/Association"
 import FormAnnonce from "./components/annonceDoc/FormAnnonce"
+import FormDemandeAide from "./components/Demande/FormDemandeAide"
+import DemandeAide from "./mespages/DemandeAide"
 
 
 
@@ -54,6 +56,9 @@ function App() {
 
         <Route path="/particuliers" element={<Particulier />} />
         <Route path="/formParticulier" element={<FormParticulier />} />
+
+        <Route path="/formDemandeAide" element={<FormDemandeAide />} />
+        <Route path="/demandeAide" element={<DemandeAide />} />
 
         <Route path="/login" element={<Login />} />
 

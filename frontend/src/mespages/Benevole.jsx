@@ -30,6 +30,9 @@ function Benevole() {
         console.log(response.data.dataBenevole);
 
         if (isMounted) {
+          const benevole_Annonces = response.data.dataBenevole.map(benevole=>({
+            ...benevole,annoncesCpt:benevole.annoncesCpt || 0// si valeur undefined
+          }))
           setBenevoles(response.data.dataBenevole);
           setLoading(false);
         }
@@ -40,7 +43,6 @@ function Benevole() {
     };
 
     fetchBenevoles();
-
     return () => {
       isMounted = false;
     };
@@ -75,14 +77,15 @@ function Benevole() {
                 // whileHover={{ scale: 1.03 }}//ci en hover sur la carte
                 // whileTap={{ scale: 0.95 }}// si en click il n ouvre pas mais il fair un mouvement
                 >
-                  //1743806964317.jpg
                   <div>
                     <div className='flex justify-center items-center'>
-                        <img src={benevole.image} alt={benevole.nom} className="rounded-full w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 object-cover" />
+                        <img src={`http://localhost:5000/${benevole.image}`} alt={benevole.nom} className="rounded-full w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 object-cover" />
                     </div>
 
                     <div>
-                      <span className='absolute top-2 right-2 sm:top-3 sm:right-3 border border-purple-400 p-1 font-semibold text-gray-600 bg-orange-50 text-[8px] sm:text-[10px] rounded-3xl'>2 missions</span>
+                      <span className='absolute top-2 right-2 sm:top-3 sm:right-3 border border-purple-400 p-1 font-semibold text-gray-600 bg-orange-50 text-[8px] sm:text-[10px] rounded-3xl'>
+                        {benevole.annoncesCpt} annonce{benevole.annoncesCpt !==1 ?'s':''}
+                      </span>
                     </div>
 
                     <div>

@@ -8,12 +8,12 @@ const associationSchema = new mongoose.Schema({
   fonctiondsAssociation: { type: String, required: true },
   email: { type: String, required: true  },
   role: { type: String, default: "Association", enum: ["Association"] },
-  accreditée:{ type:Boolean,required:true },
+  accreditee:{ type:Boolean,default:false },//erreur de l'envoi si elle etait required :true
   // passeword: { type: String, required: true },
   numeTelephone: { type: String, required: true },
   dateCreation: { type: Date, required: true },//YYYY-MM-DD
   VilleAssociation: { type: String, required: true },
-  categorie: { type: String, required: true },
+  categorie: [{ type: String, required: true ,default:[]}], 
   mission: { type: String, required: true },//Objectif ou mission principale
   image:{type:String}
   // website:{type:String, required:false },
