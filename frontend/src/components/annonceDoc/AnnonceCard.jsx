@@ -15,9 +15,8 @@ export default function AnnonceCard({ annonce }) {
     Fiable: { bg: "bg-green-200 text-green-800", icon: CheckCircle },
     Moyen: { bg: "bg-blue-200 text-yellow-800", icon: Info },
     Urgent: { bg: "bg-red-200 text-red-800", icon: AlertTriangle }
-
   }
-
+  
   //les statut des annonces termine...
   const statutEncouleur = {
     brouillon: "bg-gray-300 test-gray-800",

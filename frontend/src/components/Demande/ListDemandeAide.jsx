@@ -1,65 +1,90 @@
+import React, { useEffect, useState } from 'react'
+import axios from "axios"
+import DemandeAideModal from './DemandeAideModal';
+import DemandeAideCard from './DemandeAideCard';
+import MenuParticulier from '../MenuParticulier';
 
-
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
-import { ArrowDownLeftSquareIcon, Send } from "lucide-react";
-import MenuParticulier from "../MenuParticulier";
-
-const ListDemandeAide = () => {
+export default function ListDemande() {
   const [demandes, setDemandes] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const [selectedDemandeId, setSelectedDemandeId] = useState(null);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/demandeAide")
-      .then((res) => setDemandes(res.data))
-      .catch((err) => console.error(err));
-  }, []);
-
+    const fetchDemandes = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/demandeAide")
+        console.log("list des demandes:", res.data);
+        console.log("info de la 1er demande", res.data[0])
+        setDemandes(res.data || [])
+        setLoading(false);
+      } catch (error) {
+        console.log("Erreur lors du chargement des demandes d'aide: ", error)
+        setLoading(false);
+      }
+    }
+    fetchDemandes();
+  }, [])
+  // OpenModal
+  const handleOpenModal = (demandeId) => {
+    setSelectedDemandeId(demandeId);
+  };
+  // close it 
+  const handleCloseModal = () => {
+    setSelectedDemandeId(null);
+  };
   return (
-    <>    
-    <MenuParticulier/>
-    <div className="py-24 px-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mx-auto gap-4">
-      {demandes.map((demande) => (
-        <div key={demande._id} className="border rounded-xl p-4 shadow">
-          <img
-            src={`http://localhost:5000/${demande.image}`}
-            alt={demande.titre}
-            className="w-full h-48 object-cover rounded-lg mb-2"
-          />
-          <h2 className="text-xl font-bold">{demande.titre}</h2>
-          <p className="text-sm text-gray-600 mb-2">{demande.description}</p>
-
-
-
-          {/* Infos du particulier */}
-          <div className="mt-2 text-sm">
-            <span className="font-medium">Demandeur:</span>{" "}
-            {demande.particulierInfo?.prenom} {demande.particulierInfo?.nom} {" "}
-            {demande.particulierInfo?.ville}
-          </div>
-          <div className=" my-3 flex gap-3 items-center justify-center">
-            <div className="bg-orange-100 py-3 max-w-fit px-2 rounded-lg items-center justify-center  flex ">
-              <Send className="mr-2 w-4 h-4" />
-              {demande.particulierInfo?.email}
+    <>
+      <div className='bg-purple-100 pb-8 min-h-screen'>
+        <div className='px-6 pt-24 md:pt-26 md:px-12 min-h-screen'>
+          {loading === true ? (
+            <div className='flex items-center mt-20 md:mt-40 lg:mt-52 justify-center'>
+              <img
+                src="images/Spinner.svg"
+                alt="Chargement des demandes d'aide..."
+                className='w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-40 lg:h-40'
+              />
             </div>
-            {/* Priorité */}
-            <div className=" bg-orange-100 py-3 flex items-center   px-2 rounded-lg  ">
-              <p className="text-gray-500">Priorité:</p>
-              <p className={`font-medium ${demande.priorite === 'Urgent' ? 'text-red-600' :
-                demande.priorite === 'Faible' ? 'text-green-600' :
-                  'text-yellow-600'
-                }`}>
-                {demande.priorite}
-              </p>
-            </div></div>
+          ) : (
+            <>
+            <MenuParticulier />
+              {/* Partie présentation des listes des demandes d'aide */}
+              <div className='text-white bg-violet-600 my-4 md:mx-8 md:my-6 flex flex-col p-6 rounded-xl mb-6 justify-center'>
+                <h1 className='text-2xl md:text-3xl font-bold mb-2 sm:mb-4 md:mb-6 md:text-center md:mt-4 text-center'>
+                  Demandes d'aide : Répondez aux besoins des particuliers
+                </h1>
+                <p className='text-lg text-start md:text-left md:text-xl'>
+                  Découvrez ici les demandes d'aide urgentes des particuliers qui ont besoin de votre soutien.
+                  Votre aide peut faire une réelle différence dans leur vie quotidienne.
+                </p>
+              </div>
+              {demandes.length > 0 ? (
+              // Afficher les cartes des demandes d'aide
+              <div className="grid grid-cols-1 gap-6 mx-2 md:grid-cols-3 auto-rows-fr md:gap-8">
+                {demandes.map((demande) => (
+                  <div key={demande._id} onClick={() => handleOpenModal(demande._id)}>
+                    <DemandeAideCard demande={demande} onSelectDemande={handleOpenModal}  />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              // Message si aucune demande trouvée
+              <div className="text-center py-6 lg:py-10">
+                <p className="text-lg md:text-xl text-gray-600">Aucune demande d'aide trouvée.</p>
+              </div>
+            )}
+
+            {/* Modal pour afficher les détails de la demande */}
+            {selectedDemandeId && (
+              <DemandeAideModal 
+                demandeId={selectedDemandeId}
+                onClose={handleCloseModal}
+              />
+            )}
+          </>
+        )}
         </div>
-
-      ))}
-    </div>
+      </div>
     </>
-
-  );
-};
-
-export default ListDemandeAide;
+  )
+}

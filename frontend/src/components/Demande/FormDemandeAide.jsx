@@ -71,7 +71,6 @@ function FormDemandeAide() {
       for (const key in formDemande) {
         formData.append(key, formDemande[key]);
       }
-
       formData.append("categorie", JSON.stringify(selectedCtg));
 
       if (image) {
@@ -126,28 +125,17 @@ function FormDemandeAide() {
         
         <Notification type={notification.type} msg={notification.msg} onClose={onCloseNotify} />
 
-        <Confirmation 
-          isOpen={isConfirme} 
-          onCancel={() => setIsConfirme(false)} 
-          onConfirm={handleSubmit}
-          msg="Veuillez vérifier que toutes vos informations sont correctes avant de soumettre votre demande d'aide." 
-        />
+        <Confirmation isOpen={isConfirme} onCancel={() => setIsConfirme(false)} onConfirm={handleSubmit}
+          msg="Veuillez vérifier que toutes vos informations sont correctes avant de soumettre votre demande d'aide." />
 
-        <form 
-          onSubmit={(e) => { e.preventDefault(); setIsConfirme(true); }}
-          className="space-y-6" 
-          encType="multipart/form-data"
-        >
+        <form onSubmit={(e) => { e.preventDefault(); setIsConfirme(true); }}
+          className="space-y-6" encType="multipart/form-data" >
           {/* Particulier */}
           <div className="mb-6 bg-orange-50 p-4 rounded-lg border-l-4 border-orange-400">
             <label className="block text-gray-700 font-medium mb-2">Sélectionnez votre profil</label>
-            <select
-              name="particulier"
-              value={formDemande.particulier}
-              onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
-              required
-            >
+            <select name="particulier" value={formDemande.particulier}
+              onChange={handleChange} className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
+              required >
               <option value="">-- Sélectionnez votre profil --</option>
               {particuliers.map(p => (
                 <option key={p._id} value={p._id}>
@@ -160,15 +148,11 @@ function FormDemandeAide() {
           {/* Titre */}
           <div className="mb-6">
             <label className="block text-gray-700 font-medium mb-2">Titre de la demande</label>
-            <input
-              type="text"
-              name="titre"
-              value={formDemande.titre}
-              onChange={handleChange}
-              placeholder="Titre décrivant votre besoin"
+            <input type="text"
+              name="titre" value={formDemande.titre}
+              onChange={handleChange} placeholder="Titre décrivant votre besoin"
               className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
-              required
-            />
+              required />
           </div>
 
           {/* Catégories */}
@@ -181,13 +165,10 @@ function FormDemandeAide() {
           <div className="mb-6">
             <label className="block text-gray-700 font-medium mb-2">Description détaillée</label>
             <textarea
-              name="description"
-              value={formDemande.description}
-              onChange={handleChange}
+              name="description" value={formDemande.description} onChange={handleChange}
               placeholder="Décrivez votre besoin en détail..."
               className="w-full px-4 py-3 border border-gray-300 rounded-md h-40 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
-              required
-            ></textarea>
+              required ></textarea>
           </div>
 
           {/* Dates */}
@@ -197,19 +178,15 @@ function FormDemandeAide() {
               <input
                 type="date"
                 name="dateBesoin"
-                value={formDemande.dateBesoin}
-                onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
+                value={formDemande.dateBesoin} onChange={handleChange} className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
                 required
               />
             </div>
             <div>
               <label className="block text-gray-700 font-medium mb-2">Date limite (optionnelle)</label>
-              <input
-                type="date"
+              <input type="date"
                 name="dateFin"
-                value={formDemande.dateFin}
-                onChange={handleChange}
+                value={formDemande.dateFin} onChange={handleChange}
                 className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
               />
             </div>
@@ -220,20 +197,15 @@ function FormDemandeAide() {
             <div>
               <label className="block text-gray-700 font-medium mb-2">Lieu</label>
               <input
-                type="text"
-                name="lieu"
-                value={formDemande.lieu}
-                onChange={handleChange}
-                placeholder="Adresse ou lieu concerné"
+                type="text" name="lieu" value={formDemande.lieu}
+                onChange={handleChange} placeholder="Adresse ou lieu concerné"
                 className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
               />
             </div>
             <div>
               <label className="block text-gray-700 font-medium mb-2">Priorité</label>
               <select
-                name="priorite"
-                value={formDemande.priorite}
-                onChange={handleChange}
+                name="priorite" value={formDemande.priorite} onChange={handleChange}
                 className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
               >
                 <option value="Faible">Faible</option>
@@ -248,24 +220,19 @@ function FormDemandeAide() {
             <label className="block text-gray-700 font-medium mb-2">Nombre de bénéficiaires</label>
             <input
               type="number"
-              name="nombrebeneficiaires"
-              min="1"
-              value={formDemande.nombrebeneficiaires}
-              onChange={handleChange}
+              name="nombrebeneficiaires"  min="1"
+              value={formDemande.nombrebeneficiaires} onChange={handleChange}
               className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
-              required
-            />
+              required />
           </div>
 
           {/* Option de contact */}
           <div className="flex items-center mb-6 bg-gray-50 p-4 rounded-md">
             <input
               type="checkbox"
-              id="etreContacter"
-              name="etreContacter"
+              id="etreContacter" name="etreContacter"
               checked={formDemande.etreContacter}
-              onChange={handleChange}
-              className="w-5 h-5 text-orange-600 mr-3"
+              onChange={handleChange} className="w-5 h-5 text-orange-600 mr-3"
             />
             <label htmlFor="etreContacter" className="text-gray-700">Je souhaite être contacté(e) concernant cette demande</label>
           </div>

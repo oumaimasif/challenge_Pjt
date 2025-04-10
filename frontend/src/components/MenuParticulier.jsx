@@ -11,7 +11,7 @@ export default function MenuParticulier() {
         navigate('/particuliers');
     }
   return (
-    <div className='bg-gray-100 flex gap-3 rounded-lg mt-8 px-3 py-2'>
+    <div className='bg-gray-100 flex gap-3 rounded-lg mb-2 w-fit mx-auto px-3 py-2'>
         <button onClick={handleDemandeAide} className=' hover:bg-white p-2 rounded-xl text-black '>
            Liste des Demandes d'aides
         </button>

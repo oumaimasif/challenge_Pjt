@@ -22,7 +22,9 @@ const categorieRoutes = require('./routes/categorieRoutes');
 //todo ; importaion pour les annonces
 const annonceRoutes = require('./routes/annonceRoutes');
 
-const demandeAideRoutes = require("./routes/demandeAideRoutes")
+const demandeAideRoutes = require("./routes/demandeAideRoutes");
+
+const admin = require("./routes/adminRoutes");
 const app = express();
 
 app.use("/uploads", express.static("uploads"));//autoriser les fichiers statique (si nn les imgs ne seront ps accessibles  depuis le frontend)
@@ -52,6 +54,8 @@ app.use('/categories', categorieRoutes);
 app.use('/annonces', annonceRoutes);
 
 app.use('/demandeAide', demandeAideRoutes);
+
+app.use('/admin',admin);
 
 
 app.listen(port,()=>{

@@ -30,9 +30,6 @@ function Benevole() {
         console.log(response.data.dataBenevole);
 
         if (isMounted) {
-          const benevole_Annonces = response.data.dataBenevole.map(benevole=>({
-            ...benevole,annoncesCpt:benevole.annoncesCpt || 0// si valeur undefined
-          }))
           setBenevoles(response.data.dataBenevole);
           setLoading(false);
         }

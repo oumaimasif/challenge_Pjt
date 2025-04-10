@@ -21,6 +21,7 @@ import Association from "./components/associationDoc/Association"
 import FormAnnonce from "./components/annonceDoc/FormAnnonce"
 import FormDemandeAide from "./components/Demande/FormDemandeAide"
 import DemandeAide from "./mespages/DemandeAide"
+import DemandeAideModal from "./components/Demande/DemandeAideModal"
 
 
 
@@ -59,6 +60,7 @@ function App() {
 
         <Route path="/formDemandeAide" element={<FormDemandeAide />} />
         <Route path="/demandeAide" element={<DemandeAide />} />
+        <Route path="/demandeDetail/:id" element={<DemandeAideModal />} />
 
         <Route path="/login" element={<Login />} />
 
