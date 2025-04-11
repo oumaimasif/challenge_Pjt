@@ -22,6 +22,7 @@ import FormAnnonce from "./components/annonceDoc/FormAnnonce"
 import FormDemandeAide from "./components/Demande/FormDemandeAide"
 import DemandeAide from "./mespages/DemandeAide"
 import DemandeAideModal from "./components/Demande/DemandeAideModal"
+import ProfileParticulier from "./components/particulierDoc/ProfileParticulier"
 
 
 
@@ -57,6 +58,8 @@ function App() {
 
         <Route path="/particuliers" element={<Particulier />} />
         <Route path="/formParticulier" element={<FormParticulier />} />
+        <Route path="/particulier/:id" element={<ProfileParticulier />} />
+
 
         <Route path="/formDemandeAide" element={<FormDemandeAide />} />
         <Route path="/demandeAide" element={<DemandeAide />} />

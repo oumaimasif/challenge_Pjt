@@ -11,7 +11,7 @@ const demandeSchema = new mongoose.Schema({
       description:{type:String,required:true},
       dateBesoin:{type:Date} ,
       dateFin:{type:Date, required:false},
-      statute:{type :String,enum:["En attente", "Accepté","Refusé","Rasolu"],
+      statute:{type :String,enum:["En attente", "Accepté", "Refusé", "Rasolu"],
         default:"En attente"
       },
       lieu:{type:String, requierd: false},

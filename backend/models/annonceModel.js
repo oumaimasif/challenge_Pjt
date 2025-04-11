@@ -35,6 +35,8 @@ const annonceSchema = new mongoose.Schema({
   // video:{type:String},
   //formulaire:{type:String},//peux etre formul d'inscription fait par ass ou benev
   dateCreation: { type: Date, default: Date.now },
+  password: { type: String, required: true },
+
 });
 
 const Annonce = mongoose.model('Annonce', annonceSchema);

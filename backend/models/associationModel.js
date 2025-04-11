@@ -9,7 +9,7 @@ const associationSchema = new mongoose.Schema({
   email: { type: String, required: true  },
   role: { type: String, default: "Association", enum: ["Association"] },
   accreditee:{ type:Boolean,default:false },//erreur de l'envoi si elle etait required :true
-  // passeword: { type: String, required: true },
+  password: { type: String, required: true },
   numeTelephone: { type: String, required: true },
   dateCreation: { type: Date, required: true },//YYYY-MM-DD
   VilleAssociation: { type: String, required: true },

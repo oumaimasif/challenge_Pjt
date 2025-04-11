@@ -10,7 +10,7 @@ const particulierSchema = new mongoose.Schema({
       prenom: { type: String, required: true },
       profession: { type: String, required: true }, //etudient , parent ....
       email: { type: String, required: true },
-      //passeword: { type: String, required: true },
+      password: { type: String, required: true },
       numeTelephone: { type: String, required: true },
       dateDeNaissance: { type: Date, required: true }, //YYYY-MM-DD
       ville: { type: String, required: true },

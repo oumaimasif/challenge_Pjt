@@ -112,4 +112,25 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// Récupérer les demandes d'aide d'un particulier spécifique
+router.get("/particulier/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    // Vérifier si le particulier existe
+    const particulierExists = await Particulier.findById(id);
+    if (!particulierExists) {
+      return res.status(404).json({ error: "Particulier non trouvé" });
+    }
+    
+    // trouver toutes les demandes d'aide associées à ce particulier
+    const demandes = await DemandeAide.find({ particulier: id })
+      .sort({ createdAt: -1 }); // tier de plus recent en plus ancien
+      
+    res.status(200).json(demandes);
+  } catch (error) {
+    console.error("Erreur lors de la récupération des demandes:", error);
+    res.status(500).json({ error: error.message });
+  }
+});
 module.exports = router;

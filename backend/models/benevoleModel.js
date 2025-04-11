@@ -13,7 +13,7 @@ const benevoleSchema = new mongoose.Schema({
   profession: { type: String, required: false }, // facultatif étudiants, retraités
   // categorie: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Categorie', required: true }],
   email: { type: String, required: true },
-  // passeword: { type: String, required: true },
+  password: { type: String, required: true },
   numeTelephone: { type: String, required: true  },
   dateDeNaissance: { type: Date, required: true }, //YYYY-MM-DD
   ville: { type: String, required: false }, // required: true
