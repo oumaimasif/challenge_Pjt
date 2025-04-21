@@ -5,7 +5,7 @@ import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 
 function Footer() {
   return (
-    <footer className="bg-purple-800 text-gray-300   py-10">
+    <footer className="bg-purple-700 text-gray-300   py-10">
   <div className='px-12  md:flex md:items-center md:justify-between gap-8'>
        <div className="text-center pb-3 md:text-left">
           <h2 className='text-2xl font-semibold text-white'>NoorWays</h2>

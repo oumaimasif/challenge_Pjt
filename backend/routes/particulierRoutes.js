@@ -24,7 +24,9 @@ router.get("/me",  (req, res) => {
 router.post("/add_particulier", upload.single("image"), async (req, res) => {
   try {
     console.log("Données reçues:", req.body);
-    console.log("Fichier reçu:", req.header);
+    // console.log("Fichier reçu:", req.header);
+    console.log("Fichier reçu:", req.file);
+
     const pathImage= req.file ? req.file.path : "uploads/uploadsParticulier/avatar_particulier.jpg";
     const newParticulier = new Particulier({
       ...req.body,

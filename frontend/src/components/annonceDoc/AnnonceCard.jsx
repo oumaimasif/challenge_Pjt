@@ -16,8 +16,9 @@ export default function AnnonceCard({ annonce }) {
     Moyen: { bg: "bg-blue-200 text-yellow-800", icon: Info },
     Urgent: { bg: "bg-red-200 text-red-800", icon: AlertTriangle }
   }
-  
-  //les statut des annonces termine...
+
+  //les statut des annonces valide par ( admin (si il passe 24h elle va etre publier 
+  // automatique et benevole, association peuvent indiquer ci le annonce a ete terminer )..
   const statutEncouleur = {
     brouillon: "bg-gray-300 test-gray-800",
     Publié: "bg-blue-300 test-blue-800",

@@ -28,7 +28,7 @@ function FormBenevol() {
 
   const [formbenevole, setFormbenevole] = useState({
     civilite: "", nom: "", prenom: "", email: "", numeTelephone: "", dateDeNaissance: "", profession: "", ville: "",
-    competence: "", formationExperiences: "", description: "", commentaires: "",
+    competence: "", formationExperiences: "", description: "", commentaires: "",password:"",
     disponible: "Flexible", heure: "", role: "Benevole"
   });
 
@@ -73,7 +73,11 @@ function FormBenevol() {
           'Content-Type': 'multipart/form-data'
         }
       });
-
+      console.log("Contenu de FormData :");
+      for (let pair of formData.entries()) {
+        console.log(pair[0], pair[1]);
+      }
+      
       console.log("Bénévole ajouté avec succès", res.data);
       setNotification({
         type: 'Ok',
@@ -83,7 +87,7 @@ function FormBenevol() {
 
       // Reset form
       setFormbenevole({
-        civilite: "", nom: "", prenom: "", email: "", numeTelephone: "", dateDeNaissance: "", profession: "", ville: "",
+        civilite: "", nom: "", prenom: "", email: "", numeTelephone: "",password:"", dateDeNaissance: "", profession: "", ville: "",
         competence: "", formationExperiences: "", description: "", commentaires: "", disponible: "Flexible", heure: "", role: "Benevole"
       });
       setSelectedCtg([]);
@@ -115,6 +119,7 @@ function FormBenevol() {
         <form onSubmit={(e) => { e.preventDefault(); setIsConfirme(true); }}  // la verification des info avant soumission
           className="space-y-4" encType="multipart/form-data"> {/*// !encType="multipart/form-data" =obligatoire pour que le fichier soit bien envoyé au backend. */}
           {/* image Upload */}
+          
           <ImageUploads onChange={setImage} />
           {/*civilité */}
           <CiviliteRadio value={formbenevole.civilite} onChange={handleChange} required />
@@ -164,7 +169,7 @@ function FormBenevol() {
           <TextArea label="Description personnelle" name="description" value={formbenevole.description} onChange={handleChange} placeholder="Parlez-nous un peu de vous" />
 
           {/* Commentaire */}
-          <TextArea label="Commentaire" name="Commentaires" value={formbenevole.commentaires} onChange={handleChange} placeholder="Avez-vous des commentaires ou des attentes particulières ?" />
+          <TextArea label="Commentaire" name="commentaires" value={formbenevole.commentaires} onChange={handleChange} placeholder="Avez-vous des commentaires ou des attentes particulières ?" />
 
           {/* Btn */}
        <BtnSubmit text="S'inscrire comme Particulier" locationf="benevole"/>

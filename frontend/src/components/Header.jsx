@@ -65,7 +65,7 @@ function Header() {
 
             </ul >
             <div className="md:ml-4 hidden md:block">
-                <Link to="/login" className="bg-purple-700 text-white px-4 py-2 text-base lg:text-xl font-bold rounded-full hover:bg-[#872078] duration-500">
+                <Link to="/login" className="bg-purple-700 text-white px-4 py-2 text-base lg:text-xl font-bold rounded-full hover:bg-[#841f75] duration-500">
                     Connexion
                 </Link>
             </div>
