@@ -19,7 +19,7 @@ function Login() {
 
                     <div className=' md:w-[500px] py-4 px-5 m-auto'>
                         <h1 className='text-3xl font-bold text-center'>Connectez-vous</h1>
-                        <p className=' text-lx text-center text-gray-500 mt-4'>Entre votre email et mot de passe .</p>
+                        <p className=' text-lx text-center text-gray-500 mt-4'>Entrez vos identifiants pour accéder à votre compte.</p>
 
                         <form onSubmit={handleSubmit} className='mt-6 mr-5  space-y-4'>
 
@@ -27,7 +27,7 @@ function Login() {
                                 <label className=" block text-lg font-medium text-gray-700">Voter email </label>
                                 <input type="email" value={email} required
                                     className="w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-700 "
-                                    placeholder="name@gmail.com" onChange={(e) => setEmail(e.target.value)} />
+                                    placeholder="votre@gmail.com" onChange={(e) => setEmail(e.target.value)} />
                             </div>
 
                             <div>
@@ -51,17 +51,10 @@ function Login() {
                                 Connexion
                             </button>
 
-                            <button
-                                type="button"
-                                className="w-full py-3 mt-2 bg-gray-200 text-gray-800 rounded-lg font-semibold flex items-center justify-center space-x-2 hover:bg-gray-300 transition duration-300"
-                            >
-                                <img src="/images/google-icon.png" alt="Google" className="h-5 w-5" />
-                                <span>Se connecter avec Google</span>
-                            </button>
                         </form>
                         {/* sign up  */}
-                        <p className="text-center text-gray-600 mt-4"> Pas encore de compte ?
-                        <button className="text-purple-600 hover:underline ml-1">Créer un compte</button>
+                        <p className="text-center text-gray-600 mt-4"> Vous n'avez pas de compte ?
+                        <button className="text-purple-600 hover:underline ml-1">Inscription</button>
                         </p>
                     </div>
                 </div>
