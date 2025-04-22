@@ -25,6 +25,7 @@ const annonceRoutes = require('./routes/annonceRoutes');
 const demandeAideRoutes = require("./routes/demandeAideRoutes");
 
 const admin = require("./routes/adminRoutes");
+const contactRoutes = require("./routes/contactRoutes")
 const app = express();
 
 app.use("/uploads", express.static("uploads"));//autoriser les fichiers statique (si nn les imgs ne seront ps accessibles  depuis le frontend)
@@ -56,6 +57,8 @@ app.use('/annonces', annonceRoutes);
 app.use('/demandeAide', demandeAideRoutes);
 
 app.use('/admin',admin);
+
+ app.use('/contact', contactRoutes)
 
 
 app.listen(port,()=>{
