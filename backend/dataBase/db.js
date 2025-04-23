@@ -1,10 +1,9 @@
 const mongoose= require("mongoose");
-const uri = "mongodb+srv://Omaima134:Omaima134@cluster0.paelt.mongodb.net/dbnoorways?retryWrites=true&w=majority&appName=Cluster0";
 
 const connectToDb = async ()=>
 {
     try {
-        await mongoose.connect(uri,{});
+        await mongoose.connect(process.env.URI,{});
         console.log("Connecté à MongoDB");
                       
     } catch (err) {
