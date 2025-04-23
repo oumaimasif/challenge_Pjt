@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { X } from 'lucide-react';
 
-export default function CategoriesDropDown({ selectedCtg = [], setSelectedCtg })//undefind =[] vide 
+export default function CategoriesDropDown({ selectedCtg = [], setSelectedCtg,required=false })//undefind =[] vide 
  {
     const [categories, setCategories] = useState([]);
 
@@ -25,8 +25,8 @@ export default function CategoriesDropDown({ selectedCtg = [], setSelectedCtg })
     return (
         <>
             <div className='mb-4'>
-                <label className='block text-gray-700 text-sm font-bold mb-2'>
-                    Catégories qui vous intéressent
+                <label className='block text-gray-700 text-lg font-semibold mb-2'>
+                    Catégories qui vous intéressent{required && <span className='text-red-500 font-semibold  ml-1'>*</span>}
                 </label>
                 <select className='w-full p-2 border  rounded mb-2'
                     onChange={(e) => {
@@ -54,7 +54,7 @@ export default function CategoriesDropDown({ selectedCtg = [], setSelectedCtg })
                     )
 
                     )}
-                    <p className='text-sm text-fuchsia-700 mt-1'>Séléctionnnez plusieurs catégories dans la liste déroulante</p>
+                    <p className='text-sm text-fuchsia-700 mt-1'>Vous avez la possibilité de sélectionner plusieurs catégories dans la liste déroulante.</p>
 
                 </div>
             </div>

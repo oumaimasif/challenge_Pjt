@@ -11,6 +11,8 @@ import FormInput from '../formComponents/FormInput';
 import GroupChamps from '../formComponents/GroupChamps';
 import ImageUploads from '../formComponents/ImageUploads';
 import { Eye, EyeOff } from 'lucide-react';
+import ListVille from '../formComponents/ListVille';
+
 
 function FormParticulier() {
   const [formParticulier, setFormParticulier] = useState({
@@ -89,6 +91,9 @@ function FormParticulier() {
       // Réinitialiser le champ de fichier
       const fileInput = document.querySelector('input[type="file"]');
       if (fileInput) fileInput.value = '';
+      setTimeout(() => {
+        setNotification({ type: '', msg: '' });
+      }, 4000);
 
     } catch (error) {
       console.error("Erreur lors de l'ajout", error);
@@ -96,24 +101,30 @@ function FormParticulier() {
         type: 'error',
         msg: "Erreur lors de l'ajout du particulier. Veuillez réessayer."
       });
+
+      setTimeout(() => {
+        setNotification({ type: '', msg: '' });
+      }, 6000);
+
     }
   }
 
   return (
     <div className="flex justify-center items-center min-h-screen pt-32 pb-36">
+      {/* La confirmation */}
+      <Confirmation
+        isOpen={isConfirme}
+        onCancel={() => setIsConfirme(false)}
+        onConfirm={handleSubmit}
+        msg="Veuillez vérifier que toutes vos informations sont correctes avant de finaliser votre inscription."
+      />
+
       <div className="w-full md:w-2/3 bg-white p-8 rounded-lg shadow-lg drop-shadow-xl">
         <h2 className="text-2xl font-bold mb-6 text-center">Inscription Particulier</h2>
 
         {/* Afficher la notification */}
         <Notification type={notification.type} msg={notification.msg} onClose={onCloseNotify} />
 
-        {/* La confirmation */}
-        <Confirmation
-          isOpen={isConfirme}
-          onCancel={() => setIsConfirme(false)}
-          onConfirm={handleSubmit}
-          msg="Veuillez vérifier que toutes vos informations sont correctes avant de finaliser votre inscription."
-        />
 
         <form
           onSubmit={(e) => { e.preventDefault(); setIsConfirme(true); }}
@@ -188,21 +199,19 @@ function FormParticulier() {
               required
             />
           </GroupChamps>
+          {/* Selectionner un Ville & Password Hash */}
           <GroupChamps>
-            {/* Ville */}
-            <FormInput
-              label="Ville"
-              name="ville"
+            {/*Composant ListVille*/}
+            <ListVille
               value={formParticulier.ville}
               onChange={handleChange}
-              placeholder="Votre ville"
               required
             />
-
+            {/* Password hash */}
             <div className='relative '>
               <FormInput
                 label="Mot de passe"
-                type={show ? "text":"password"}
+                type={show ? "text" : "password"}
                 name="password"
                 value={formParticulier.password}
                 onChange={handleChange}
@@ -210,12 +219,12 @@ function FormParticulier() {
                 placeholder="Entrez un mot de passe"
               />
               <button type="button" onClick={() => setShow(prev => !prev)}
-                className="absolute  right-2 bottom-6 ">
-                {show ? <Eye /> : <EyeOff />}
+                className="absolute  right-2 lg:top-0 bottom-6  ">
+                {show ? <Eye className='h-5 w-5 text-slate-800' /> : <EyeOff className='h-5 w-5 text-slate-800' />}
               </button>
             </div>
           </GroupChamps>
-          {/* Bouton de soumission */}
+          {/* btn de soumission */}
           <BtnSubmit text="S'inscrire comme Particulier" locationf="particulier" />
         </form>
       </div>

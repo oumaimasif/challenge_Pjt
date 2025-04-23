@@ -9,13 +9,17 @@ import FormInput from '../formComponents/FormInput';
 import GroupChamps from '../formComponents/GroupChamps';
 import ImageUploads from '../formComponents/ImageUploads';
 import TextArea from '../formComponents/TextArea';
-import { Building } from 'lucide-react';
+import { Building, Eye, EyeOff } from 'lucide-react';
+
+
 
 function FormAssociation() {
   const [formAssociation, setFormAssociation] = useState({
-    nomAssociation: "", nomPrenomResponsable: "", description: "", fonctiondsAssociation: "", email: "",
-    role: "Association", accreditee: false, numeTelephone: "", dateCreation: "", VilleAssociation: "", mission: "" });
+    nomAssociation: "", nomPrenomResponsable: "", description: "", fonctiondsAssociation: "", email: "", password: "",
+    role: "Association", accreditee: false, numeTelephone: "", dateCreation: "", VilleAssociation: "", mission: ""
+  });
 
+  const [show, setShow] = useState(null);
   const [image, setImage] = useState(null);
   const [notification, setNotification] = useState({ type: '', msg: '' });
   const [isConfirme, setIsConfirme] = useState(false);
@@ -42,7 +46,7 @@ function FormAssociation() {
 
       // Ajouter toutes les données du formulaire sf accreditée
       for (const key in formAssociation) {
-        if (key !=="accreditee") {
+        if (key !== "accreditee") {
           formData.append(key, formAssociation[key]);
         }
       }
@@ -74,9 +78,10 @@ function FormAssociation() {
 
       // Vider les champs
       setFormAssociation({
-        nomAssociation: "", nomPrenomResponsable: "", description: "",
+        nomAssociation: "", nomPrenomResponsable: "", description: "", password: "",
         fonctiondsAssociation: "", email: "", role: "Association", accreditee: false, numeTelephone: "", dateCreation: "",
-        VilleAssociation: "",mission: "" });
+        VilleAssociation: "", mission: ""
+      });
 
       setSelectedCtg([]);
       setImage(null);
@@ -84,6 +89,9 @@ function FormAssociation() {
       // Réinitialiser le champ de fichier
       const fileInput = document.querySelector('input[type="file"]');
       if (fileInput) fileInput.value = '';
+      setTimeout(() => {
+        setNotification({ type: '', msg: '' });
+      }, 5000);
 
     } catch (error) {
       console.error("Erreur lors de l'ajout", error);
@@ -92,138 +100,99 @@ function FormAssociation() {
         type: 'error',
         msg: `Erreur: ${error.response?.data?.message || error.message}`
       });
+      setTimeout(() => {
+        setNotification({ type: '', msg: '' });
+      }, 6000);
     }
   }
 
   return (
     <div className="flex justify-center items-center min-h-screen pt-32 pb-36">
+      <Confirmation isOpen={isConfirme} onCancel={() => setIsConfirme(false)} onConfirm={handleSubmit}
+        msg="Veuillez vérifier que toutes vos informations sont correctes avant de finaliser votre inscription." />
+
       <div className="w-full md:w-2/3 bg-white p-8 rounded-lg shadow-lg drop-shadow-xl">
-<div className='flex  justify-center gap-2 text-teal-600'>
-  <Building className='w-7 h-7  '/>
-  <h2 className="text-2xl font-bold mb-6 text-center">Inscription Association</h2>
-</div>
+        <div className='flex  justify-center gap-2 text-teal-600'>
+          <Building className='w-7 h-7  ' />
+          <h2 className="text-2xl font-bold mb-6 text-center">Inscription Association</h2>
+        </div>
         {/* Notification */}
         <Notification type={notification.type} msg={notification.msg} onClose={onCloseNotify} />
 
-        {/* Confirmation */}
-        <Confirmation
-          isOpen={isConfirme}
-          onCancel={() => setIsConfirme(false)}
-          onConfirm={handleSubmit}
-          msg="Veuillez vérifier que toutes vos informations sont correctes avant de finaliser votre inscription."
-        />
 
         <form
           onSubmit={(e) => { e.preventDefault(); setIsConfirme(true); }}
           className="space-y-4"
           encType="multipart/form-data"
         >
-          {/* Image Upload */}
-          <ImageUploads
-            onChange={(file) => setImage(file)}
-          />
+          {/* image Upload */}
+          <ImageUploads onChange={setImage} />
 
-          {/* Nom de l'association */}
-          <FormInput
-            label="Nom de l'association"
-            name="nomAssociation"
-            value={formAssociation.nomAssociation}
-            onChange={handleChange}
-            placeholder="Nom de votre association"
-            required={true}
-          />
-
+          <GroupChamps >
+            {/* Nom de l'association */}
+            <FormInput label="Nom de l'association" name="nomAssociation" value={formAssociation.nomAssociation} onChange={handleChange} placeholder="Nom de votre association" required={true} />
+            {/* Accréditation */}
+            <div className="flex items-center space-x-3 pt-4 ">
+              <input type="checkbox" name="accreditee" checked={formAssociation.accreditee} onChange={handleChange} className="w-3 h-3" />
+              <label className="text-gray-700 text-xl font-semibold ">
+                Association accréditée
+              </label>
+            </div>
+          </GroupChamps>
           {/* Responsable & Contact */}
           <GroupChamps>
-            <FormInput
-              label="Nom et prénom du responsable"
-              name="nomPrenomResponsable"
-              value={formAssociation.nomPrenomResponsable}
-              onChange={handleChange}
-              placeholder="Nom et prénom du responsable"
-              required={true}
-            />
-            <FormInput
-              label="Email"
-              name="email"
-              type="email"
-              value={formAssociation.email}
-              onChange={handleChange}
-              placeholder="email@association.com"
-              required={true}
-            />
+            <FormInput label="Nom et prénom du responsable" name="nomPrenomResponsable" value={formAssociation.nomPrenomResponsable} onChange={handleChange} placeholder="Nom et prénom du responsable" required={true} />
+            <FormInput label="Email" name="email" type="email" value={formAssociation.email} onChange={handleChange} placeholder="email@association.com" required={true} />
           </GroupChamps>
 
           <GroupChamps>
-            <FormInput
-              label="Numéro de téléphone"
-              name="numeTelephone"
-              type="tel"
-              value={formAssociation.numeTelephone}
-              onChange={handleChange}
-              placeholder="0600000000"
-              required={true}
-            />
-            <FormInput
-              label="Ville"
-              name="VilleAssociation"
-              value={formAssociation.VilleAssociation}
-              onChange={handleChange}
-              placeholder="Ville de l'association"
-              required={true}
-            />
+            <FormInput label="Numéro de téléphone" name="numeTelephone" type="tel" value={formAssociation.numeTelephone} onChange={handleChange} placeholder="0600000000" required={true} />
+            <FormInput label="Où se trouve votre association ? " name="VilleAssociation"
+              value={formAssociation.VilleAssociation} onChange={handleChange} placeholder="Ville, adresse exacte" required={true} />
           </GroupChamps>
 
           {/* Date de création & Fonction */}
           <GroupChamps>
-            <FormInput
-              label="Date de création"
-              name="dateCreation"
-              type="date"
-              value={formAssociation.dateCreation}
-              onChange={handleChange}
-              required={true}
-            />
-            <FormInput
-              label="Fonction de l'association"
-              name="fonctiondsAssociation"
-              value={formAssociation.fonctiondsAssociation}
-              onChange={handleChange}
-              placeholder="Fonction principale de l'association"
-              required={true}
-            />
+            <FormInput label="Date de création" name="dateCreation" type="date" value={formAssociation.dateCreation} onChange={handleChange} required={true} />
+            <FormInput label="Fonction de l'association" name="fonctiondsAssociation"  value={formAssociation.fonctiondsAssociation} placeholder="Fonction principale de l'association" onChange={handleChange} required={true} />
           </GroupChamps>
 
           {/* Catégories */}
-          <CategoriesDropDown setSelectedCtg={setSelectedCtg} selectedCtg={selectedCtg} />
+          <CategoriesDropDown setSelectedCtg={setSelectedCtg} selectedCtg={selectedCtg} required />
 
-          {/* Accréditation */}
-          <div className="flex items-center space-x-2">
-            <input
-              type="checkbox"
-              name="accreditee"
-              checked={formAssociation.accreditee}
-              onChange={handleChange}
-              className="w-4 h-4"
-            />
-            <label className="text-gray-700 text-sm font-bold">
-              Association accréditée
-            </label>
-          </div>
+          <GroupChamps>
+            {/* Password hash */}
+            <div className='relative '>
+              <FormInput
+                label="Mot de passe"
+                type={show ? "text" : "password"}
+                name="password"
+                value={formAssociation.password}
+                onChange={handleChange}
+                required
+                placeholder="Entrez un mot de passe"
+              />
+              <div className='absolute inset-y-14 right-0 flex items-center pr-3 mb-2'>
+                <button type="button" onClick={() => setShow(prev => !prev)} >
+                  {show ? <Eye className='h-5 w-5 text-slate-800' /> : <EyeOff className='h-5 w-5 text-slate-800' />}
+                </button>
+              </div>
+            </div>
+          </GroupChamps>
 
           {/* Description & Mission */}
           <TextArea
             label="Description de l'association"
             name="description"
             value={formAssociation.description} onChange={handleChange} placeholder="Décrivez votre association"
-          />
+          required/>
 
           <TextArea
             label="Mission principale" name="mission" value={formAssociation.mission}
             onChange={handleChange} placeholder="Objectif ou mission principale de l'association" required={true} />
 
           {/* Submit button */}
-          <BtnSubmit text="Inscrire l'Association" locationf="association"/>
+          <BtnSubmit text="Inscrire l'Association" locationf="association" />
         </form>
       </div>
     </div>

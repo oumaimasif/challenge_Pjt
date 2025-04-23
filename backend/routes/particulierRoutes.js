@@ -2,10 +2,10 @@ const express = require("express");
 const router = express.Router();
 const Particulier = require("../models/particulierModel");
 const upload = require("../multerconfig");
-
+const bcrypt = require("bcryptjs");
 
 //test
-router.get("/me",  (req, res) => {
+router.get("/me", (req, res) => {
   res.send("Liste des particulier");
 });
 
@@ -27,22 +27,28 @@ router.post("/add_particulier", upload.single("image"), async (req, res) => {
     // console.log("Fichier reçu:", req.header);
     console.log("Fichier reçu:", req.file);
 
-    const pathImage= req.file ? req.file.path : "uploads/uploadsParticulier/avatar_particulier.jpg";
+    const pathImage = req.file
+      ? req.file.path
+      : "uploads/uploadsParticulier/avatar_particulier.jpg";
+    const password = req.body.password;
+
+    const salt = await bcrypt.genSalt(10);
+    const hashePassword = await bcrypt.hash(password, salt);
+
+      console.log(
+      "Mot de passe haché :",
+      salt + " password Particulier: " + password + " hashePassword: " + hashePassword
+    );
     const newParticulier = new Particulier({
       ...req.body,
-      image: pathImage,});
-
-      const validationError = newParticulier.validateSync();
-      if (validationError) {
-        console.error("Erreur de validation:", validationError);
-        return res.status(400).json({ error: validationError.message });
-      }
-      
+      image: pathImage,
+      password: hashePassword,
+    });
     await newParticulier.save();
 
-    res.status(200).json({ message: "Particulier bien ajoutée" });
+    res.status(201).json({ message: "Particulier bien ajoutée" });
   } catch (error) {
-    res.status(400).json({ error: "ERReur "+error.message });
+    res.status(400).json({ error: "ERReur " + error.message });
   }
 });
 
@@ -51,7 +57,7 @@ router.post("/add_particulier", upload.single("image"), async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const data = await Particulier.find();
-    res.send( data);
+    res.send(data);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -60,16 +66,15 @@ router.get("/", async (req, res) => {
 //supprimer Particulier by id
 router.delete("/:id", async (req, res) => {
   try {
-    console.log(req.params.id)
-    
+    console.log(req.params.id);
+
     const datatoDelete = await Particulier.findByIdAndDelete(req.params.id);
     if (!datatoDelete) {
       return res.status(404).json({ error: "Particulier non touvée" });
     }
     res.json({ message: "Particulier supprimé avec succès ", datatoDelete });
-
   } catch (error) {
-    res.status(400).json({ error:"Erreur Serveur: "+ error.message });
+    res.status(400).json({ error: "Erreur Serveur: " + error.message });
   }
 });
 
@@ -77,17 +82,18 @@ router.delete("/:id", async (req, res) => {
 router.get("/particulier/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    
+
     // Vérifier si le particulier existe
     const particulierExists = await Particulier.findById(id);
     if (!particulierExists) {
       return res.status(404).json({ error: "Particulier non trouvé" });
     }
-    
+
     // trouver toutes les demandes d'aide associées à ce particulier
-    const demandes = await DemandeAide.find({ particulier: id })
-      .sort({ createdAt: -1 }); // tier de plus recent en plus ancien
-      
+    const demandes = await DemandeAide.find({ particulier: id }).sort({
+      createdAt: -1,
+    }); // tier de plus recent en plus ancien
+
     res.status(200).json(demandes);
   } catch (error) {
     console.error("Erreur lors de la récupération des demandes:", error);

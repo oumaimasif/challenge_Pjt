@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const Benevole = require("../models/benevoleModel");
 const upload = require("../multerconfig");
+const bcrypt = require("bcryptjs");
+
 
 //test
 router.get("/me", async (req, res) => {
@@ -70,11 +72,16 @@ router.post("/add", upload.single("image"), async (req, res) => {
     
      //todo frontend,envoier un tableau de catégories sous forme de chaîne JSON dans formData.append("categorie", JSON.stringify(selectedCategories)).
      //todo mais le backend, parserer ce champ pour le stocker dans MongoDB via JSON.parse(req.body.categorie).
+    const password = req.body.password;
+
+    const salt = await bcrypt.genSalt(10);
+    const hashePassword = await bcrypt.hash(password, salt);
 
       const newBenevole = new Benevole({
         ...req.body, //destructeure req.body =>>> spread operator (...).
         categorie:categories,// ajouter les categories ds l'objet 
         image: pathImage, // ajouter l'image dans l'objet
+        password: hashePassword,
       });
       await newBenevole.save();
       res.status(201).json({ message: "Benevole enregistré avec succès ", newBenevole });

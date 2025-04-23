@@ -11,6 +11,9 @@ import GroupChamps from '../formComponents/GroupChamps';
 import ImageUploads from '../formComponents/ImageUploads';
 import SelectInput from '../formComponents/SelectInput';
 import TextArea from '../formComponents/TextArea';
+import { Eye, EyeOff } from 'lucide-react';
+import ListVille from '../formComponents/ListVille';
+
 
 
 
@@ -28,10 +31,11 @@ function FormBenevol() {
 
   const [formbenevole, setFormbenevole] = useState({
     civilite: "", nom: "", prenom: "", email: "", numeTelephone: "", dateDeNaissance: "", profession: "", ville: "",
-    competence: "", formationExperiences: "", description: "", commentaires: "",password:"",
+    competence: "", formationExperiences: "", description: "", password: "",
     disponible: "Flexible", heure: "", role: "Benevole"
   });
 
+  const [show, setShow] = useState(false);
   const [image, setImage] = useState(null);
   const [notification, setNotification] = useState({ type: '', msg: '' });
   const [isConfirme, setIsConfirme] = useState(false);
@@ -73,11 +77,8 @@ function FormBenevol() {
           'Content-Type': 'multipart/form-data'
         }
       });
-      console.log("Contenu de FormData :");
-      for (let pair of formData.entries()) {
-        console.log(pair[0], pair[1]);
-      }
-      
+
+
       console.log("Bénévole ajouté avec succès", res.data);
       setNotification({
         type: 'Ok',
@@ -87,8 +88,8 @@ function FormBenevol() {
 
       // Reset form
       setFormbenevole({
-        civilite: "", nom: "", prenom: "", email: "", numeTelephone: "",password:"", dateDeNaissance: "", profession: "", ville: "",
-        competence: "", formationExperiences: "", description: "", commentaires: "", disponible: "Flexible", heure: "", role: "Benevole"
+        civilite: "", nom: "", prenom: "", email: "", numeTelephone: "", password: "", dateDeNaissance: "", profession: "", ville: "",
+        competence: "", formationExperiences: "", description: "", disponible: "Flexible", heure: "", role: "Benevole"
       });
       setSelectedCtg([]);
       setImage(null);
@@ -96,6 +97,11 @@ function FormBenevol() {
       // Réinitialiser le champ de fichier(img..)
       const fileInput = document.querySelector('input[type="file"]');
       if (fileInput) fileInput.value = '';
+      
+      //la fermeture automatique de notification
+      setTimeout(() => {
+        setNotification({ type: '', msg: '' });
+      }, 4000);
 
     } catch (error) {
       console.error("Erreur lors de l'ajout", error);
@@ -103,24 +109,30 @@ function FormBenevol() {
         type: 'error',
         msg: "Erreur lors de l'ajout du bénévole. Veuillez réessayer."
       });
+
+      setTimeout(() => {
+        setNotification({ type: '', msg: '' });
+      }, 6000);
     }
   }
   return (
     <div className="flex justify-center items-center min-h-screen pt-32 pb-36">
+      {/* la confirmation  */}
+      <Confirmation isOpen={isConfirme} onCancel={() => setIsConfirme(false)} onConfirm={handleSubmit}
+        msg="Veuillez vérifier que toutes vos informations sont correctes avant de finaliser votre inscription." />
+
       <div className="w-full md:w-2/3 bg-white p-8 rounded-lg shadow-lg drop-shadow-xl">
         <h2 className="text-2xl font-bold mb-6 text-center">Inscription Bénévole</h2>
         {/* afficher la notification  */}
         <Notification type={notification.type} msg={notification.msg} onClose={onCloseNotify} />
 
-        {/* la confirmation  */}
-        <Confirmation isOpen={isConfirme} onCancel={() => setIsConfirme(false)} onConfirm={handleSubmit}
-          msg="Veuillez vérifier que toutes vos informations sont correctes avant de finaliser votre inscription." />
 
         <form onSubmit={(e) => { e.preventDefault(); setIsConfirme(true); }}  // la verification des info avant soumission
           className="space-y-4" encType="multipart/form-data"> {/*// !encType="multipart/form-data" =obligatoire pour que le fichier soit bien envoyé au backend. */}
+
           {/* image Upload */}
-          
           <ImageUploads onChange={setImage} />
+
           {/*civilité */}
           <CiviliteRadio value={formbenevole.civilite} onChange={handleChange} required />
 
@@ -135,6 +147,22 @@ function FormBenevol() {
           <GroupChamps>
             <FormInput label="Email" name="email" type="email" value={formbenevole.email} onChange={handleChange} placeholder="votre.email@exemple.com" required />
             <FormInput label="Numéro de téléphone" name="numeTelephone" type="tel" value={formbenevole.numeTelephone} onChange={handleChange} placeholder="0600000000 & 0700000000" required />
+            {/* Password hash */}
+            <div className='relative '>
+              <FormInput
+                label="Mot de passe"
+                type={show ? "text" : "password"}
+                name="password"
+                value={formbenevole.password}
+                onChange={handleChange}
+                required
+                placeholder="Entrez un mot de passe"
+              />
+              <button type="button" onClick={() => setShow(prev => !prev)}
+                className="absolute  right-2 bottom-6  ">
+                {show ? <Eye className='h-5 w-5 text-slate-800' /> : <EyeOff className='h-5 w-5 text-slate-800' />}
+              </button>
+            </div>
           </GroupChamps>
 
           {/* Date de naissance & profession  */}
@@ -146,20 +174,18 @@ function FormBenevol() {
           {/* listes des categories */}
           <CategoriesDropDown setSelectedCtg={setSelectedCtg} selectedCtg={selectedCtg} />
 
-          {/* Partie compétences & Adresse */}
-          <GroupChamps>
-            <FormInput label="Compétence principale" name="competence" value={formbenevole.competence} onChange={handleChange} placeholder="votre compétence principale" required />
-            <FormInput label="Ville" name="ville" value={formbenevole.ville} onChange={handleChange} placeholder="Votre adresse principale" />
-
-          </GroupChamps>
-
           {/* Disponibilité & heures */}
           <GroupChamps>
             <SelectInput
-              label="Disponibilité" name="disponible" value={formbenevole.disponible} onChange={handleChange}
-              options={[{ value: "Flexible", label: "Flexible" }, { value: "Temps Partiel", label: "Temps partiel" }, { value: "Temps plein", label: "Temps plein" }]}
-            />
-            <FormInput label="Disponibilité (heures)" name="heure" value={formbenevole.heure} onChange={handleChange} placeholder="Ex: 2h-3h par jr " />
+              label="Jours disponibles" name="disponible" value={formbenevole.disponible} onChange={handleChange}
+              options={[{ value: "Flexible", label: "Flexible" }, { value: "Temps Partiel", label: "Temps partiel" }, { value: "Temps plein", label: "Temps plein" }]}/>
+            <FormInput label="Préférence horaire" name="heure" value={formbenevole.heure} onChange={handleChange} placeholder="Ex: Soir, Après-midi,2h/jr" />
+          </GroupChamps>
+
+          {/* Partie compétences & Ville */}
+          <GroupChamps>
+            <FormInput label="Compétence principale" name="competence" value={formbenevole.competence} onChange={handleChange} placeholder="votre compétence principale" required />
+            <ListVille onChange={handleChange}  required value={formbenevole.ville}/>
           </GroupChamps>
 
           {/* plus info sur formation et experiences  */}
@@ -169,10 +195,10 @@ function FormBenevol() {
           <TextArea label="Description personnelle" name="description" value={formbenevole.description} onChange={handleChange} placeholder="Parlez-nous un peu de vous" />
 
           {/* Commentaire */}
-          <TextArea label="Commentaire" name="commentaires" value={formbenevole.commentaires} onChange={handleChange} placeholder="Avez-vous des commentaires ou des attentes particulières ?" />
+          {/* <TextArea label="Commentaire" name="commentaires" value={formbenevole.commentaires} onChange={handleChange} placeholder="Avez-vous des commentaires ou des attentes particulières ?" /> */}
 
           {/* Btn */}
-       <BtnSubmit text="S'inscrire comme Particulier" locationf="benevole"/>
+          <BtnSubmit text="S'inscrire comme Particulier" locationf="benevole" />
         </form>
       </div>
     </div>

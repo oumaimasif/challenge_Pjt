@@ -4,8 +4,8 @@ export default function FormInput({label, name, value, onChange, placeholder , r
   return (
 
     <div className='mb-4'>
-        <label className="block text-gray-700 text-sm font-bold mb-2">
-            {label}
+        <label className="block text-gray-700 text-lg font-semibold mb-2">
+            {label}{required && <span className='text-red-500 font-semibold  ml-1'>*</span>} 
         </label>
         <input type={type} name={name} value={value} onChange={onChange} required={required} className='w-full p-2 border rounded ' placeholder={placeholder} />
 
