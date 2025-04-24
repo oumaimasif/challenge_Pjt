@@ -1,4 +1,4 @@
-//-----------Middelewares pour la protection des routes----------------
+//-----------Middeleware pour la protection des routes----------------
 const jwt = require('jsonwebtoken');
 
 //proteger certaines routes( user a un token valide o pas )

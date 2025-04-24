@@ -25,7 +25,7 @@ async function findByEmail(email) {
   return null;
 }
 
-router.post("/login", async (req, res) => {
+router.post("/", async (req, res) => {
   const { email, password } = req.body; //extrait email & password
   console.log("Requête login reçue:", req.body);
   try {

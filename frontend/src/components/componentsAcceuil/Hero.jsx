@@ -32,16 +32,16 @@ const Hero = () => {
             citation: "« L'union fait la force. » ",
             image: "/images/association.png",
             btn: "Inscrivez votre association !",
-            theme :"bg-[#6b21a8] shadow-purpel-400 hover:bg-purpel-600", 
+            theme :"bg-blue-500 shadow-blue-400 hover:bg-blue-600", 
             path:"/formAssociation",
 
         }, {
             titre: "Besoin d'aide ? Nous sommes là.",
             description: "| Trouvez du soutien auprès de notre communauté solidaire.",
             citation:"« Demander de l'aide, c'est faire le premier pas vers un avenir meilleur. »",
-            image: "/images/about-us.svg",
+            image: "/images/give_help2.png",
             btn: "Demander de l'aide !",
-            theme:"bg-[#18b710]  shadow-bg-[#18b710] hover:bg-[#16a30e]",
+            theme:"bg-[#fece0e]  shadow-yellow-400 hover:bg-[#f9c10b]",
             path:"/formParticulier",
 
         }
@@ -50,7 +50,7 @@ const Hero = () => {
 
     return (
         <Swiper modules={[Navigation, Pagination, Autoplay]} navigation pagination={{ clickable: true }}
-            autoplay={{ delay: 6000 }} loop={true} className={`   lg:min-h-[500px] `}
+            autoplay={{ delay: 6000 }} loop={true} className={ ` lg:min-h-[500px] `}
 
         >
 

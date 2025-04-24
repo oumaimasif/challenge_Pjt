@@ -3,6 +3,7 @@ const router = express.Router();
 const Association = require("../models/associationModel");
 const upload = require("../multerconfig");
 const { default: mongoose } = require("mongoose");
+const bcrypt = require("bcryptjs");
 
 //test
 router.get("/me", (req, res) => {
@@ -26,7 +27,6 @@ router.post("/add", async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 });
-
 
 //add avec image
 router.post("/add_association", upload.single("image"), async (req, res) => {
@@ -53,16 +53,23 @@ router.post("/add_association", upload.single("image"), async (req, res) => {
       accrediteeValue = accrediteeValue[0];
     }
     let accreditee = accrediteeValue === "true"; // convertire en booléen
+
+    const password = req.body.password;
+
+    const salt = await bcrypt.genSalt(10);
+    const hashePassword = await bcrypt.hash(password, salt);
+
     const newAssociation = new Association({
       ...req.body,
       accreditee: accreditee,
       categorie: categories,
       image: pathImage,
+      password: hashePassword,
     });
 
     await newAssociation.save();
 
-    console.log("Type of acctivite:" ,typeof accreditee, " Valeur : ",accreditee);
+    // console.log(  "Type of acctivite:",  typeof accreditee, " Valeur : ",  accreditee );
 
     res.status(201).json({
       message: "Association enregistrée avec succès ",

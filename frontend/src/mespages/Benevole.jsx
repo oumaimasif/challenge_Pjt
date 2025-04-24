@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
-console.log("Composant Benevole chargé");
+// console.log("Composant Benevole chargé");
 
 function Benevole() {
   const [benevoles, setBenevoles] = useState([]);
@@ -30,6 +30,7 @@ function Benevole() {
         console.log(response.data.dataBenevole);
 
         if (isMounted) {
+
           setBenevoles(response.data.dataBenevole);
           setLoading(false);
         }

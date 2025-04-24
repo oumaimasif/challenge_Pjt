@@ -106,20 +106,28 @@ function FormDemandeAide() {
       const fileInput = document.querySelector('input[type="file"]');
       if (fileInput) fileInput.value = '';
 
+      setTimeout(() => {
+        setNotification({ type: '', msg: '' });
+      }, 4000);
+
     } catch (error) {
       console.error("Erreur lors de l'ajout de la demande", error);
       setNotification({
         type: 'error',
         msg: "Erreur lors de l'envoi de la demande d'aide. Veuillez réessayer."
       });
+
+      setTimeout(() => {
+        setNotification({ type: '', msg: '' });
+      }, 6000);
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen pt-20 pb-20 bg-gradient-to-b from-blue-50 to-white">
-      <div className="w-full max-w-3xl bg-white p-8 rounded-xl shadow-xl border-t-4 border-orange-500">
+    <div className="flex justify-center items-center min-h-screen pt-32 pb-20 bg-gradient-to-b from-blue-50 to-white">
+      <div className="w-full max-w-3xl bg-white p-8 rounded-xl shadow-xl border-t-4 border-blue-500">
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-orange-600">Demande d'Aide</h2>
+          <h2 className="text-3xl font-bold text-blue-600">Demande d'Aide</h2>
           <p className="text-gray-600 mt-2">Complétez ce formulaire pour recevoir l'aide dont vous avez besoin</p>
         </div>
         
@@ -131,10 +139,10 @@ function FormDemandeAide() {
         <form onSubmit={(e) => { e.preventDefault(); setIsConfirme(true); }}
           className="space-y-6" encType="multipart/form-data" >
           {/* Particulier */}
-          <div className="mb-6 bg-orange-50 p-4 rounded-lg border-l-4 border-orange-400">
+          <div className="mb-6 bg-blue-50 p-4 rounded-lg border-l-4 border-blue-400">
             <label className="block text-gray-700 font-medium mb-2">Sélectionnez votre profil</label>
             <select name="particulier" value={formDemande.particulier}
-              onChange={handleChange} className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
+              onChange={handleChange} className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
               required >
               <option value="">-- Sélectionnez votre profil --</option>
               {particuliers.map(p => (
@@ -151,7 +159,7 @@ function FormDemandeAide() {
             <input type="text"
               name="titre" value={formDemande.titre}
               onChange={handleChange} placeholder="Titre décrivant votre besoin"
-              className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
+              className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
               required />
           </div>
 
@@ -167,7 +175,7 @@ function FormDemandeAide() {
             <textarea
               name="description" value={formDemande.description} onChange={handleChange}
               placeholder="Décrivez votre besoin en détail..."
-              className="w-full px-4 py-3 border border-gray-300 rounded-md h-40 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
+              className="w-full px-4 py-3 border border-gray-300 rounded-md h-40 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
               required ></textarea>
           </div>
 
@@ -178,7 +186,7 @@ function FormDemandeAide() {
               <input
                 type="date"
                 name="dateBesoin"
-                value={formDemande.dateBesoin} onChange={handleChange} className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
+                value={formDemande.dateBesoin} onChange={handleChange} className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                 required
               />
             </div>
@@ -187,7 +195,7 @@ function FormDemandeAide() {
               <input type="date"
                 name="dateFin"
                 value={formDemande.dateFin} onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
+                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
               />
             </div>
           </div>
@@ -199,14 +207,14 @@ function FormDemandeAide() {
               <input
                 type="text" name="lieu" value={formDemande.lieu}
                 onChange={handleChange} placeholder="Adresse ou lieu concerné"
-                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
+                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
               />
             </div>
             <div>
               <label className="block text-gray-700 font-medium mb-2">Priorité</label>
               <select
                 name="priorite" value={formDemande.priorite} onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
+                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
               >
                 <option value="Faible">Faible</option>
                 <option value="Normale">Normale</option>
@@ -222,7 +230,7 @@ function FormDemandeAide() {
               type="number"
               name="nombrebeneficiaires"  min="1"
               value={formDemande.nombrebeneficiaires} onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
+              className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
               required />
           </div>
 
@@ -232,13 +240,13 @@ function FormDemandeAide() {
               type="checkbox"
               id="etreContacter" name="etreContacter"
               checked={formDemande.etreContacter}
-              onChange={handleChange} className="w-5 h-5 text-orange-600 mr-3"
+              onChange={handleChange} className="w-5 h-5 text-blue-600 mr-3"
             />
             <label htmlFor="etreContacter" className="text-gray-700">Je souhaite être contacté(e) concernant cette demande</label>
           </div>
 
           {/* Image Upload - Déplacé avant le bouton */}
-          <div className="mb-8 p-6 bg-gradient-to-r from-orange-50 to-blue-50 rounded-lg border border-dashed border-gray-300">
+          <div className="mb-8 p-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border border-dashed border-gray-300">
             <h3 className="text-lg font-medium text-center mb-4">Image illustrative (optionnelle)</h3>
             <ImageUploads onChange={setImage} />
           </div>
@@ -247,7 +255,7 @@ function FormDemandeAide() {
           <div className="text-center">
             <button 
               type="submit" 
-              className="inline-flex items-center justify-center px-8 py-4 bg-orange-600 text-white font-medium rounded-lg shadow-lg hover:bg-orange-700 transition-all transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50"
+              className="inline-flex items-center justify-center px-8 py-4 bg-blue-600 text-white font-medium rounded-lg shadow-lg hover:bg-blue-700 transition-all transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
             >
               <HeartHandshake className='w-6 h--6 mr-2'/>
               Soumettre ma demande d'aide

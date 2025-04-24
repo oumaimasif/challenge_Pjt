@@ -69,8 +69,8 @@ function FormAssociation() {
           'Content-Type': 'multipart/form-data'
         }
       });
-      console.log("Valeur accreditée avant envoi:", formAssociation.accreditee);
-      console.log("Association ajoutée avec succès", res.data);
+      // console.log("Valeur accreditée avant envoi:", formAssociation.accreditee);
+      // console.log("Association ajoutée avec succès", res.data);
       setNotification({
         type: 'Ok',
         msg: "Votre association a été ajoutée avec succès!"
@@ -91,7 +91,7 @@ function FormAssociation() {
       if (fileInput) fileInput.value = '';
       setTimeout(() => {
         setNotification({ type: '', msg: '' });
-      }, 5000);
+      }, 4000);
 
     } catch (error) {
       console.error("Erreur lors de l'ajout", error);
@@ -112,7 +112,7 @@ function FormAssociation() {
         msg="Veuillez vérifier que toutes vos informations sont correctes avant de finaliser votre inscription." />
 
       <div className="w-full md:w-2/3 bg-white p-8 rounded-lg shadow-lg drop-shadow-xl">
-        <div className='flex  justify-center gap-2 text-teal-600'>
+        <div className='flex  justify-center gap-2 text-blue-600'>
           <Building className='w-7 h-7  ' />
           <h2 className="text-2xl font-bold mb-6 text-center">Inscription Association</h2>
         </div>

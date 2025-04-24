@@ -5,11 +5,11 @@ export default function BtnSubmit({ text,locationf }) {
     const typeForm= ()=>{
         switch(locationf){
             case "benevole":
-                return "bg-blue-500 hover:bg-blue-600";
+                return "bg-orange-500 hover:bg-orange-600";
             case "association":
-                return "bg-teal-600 hover:bg-green-600";
+                return "bg-blue-600 hover:bg-blue-600";
             case "particulier":
-                return "bg-orange-500 hover:bg-orange-600"
+                return "bg-[#fece0e]  hover:bg-[#f9c10b]"
         }
     }
     return (

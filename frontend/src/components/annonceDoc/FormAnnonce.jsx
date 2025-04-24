@@ -118,10 +118,10 @@ function FormAnnonce() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen pt-20 pb-20 bg-gradient-to-b from-blue-50 to-white">
-      <div className="w-full max-w-3xl bg-white p-8 rounded-xl shadow-xl border-t-4 border-blue-500">
+    <div className="flex justify-center items-center min-h-screen pt-32 pb-20 bg-gradient-to-b from-blue-50 to-white">
+      <div className="w-full max-w-3xl bg-white p-8 rounded-xl shadow-xl border-t-4 border-orange-500">
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-blue-600">Publication d'Annonce</h2>
+          <h2 className="text-3xl font-bold text-orange-600">Publication d'Annonce</h2>
           <p className="text-gray-600 mt-2">Créez votre annonce pour partager vos besoins ou services</p>
         </div>
         
@@ -148,20 +148,20 @@ function FormAnnonce() {
               value={formAnnonce.titre}
               onChange={handleChange}
               placeholder="Titre décrivant votre annonce"
-              className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+              className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
               required
             />
           </div>
 
           {/* Type et Niveau d'urgence */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 bg-blue-50 p-4 rounded-lg">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 bg-orange-50 p-4 rounded-lg">
             <div>
               <label className="block text-gray-700 font-medium mb-2">Type d'annonce</label>
               <select
                 name="type"
                 value={formAnnonce.type}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
               >
                 <option value="Besoin">Besoin</option>
                 <option value="Service">Service</option>
@@ -173,7 +173,7 @@ function FormAnnonce() {
                 name="niveauDurgence"
                 value={formAnnonce.niveauDurgence}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
               >
                 <option value="Faible">Faible</option>
                 <option value="Moyen">Moyen</option>
@@ -198,7 +198,7 @@ function FormAnnonce() {
               value={formAnnonce.description}
               onChange={handleChange}
               placeholder="Décrivez votre annonce en détail..."
-              className="w-full px-4 py-3 border border-gray-300 rounded-md h-40 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+              className="w-full px-4 py-3 border border-gray-300 rounded-md h-40 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
               required
             ></textarea>
           </div>
@@ -212,7 +212,7 @@ function FormAnnonce() {
                 name="dateDebut"
                 value={formAnnonce.dateDebut}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
                 required
               />
             </div>
@@ -223,7 +223,7 @@ function FormAnnonce() {
                 name="dateFin"
                 value={formAnnonce.dateFin}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
               />
             </div>
           </div>
@@ -238,7 +238,7 @@ function FormAnnonce() {
                 value={formAnnonce.ville}
                 onChange={handleChange}
                 placeholder="Ville de l'événement ou mission"
-                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
                 required
               />
             </div>
@@ -250,7 +250,7 @@ function FormAnnonce() {
                 min="0"
                 value={formAnnonce.nbrBenevole}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
                 required
               />
             </div>
@@ -265,7 +265,7 @@ function FormAnnonce() {
               value={formAnnonce.infoContact}
               onChange={handleChange}
               placeholder="Email, téléphone ou autre moyen de contact"
-              className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+              className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
               required
             />
           </div>
@@ -277,7 +277,7 @@ function FormAnnonce() {
               name="statut"
               value={formAnnonce.statut}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+              className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
             >
               <option value="brouillon">Brouillon</option>
               <option value="publie">Publier immédiatement</option>
@@ -285,7 +285,7 @@ function FormAnnonce() {
           </div>
 
           {/* Image Upload */}
-          <div className="mb-8 p-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border border-dashed border-gray-300">
+          <div className="mb-8 p-6 bg-gradient-to-r from-orange-50 to-blue-50 rounded-lg border border-dashed border-gray-300">
             <h3 className="text-lg font-medium text-center mb-4">Image illustrative (optionnelle)</h3>
             <ImageUploads onChange={setImage} />
           </div>
@@ -294,7 +294,7 @@ function FormAnnonce() {
           <div className="text-center">
             <button 
               type="submit" 
-              className="inline-flex items-center justify-center px-8 py-4 bg-blue-600 text-white font-medium rounded-lg shadow-lg hover:bg-blue-700 transition-all transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              className="inline-flex items-center justify-center px-8 py-4 bg-orange-600 text-white font-medium rounded-lg shadow-lg hover:bg-orange-700 transition-all transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50"
             >
               <Megaphone className='w-6 h-6 mr-2'/>
               Publier mon annonce

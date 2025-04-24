@@ -16,7 +16,7 @@ const demandeSchema = new mongoose.Schema({
       },
       lieu:{type:String, requierd: false},
       priorite: { type: String,
-        enum: ["Urgent ", "Normale", "Faible"], default: "Normale" }, // Priorité de la demande
+        enum: [ "Faible", "Normale","Urgent"], default: "Normale" }, // Priorité de la demande
       image: { type: String, default: "uploads/uploadsDemandes/default_demande.jpg" },
       etreContacter :{type: Boolean,default:true},// Si le particulier souhaite être contacté
       nombrebeneficiaires:{type:Number, default:1}
