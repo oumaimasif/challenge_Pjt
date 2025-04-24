@@ -1,15 +1,12 @@
 {
-    "version": 2,
-    "builds": [
-      { "src": "backend/server.js", "use": "@vercel/node" },
-      { "src": "frontend/package.json", "use": "@vercel/static-build", "config": { "distDir": "dist" } }
-    ],
-    "routes": [
-      { 
-        "src": "/(associations|benevoles|particuliers|categories|annonces|demandeAide|admin|contact|login|uploads)(.*)", 
-        "dest": "backend/server.js" 
-      },
-      { "handle": "filesystem" },
-      { "src": "/(.*)", "dest": "frontend/dist/$1" }
-    ]
-  }
+  "version": 2,
+  "builds": [
+    { "src": "backend/server.js", "use": "@vercel/node" },
+    { "src": "frontend/package.json", "use": "@vercel/static-build" }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "frontend/$1" },
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "backend/server.js" }
+  ]
+}
