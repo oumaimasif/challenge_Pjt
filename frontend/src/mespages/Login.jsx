@@ -1,7 +1,13 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { jwtDecode } from 'jwt-decode'
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { Auth } from '../context/Auth';
+import Notification from '../components/Notification';
+import { toast } from 'react-toastify';
+import GoHome from '../components/formComponents/GoHome';
+
+
 
 
 
@@ -9,41 +15,77 @@ function Login() {
 
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
+    const [notification, setNotification] = useState({ type: '', msg: '' });
+    const { login } = useContext(Auth);
     const navigate = useNavigate();
 
+    useEffect(()=>{
+        const queryPrams = new URLSearchParams(window.location.search);// ! acceder a url apres ? 
+        const expired = queryPrams.get('expired')// / extraire value expired => login?exipred=true
+        if(expired==="true"){
+         toast.error('Votre session a expiré, veuillez vous reconnecter.')
+        //nettoyager url+ indicateur wasLoggedIn apres msg affiche
+         localStorage.removeItem('wasLoggedIn')
+         window.history.replaceState({}, document.title, '/login');
+        }
+    },[])
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            const response = await axios.Axios(`http://localhost:5000/login`, { email, password })
+            const response = await axios.post(`http://localhost:5000/login`, { email, password })
             console.log(`email : ${email}, password :${password} `)
             const { token, user } = response.data;
 
             if (token) {
-                localStorage.setItem('token', token);
+                login(token)
+                setNotification({ type: "Ok", msg: "Connexion réussie" });
+                console.log("connexion reussie!!!!!")
 
-                const decoded = jwtDecode(token);
 
-                //redirection selon le role
-                if (decoded.role === "admin") {
-                    navigate("/admin_dashboard");
-                } else if (decoded.role === "association") {
-                    navigate("/association_dashboard")
-                } else if (decoded.role === "benevole") {
-                    navigate("/benevole_dashboard")
-                } else if (decoded.role === "particulier") {
-                    navigate("/particulier_dashboard")
-                } else {
-                    // Par défaut, on redirige vers la page d'accueil
-                    navigate('/');
-                }
+                // localStorage.setItem('token', token);
+
+                setTimeout(() => {
+                    const decoded = jwtDecode(token);
+
+                    //redirection selon le role
+                    if (decoded.role === "admin") {
+                        navigate("/adminDashboard");
+                    } else if (decoded.role === "association") {
+                        navigate("/associationDashboard")
+                    } else if (decoded.role === "benevole") {
+                        navigate("/benevoleDashboard")
+                    } else if (decoded.role === "particulier") {
+                        navigate("/particulierDashboard")
+                    } else {
+                        // Par défaut, on redirige vers la page d'accueil
+                        navigate('/');
+                    }
+                }, 4000);
             }
             else {
                 console.log("Token non reçu !")
+                setNotification({ type: 'Error', msg: "Token non reçu" });
+
+                setTimeout(() => {
+                    setNotification({ type: "", msg: "" });
+                }, 6000);
             }
+            setTimeout(() => {
+                setNotification({ type: "", msg: "" });
+            }, 3000);
+
 
         } catch (error) {
             console.error('Erreur de la connexion :', error)
+            setNotification({
+                type: 'Error',
+                msg: error.response?.data?.msg || "Erreur de connexion"
+            });
+
+            setTimeout(() => {
+                setNotification({ type: "", msg: "" });
+            }, 6000);
         }
     }
     return (
@@ -58,6 +100,9 @@ function Login() {
                     <h1 className='text-3xl font-bold text-center'>Connectez-vous</h1>
                     <p className=' text-lx text-center text-gray-500 mt-4'>Entrez vos identifiants pour accéder à votre compte.</p>
 
+                    {/* ---------Partie Notification--------- */}
+                    <Notification type={notification.type} msg={notification.msg} onClose={() => setNotification({ type: "", msg: "" })} />
+
                     <form onSubmit={handleSubmit} className='mt-6 mr-5  space-y-4'>
 
                         <div>
@@ -69,7 +114,7 @@ function Login() {
 
 
                         <div>
-                            <label class="block text-lg font-medium text-gray-700">Mot de Passe</label>
+                            <label className="block text-lg font-medium text-gray-700">Mot de Passe</label>
                             <input type="password" value={password} required
                                 className=" w-full px-4 py-2 border  rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-700"
                                 placeholder="********" onChange={(e) => setPassword(e.target.value)} />
@@ -94,13 +139,13 @@ function Login() {
                     <div className='m-6'>
                         <p className='text-centre flex items-center justify-center space-y-8 text-gray-600'>Pas encore de compte ?</p>
                         <div className='flex justify-center gap-2 mt-2'>
-                            <button onClick={() => navigate('/formBenevole')} className='px-4 py-2 rounded-md bg-blue-500 text-white hover:bg-blue-600'>
+                            <button onClick={() => navigate('/formBenevole')} className='px-4 py-2 rounded-md bg-blue-500 text-white font-medium hover:bg-blue-600  transition-all duration-200'>
                                 Bénévole
                             </button>
-                            <button onClick={() => navigate('/formAssociation')} className='px-4 py-2  rounded-md bg-green-500 text-white hover:bg-green-600'>
+                            <button onClick={() => navigate('/formAssociation')} className='px-4 py-2  rounded-md bg-orange-500 font-medium text-white hover:bg-orange-600 transition-all duration-200'>
                                 Association
                             </button>
-                            <button onClick={() => navigate('/formParticulier')} className='px-4 py-2  rounded-md bg-yellow-500 text-white hover:bg-yellow-600'>
+                            <button onClick={() => navigate('/formParticulier')} className='px-4 py-2  rounded-md bg-yellow-300 font-medium text-white hover:bg-yellow-500  transition-all duration-200'>
                                 Particulier
                             </button>
                         </div>
@@ -108,6 +153,7 @@ function Login() {
 
                 </div>
             </div>
+            <GoHome/>
         </div>
 
     )

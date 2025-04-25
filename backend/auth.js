@@ -28,3 +28,4 @@ const checkRole = (roles)=>(req,res,next)=>{
 }
 
 module.exports= {verifierToken,checkRole}
+

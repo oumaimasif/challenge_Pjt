@@ -36,10 +36,13 @@ router.post("/", async (req, res) => {
     console.log("result: ", result);
 
     const { user, role } = result;
-    console.log("User: ", user);
+    console.log("User 4444: ", user);
 
     //compare password envoyé & password hashé
+if(!user.password){
 
+  return res.status(400).json({msg:"Problème avec le compte utilisateur."})
+}
     const IsMtach = await bcrypt.compare(password, user.password);
     console.log("IsMtach for password:",IsMtach , " ,password:",password, " ,user.password",user.password);
     if (!IsMtach)
@@ -56,7 +59,7 @@ router.post("/", async (req, res) => {
       },
       process.env.JWT_SECRET,
       {
-        expiresIn: "40s",
+        expiresIn: "2m",
       }
     );
 

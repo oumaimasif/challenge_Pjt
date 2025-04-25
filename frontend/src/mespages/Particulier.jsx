@@ -4,7 +4,7 @@ import Particulierlist from '../components/particulierDoc/Particulierlist'
 function Particulier() {
   return (
     <div> 
-       <div className=' flex justify-center items-center px-10 flex-col pt-24 '>
+       <div className='  '>
         <Particulierlist />
       </div>
    </div>

@@ -37,52 +37,48 @@ export default function ListDemande() {
     <>
       <div className='bg-[#f7ece1] pb-8 min-h-screen'>
         <div className='px-6 pt-24 md:pt-26 md:px-12 min-h-screen'>
+          <MenuParticulier />
+          <div className='text-white bg-violet-600 my-4 md:mx-8 flex flex-col p-6 rounded-xl  mb-6 justify-center '>
+            <h1 className='text-2xl md:text-3xl font-bold sm:mb-4  mb-2 md:mb-6 md:text-center md:mt-4 text-center'>                   Demandes d'aide : Répondez aux besoins des particuliers
+            </h1>
+            <p className='text-lg text-start md:text-left md:text-xl'>
+              Découvrez ici les demandes d'aide urgentes des particuliers qui ont besoin de votre soutien.
+              Votre aide peut faire une réelle différence dans leur vie quotidienne.
+            </p>
+          </div>
           {loading === true ? (
-            <div className='flex items-center mt-20 md:mt-40 lg:mt-52 justify-center'>
-              <img
-                src="images/Spinner.svg"
-                alt="Chargement des demandes d'aide..."
-                className='w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-40 lg:h-40'
-              />
-            </div>
-          ) : (
+            <div className='flex items-center mt-20 md:mt-40 lg:mt-52 justify-center '>
+              <img src="images/Spinner.svg" alt="Chargement des demandes d'aide...." className='w-20 h-20 sm:w-28 sm:h-28 md:w-32 lg:w-40 lg:h-40' />
+            </div>) 
+            : (
             <>
-            <MenuParticulier />
               {/* Partie présentation des listes des demandes d'aide */}
-              <div className='text-white bg-violet-600 my-4 md:mx-8 md:my-6 flex flex-col p-6 rounded-xl mb-6 justify-center'>
-                <h1 className='text-2xl md:text-3xl font-bold mb-2 sm:mb-4 md:mb-6 md:text-center md:mt-4 text-center'>
-                  Demandes d'aide : Répondez aux besoins des particuliers
-                </h1>
-                <p className='text-lg text-start md:text-left md:text-xl'>
-                  Découvrez ici les demandes d'aide urgentes des particuliers qui ont besoin de votre soutien.
-                  Votre aide peut faire une réelle différence dans leur vie quotidienne.
-                </p>
-              </div>
-              {demandes.length > 0 ? (
-              // Afficher les cartes des demandes d'aide
-              <div className="grid grid-cols-1 gap-6 mx-2 md:grid-cols-3 auto-rows-fr md:gap-8">
-                {demandes.map((demande) => (
-                  <div key={demande._id} onClick={() => handleOpenModal(demande._id)}>
-                    <DemandeAideCard demande={demande} onSelectDemande={handleOpenModal}  />
-                  </div>
-                ))}
-              </div>
-            ) : (
-              // Message si aucune demande trouvée
-              <div className="text-center py-6 lg:py-10">
-                <p className="text-lg md:text-xl text-gray-600">Aucune demande d'aide trouvée.</p>
-              </div>
-            )}
 
-            {/* Modal pour afficher les détails de la demande */}
-            {selectedDemandeId && (
-              <DemandeAideModal 
-                demandeId={selectedDemandeId}
-                onClose={handleCloseModal}
-              />
-            )}
-          </>
-        )}
+              {demandes.length > 0 ? (
+                // Afficher les cartes des demandes d'aide
+                <div className="grid grid-cols-1 gap-6 mx-2 md:grid-cols-3 auto-rows-fr md:gap-8">
+                  {demandes.map((demande) => (
+                    <div key={demande._id} onClick={() => handleOpenModal(demande._id)}>
+                      <DemandeAideCard demande={demande} onSelectDemande={handleOpenModal} />
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                // Message si aucune demande trouvée
+                <div className="text-center py-6 lg:py-10">
+                  <p className="text-lg md:text-xl text-gray-600">Aucune demande d'aide trouvée.</p>
+                </div>
+              )}
+
+              {/* Modal pour afficher les détails de la demande */}
+              {selectedDemandeId && (
+                <DemandeAideModal
+                  demandeId={selectedDemandeId}
+                  onClose={handleCloseModal}
+                />
+              )}
+            </>
+          )}
         </div>
       </div>
     </>
