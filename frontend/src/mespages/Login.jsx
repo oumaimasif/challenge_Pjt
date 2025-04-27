@@ -138,14 +138,14 @@ function Login() {
 
                     <div className='m-6'>
                         <p className='text-centre flex items-center justify-center space-y-8 text-gray-600'>Pas encore de compte ?</p>
-                        <div className='flex justify-center gap-2 mt-2'>
+                        <div className='flex justify-center gap-3 mt-3'>
                             <button onClick={() => navigate('/formBenevole')} className='px-4 py-2 rounded-md bg-blue-500 text-white font-medium hover:bg-blue-600  transition-all duration-200'>
                                 Bénévole
                             </button>
                             <button onClick={() => navigate('/formAssociation')} className='px-4 py-2  rounded-md bg-orange-500 font-medium text-white hover:bg-orange-600 transition-all duration-200'>
                                 Association
                             </button>
-                            <button onClick={() => navigate('/formParticulier')} className='px-4 py-2  rounded-md bg-yellow-300 font-medium text-white hover:bg-yellow-500  transition-all duration-200'>
+                            <button onClick={() => navigate('/formParticulier')} className='px-4 py-2  rounded-md bg-yellow-500 font-medium text-white hover:bg-yellow-500  transition-all duration-200'>
                                 Particulier
                             </button>
                         </div>

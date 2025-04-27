@@ -16,7 +16,7 @@ export default function MenuParticulier() {
     }
 
     return (
-        <div className='bg-gray-100 mt-5 flex justify-center w-fit rounded-2xl mb-6 mx-auto overflow-hidden shadow-md'>
+        <div className='bg-gray-100 mt-5 flex text-lg justify-center w-fit rounded-2xl mb-6 mx-auto overflow-hidden shadow-md'>
             <button onClick={handleDemandeAide} className={`flex items-center rounded-l-2xl gap-2 px-3 py-4 lg:py-3 lgpx-4 transition-all ${isDemandeActive ? 'bg-violet-500 text-white font-medium' : 'hover:bg-white text-gray-700'}`}>
                 <HelpCircle className='h-5 w-5' />
                 Demande d'aide

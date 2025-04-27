@@ -22,7 +22,7 @@ const Hero = () => {
             image: "/images/donation.jpg",
             btn: "Rejoignez les bénévoles !",
             // bg:"bg-orange-100 ",
-            theme:"bg-orange-500  shadow-orange-400 hover:bg-orange-600",
+            theme:"bg-orange-500  py-4 px-8 shadow-orange-400 hover:bg-orange-600",
             path:"/formBenevole",
 
         },
@@ -32,7 +32,7 @@ const Hero = () => {
             citation: "« L'union fait la force. » ",
             image: "/images/association.png",
             btn: "Inscrivez votre association !",
-            theme :"bg-blue-500 shadow-blue-400 hover:bg-blue-600", 
+            theme :"bg-blue-500 px-8 py-4 shadow-blue-400 hover:bg-blue-600", 
             path:"/formAssociation",
 
         }, {
@@ -41,7 +41,7 @@ const Hero = () => {
             citation:"« Demander de l'aide, c'est faire le premier pas vers un avenir meilleur. »",
             image: "/images/give_help2.png",
             btn: "Demander de l'aide !",
-            theme:"bg-[#fece0e]  shadow-yellow-400 hover:bg-[#f9c10b]",
+            theme:"bg-[#fece0e] px-8 py-4 shadow-yellow-400 hover:bg-[#f9c10b]",
             path:"/formParticulier",
 
         }

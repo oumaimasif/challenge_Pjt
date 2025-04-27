@@ -19,7 +19,7 @@ router.get("/me", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1; //page actuelle (pr defaut:1)
-    const limit = parseInt(req.query.limit) || 8; //nbr de benevoles par page
+    const limit = parseInt(req.query.limit) || 12; //nbr de benevoles par page
     const skip = (page - 1) * limit; //element à sauter
 
     const totalBen = await Benevole.countDocuments();

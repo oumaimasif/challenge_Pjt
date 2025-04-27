@@ -11,8 +11,8 @@ const AssociationCard = ({ association }) => {
 
             <div className='flex items-center mb-3'>
 
-                <div className=" bg-gray-200 h-14 w-14 mr-4  border flex rounded-md items-centre justify-center">
-                    <span className='bg-black text-slate-300'>hello</span>
+                <div className=" bg-gray-200 h-14 w-14 mr-4 border  rounded-md items-centre justify-center">
+                <img src={`http://localhost:5000/${association.image}`} alt={association.nomAssociation} className=" w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 object-scale-down" />
                 </div>
 
                 <div className=''>

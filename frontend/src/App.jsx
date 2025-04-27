@@ -68,7 +68,7 @@ function App() {
 
           <Route path="/add_annonces" element={<FormAnnonce />} />
 
-          <Route path="/benevole" element={<Benevole />} />
+          <Route path="/benevoles" element={<Benevole />} />
           <Route path="/annonces" element={<Annonces />} />
           <Route path="/benevole/:id" element={<Benevole />} />
           <Route path="/annonceDetail/:id" element={<PlusInfo />} />

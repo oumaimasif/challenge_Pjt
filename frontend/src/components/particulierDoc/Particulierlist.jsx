@@ -33,16 +33,16 @@ export default function Particulierlist() {
       <div className='bg-[#f7ece1] pb-8 min-h-screen'>
         <div className='px-6 pt-24 md:pt-26 md:px-12 min-h-screen'>
           <MenuParticulier />
-          <div className='text-white bg-violet-600 my-4 md:mx-8 flex flex-col p-6 rounded-xl  mb-6 justify-center '>
-            <h1 className='text-2xl md:text-3xl font-bold sm:mb-4  mb-2 md:mb-6 md:text-center md:mt-4 text-center'> Nos Particuliers</h1>
-            <div className='flex justify-between items-center'>
+          <div className='text-white  bg-violet-600 my-4 md:mx-8 flex flex-col p-6 rounded-xl  mb-6 justify-center '>
+            <h1 className='text-2xl md:text-3xl font-bold sm:mb-4  mb-2 md:mb-6 md:text-center md:mt-4 text-center'>Réseau de Particuliers</h1>
+            <div className='flex justify-between items-center md:flex-row gap-y-6 flex-col'>
               <p className='text-lg text-start md:text-left md:text-xl flex-1'> {/* p prendre tt l'espace dispo */}
                 
-                Découvrez les particuliers inscrits sur notre plateforme et leurs demandes d'aide.
+              Explorez notre communauté de particuliers en recherche d'aide et découvrez comment vous pouvez faire la différence dans leur quotidien.
               </p>
 
-              <button onClick={handleAddDemande} className=" bg-orange-200 gap-2 px-3 py-4 ml-4 rounded-md transition-all  text-white font-medium hover:bg-white hover:text-gray-700">
-                
+              <button onClick={handleAddDemande} className=" bg-orange-200 gap-2 px-3 py-4 ml-4  rounded-tl-full rounded-e-full transition-all  text-lg font-semibold text-white  hover:bg-white hover:text-gray-700">
+              Créer une demande 
               </button>
             </div>
 

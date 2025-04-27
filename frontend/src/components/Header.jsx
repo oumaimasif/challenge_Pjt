@@ -25,7 +25,7 @@ function Header() {
 
                 <li className="relative group">
                     <Link to="/association" className={`text-xl lg:text-2xl font-semibold  py-2 ${location.pathname === "/association" ? "text-purple-700" : "text-gray-700 hover:text-purple-700"}`}>
-                        Association
+                        Associations
                         <span className={`absolute left-0 top-9 w-full  h-1 bg-[#f7932e] 
                           transition-transform duration-200 rounded-full origin-left
                           ${location.pathname === "/association" ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"} `}></span>
@@ -34,11 +34,11 @@ function Header() {
                 </li>
 
                 <li className="relative group">
-                    <Link to="/benevole" className={`text-xl lg:text-2xl font-semibold  py-2 ${location.pathname.includes("/benevole") || location.pathname.includes("/profileBenevole/") ? "text-purple-700" : "text-gray-700 hover:text-purple-700"}`}>
+                    <Link to="/benevoles" className={`text-xl lg:text-2xl font-semibold  py-2 ${location.pathname.includes("/benevoles") || location.pathname.includes("/profileBenevole/") ? "text-purple-700" : "text-gray-700 hover:text-purple-700"}`}>
                         Bénévoles
                         <span className={`absolute left-0 top-9 w-full  h-1 bg-[#f7932e] 
                           transition-transform duration-200 rounded-full origin-left
-                          ${location.pathname.includes("/benevole") || location.pathname.includes("/profileBenevole/") ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"} `}></span>
+                          ${location.pathname.includes("/benevoles") || location.pathname.includes("/profileBenevole/") ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"} `}></span>
 
                     </Link>
                 </li >
@@ -101,12 +101,12 @@ function Header() {
                                     </Link>
                                 </li>
                                 <li className="border-b border-purple-500 py-2">
-                                    <Link to="/benevole" className={`block text-lg font-semibold py-2 ${location.pathname === "/benevole" ? "text-[#f7932e]" : "text-purple-700 hover:text-[#f7932e]"}`}
+                                    <Link to="/benevoles" className={`block text-lg font-semibold py-2 ${location.pathname === "/benevoles" ? "text-[#f7932e]" : "text-purple-700 hover:text-[#f7932e]"}`}
                                         onClick={() => setIsOpen(false)}> Bénévoles
                                     </Link>
                                 </li>
                                 <li className="border-b border-purple-500 py-2">
-                                    <Link to="/particulier" className={`block text-lg font-semibold py-2 ${location.pathname === "/particulier" ? "text-[#f7932e]" : "text-purple-700 hover:text-[#f7932e]"}`}
+                                    <Link to="/particuliers" className={`block text-lg font-semibold py-2 ${location.pathname === "/particuliers" ? "text-[#f7932e]" : "text-purple-700 hover:text-[#f7932e]"}`}
                                         onClick={() => setIsOpen(false)}> Particuliers
                                     </Link>
                                 </li>

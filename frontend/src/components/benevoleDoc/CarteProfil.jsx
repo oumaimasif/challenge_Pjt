@@ -5,7 +5,7 @@ export default function CarteProfil({ profil }) {
   return (
     <>
       <div style={{ width: 'auto',maxWidth: '340px',minWidth: '250px',}} className=' sticky top-[96px] rounded-lg md:p-0 p-1.5 bg-purple-400'>
-        <img src={`http://localhost:5000/${profil.image}`}  alt="Photo de profil" className='h-42 w-42  md:border-none border-white shadow-lg md:rounded-tl-lg  md:rounded-none md:rounded-tr-lg  ' />
+        <img src={`http://localhost:5000/${profil.image}`}  alt="Photo de profil" className= 'h-auto w-full  md:border-none border-white shadow-lg md:rounded-tl-lg  md:rounded-none md:rounded-tr-lg  ' />
 
         <div className='flex  text-white px-5 pb-5 pt-2 flex-col space-y-2 '>
           <span className='flex items-center justify-center  text-xl py-2 font-semibold gap-2'>{profil.nom} {profil.prenom}</span>
