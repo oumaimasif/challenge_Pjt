@@ -24,11 +24,11 @@ function Header() {
                 </li>
 
                 <li className="relative group">
-                    <Link to="/association" className={`text-xl lg:text-2xl font-semibold  py-2 ${location.pathname === "/association" ? "text-purple-700" : "text-gray-700 hover:text-purple-700"}`}>
+                    <Link to="/associations" className={`text-xl lg:text-2xl font-semibold  py-2 ${location.pathname === "/associations" ? "text-purple-700" : "text-gray-700 hover:text-purple-700"}`}>
                         Associations
                         <span className={`absolute left-0 top-9 w-full  h-1 bg-[#f7932e] 
                           transition-transform duration-200 rounded-full origin-left
-                          ${location.pathname === "/association" ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"} `}></span>
+                          ${location.pathname === "/associations" ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"} `}></span>
 
                     </Link>
                 </li>
@@ -96,7 +96,7 @@ function Header() {
                                     </Link>
                                 </li>
                                 <li className="border-b border-purple-500 py-2">
-                                    <Link to="/association" className={`block text-lg font-semibold py-2 ${location.pathname === "/associations" ? "text-[#f7932e]" : "text-purple-700 hover:text-[#f7932e]"}`}
+                                    <Link to="/associations" className={`block text-lg font-semibold py-2 ${location.pathname === "/associations" ? "text-[#f7932e]" : "text-purple-700 hover:text-[#f7932e]"}`}
                                         onClick={() => setIsOpen(false)}> Associations
                                     </Link>
                                 </li>

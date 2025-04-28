@@ -72,19 +72,8 @@ export default function PlusInfo() {
     Moyen: { icon: Info },
     Urgent: { icon: AlertTriangle }
   }
-  //les statut des annonces termine...
 
-  // const statutEncouleur = {
-  //   brouillon: "bg-gray-300 test-gray-800",
-  //   Publié: "bg-blue-300 test-blue-800",
-  //   Terminé: "bg-green-300 test-green-800",
-  //   "En cours": "bg-yellow-300 test-yellow-800",
-  // }
-  // const TypeIcon = typeAnnonce[detail.type]?.icon || Info
   const NiveauIcon = niveau[detail.niveauDurgence]?.icon || Info
-
-
-
 
   return (
     <div className='bg-purple-200 pt-24 pb-8'>
@@ -144,13 +133,13 @@ export default function PlusInfo() {
                   ) : association ? (
 
                     <div className='flex items-center space-x-4'>
-                      <img src={association.logo || '/default-logo.png'}
+                      <img src={`http://localhost:5000/${association.image}`}
                         alt={association.nomAssociation}
                         className='w-20 h-20 object-cover rounded-full' />
                       <div>
                         <p className='font-bold'>{association.nomAssociation} </p>
-                        <p>Responsable: {association.responsable}</p>
-                        <p className='text-sm text-gray-600 '>Mission: {association.mission} </p>
+                        <p>Responsable: {association.nomPrenomResponsable}</p>
+                        {/* <p className='text-sm text-gray-600 '>Mission: {association.mission} </p> */}
 
                       </div>
                     </div>
@@ -200,7 +189,6 @@ export default function PlusInfo() {
             </button>
 
             <button
-              // onClick={ToggleContact}
               onClick={()=>{ setShowContactModal(true)}}
               className='p-4 w-full flex items-center justify-center bg-purple-500 text-white py-3 rounded-lg  
           hover:bg-violet-600 transition-all duration-300  hover:shadow-lg'

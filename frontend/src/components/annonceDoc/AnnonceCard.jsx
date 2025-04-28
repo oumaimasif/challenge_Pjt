@@ -1,4 +1,4 @@
-import { AlertCircle, AlertTriangle, CheckCircle, Info, Tag } from 'lucide-react'
+import { AlertCircle, AlertTriangle, CheckCircle, ChevronDown, Info, Tag } from 'lucide-react'
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -19,12 +19,7 @@ export default function AnnonceCard({ annonce }) {
 
   //les statut des annonces valide par ( admin (si il passe 24h elle va etre publier 
   // automatique et benevole, association peuvent indiquer ci le annonce a ete terminer )..
-  const statutEncouleur = {
-    brouillon: "bg-gray-300 test-gray-800",
-    Publié: "bg-blue-300 test-blue-800",
-    Terminé: "bg-green-300 test-green-800",
-    "En cours": "bg-yellow-300 test-yellow-800",
-  }
+
   const TypeIcon = typeAnnonce[annonce.type]?.icon || Info
   const NiveauIcon = niveau[annonce.niveauDurgence]?.icon || Info
 
@@ -37,7 +32,7 @@ export default function AnnonceCard({ annonce }) {
 
 
       {/* image des association (serveur) */}
-      <div className='relative h-48 overflow-hidden '>
+      <div className='relative h-48 border-b-2 overflow-hidden '>
         <img src={`http://localhost:5000/${annonce.image}`} alt="Image de l'annonce"
           className='w-full h-full object-cover transition-transform duration-500 hover:scale-110' />
       </div>
@@ -71,10 +66,10 @@ export default function AnnonceCard({ annonce }) {
         {/* Bouton de détails avec effet */}
         <Link
           to={`/annonceDetail/${annonce._id}`}
-          className='block mt-4 text-center bg-violet-500 text-white py-2 rounded-full 
+          className=' flex items-center justify-center mt-4 text-center bg-violet-500 text-white py-3 rounded-full 
           hover:bg-violet-600 transition-all duration-300  hover:shadow-lg'
         >
-          Voir les détails
+          Voir les détails <ChevronDown size={18}/>
         </Link>
       </div>
     </div>

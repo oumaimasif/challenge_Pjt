@@ -61,7 +61,7 @@ function Login() {
                         // Par défaut, on redirige vers la page d'accueil
                         navigate('/');
                     }
-                }, 4000);
+                }, 1500);
             }
             else {
                 console.log("Token non reçu !")

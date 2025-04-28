@@ -4,8 +4,8 @@ const associationSchema = new mongoose.Schema({
   nomAssociation: { type: String, required: true },
   // categorie: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Categorie', required: true }],
   nomPrenomResponsable: { type: String, required: true },
-  description: { type: String, required: false }, // Description de l'association
-  fonctiondsAssociation: { type: String, required: true },
+  fonctiondsAssociation: { type: String, required: true },//la fonction du responsable
+  description: { type: String, required: true }, // Description de l'association
   email: { type: String, required: true  },
   role: { type: String, default: "Association", enum: ["Association"] },
   accreditee:{ type:Boolean,default:false },//erreur de l'envoi si elle etait required :true
@@ -14,7 +14,7 @@ const associationSchema = new mongoose.Schema({
   dateCreation: { type: Date, required: true },//YYYY-MM-DD
   VilleAssociation: { type: String, required: true },
   categorie: [{ type: String, required: true ,default:[]}], 
-  mission: { type: String, required: true },//Objectif ou mission principale
+  // mission: { type: String, required: true },//Objectif ou mission principale
   image:{type:String}
   // website:{type:String, required:false },
 }                                                                                                                                                

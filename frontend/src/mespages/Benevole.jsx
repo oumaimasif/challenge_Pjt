@@ -2,6 +2,11 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import Pagination from '../components/Pagination';
+// import Notification from '../components/Notification';
+
+
 
 // console.log("Composant Benevole chargé");
 
@@ -10,59 +15,94 @@ function Benevole() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  // États pour la pagination
+  const [limit] = useState(12) //nbr elements par page
+  const [page, setPage] = useState(1);//current page
+  const [totalPages, setTotalPages] = useState(1);
+
   // Animation pour les cartes
   const cardVariants = {
     hidden: { opacity: 0, y: 50 },
     visible: (index) => ({
       opacity: 1,
       y: 0,
-      transition: { delay: index * 0.2, duration: 0.5 },
+      transition: { delay: index * 0.2, duration: 0.4 },
     })
   };
-
-
   useEffect(() => {
-    let isMounted = true;
-
     const fetchBenevoles = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/benevoles");
+        const response = await axios.get(`http://localhost:5000/benevoles?page=${page}&limit=${limit}`);
         console.log(response.data.dataBenevole);
 
-        if (isMounted) {
+        setBenevoles(response.data.dataBenevole||[]);
+        setTotalPages(response.data.totalPages);
+        setLoading(false);
 
-          setBenevoles(response.data.dataBenevole);
-          setLoading(false);
-        }
       } catch (error) {
-        console.log("Erreur lors du chargement des bénévoles :", error);
+        console.log("Erreur :", error);
+        toast.error("Erreur lors du chargement des données. Veuillez réessayer.")
         setLoading(false);
       }
     };
 
     fetchBenevoles();
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+
+  }, [page, limit]);
+
+  //changement des pages
+  const changePage = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setPage(newPage);
+
+      window.scrollTo({ top: 1, behavior: 'smooth' })//remonter en haut de la page
+
+    }
+  }
+
+  // useEffect(() => {
+  //   let isMounted = true;
+  //   const fetchBenevoles = async () => {
+  //     try {
+  //       const response = await axios.get("http://localhost:5000/benevoles");
+  //       console.log(response.data.dataBenevole);
+
+  //       if (isMounted) {
+
+  //         setBenevoles(response.data.dataBenevole);
+  //         setLoading(false);
+  //       }
+  //     } catch (error) {
+  //       console.log("Erreur lors du chargement des bénévoles :", error);
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchBenevoles();
+  //   return () => {
+  //     isMounted = false;
+  //   };
+  // }, []);
 
   return (
     <div className="pt-24  bg-purple-200 px-6  md:px-12  md:pt-26  min-h-screen">
+
+      {/* <Notification/> */}
+
+      <div className='bg-orange-400 p-4 rounded-2xl  my-6  md:text-xl '>
+        <h1 className="text-2xl sm:text-3xl text-white font-bold mt-4 sm:mt-6 md:mt-8 mb-2 sm:mb-4 md:mb-6 text-start md:text-left">Bénévoles à l'honneur</h1>
+        <p className="text-white text-base sm:text-lg text-start md:text-left">
+          Découvrez nos <span className="font-bold text-lg sm:text-xl text-gray-800">Bénévoles</span> les plus actifs et engagés.
+          Leurs compétences et leur disponibilité peuvent correspondre à vos besoins.
+        </p>
+      </div>
       {loading ? (
         <div className="flex justify-center items-center mt-20 sm:mt-32 md:mt-40 lg:mt-52">
           <img src="/images/Spinner.svg" alt="Chargement..." className="w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-40 lg:h-40" />
         </div>
       ) : (
         <>
-          <div className='bg-orange-400 p-4 rounded-2xl md:text-xl '>
-            <h1 className="text-2xl sm:text-3xl text-white font-bold mt-4 sm:mt-6 md:mt-8 mb-2 sm:mb-4 md:mb-6 text-start md:text-left">Bénévoles à l'honneur</h1>
-            <p className="text-white text-base sm:text-lg text-start md:text-left">
-              Découvrez nos <span className="font-bold text-lg sm:text-xl text-gray-800">Bénévoles</span> les plus actifs et engagés.
-              Leurs compétences et leur disponibilité peuvent correspondre à vos besoins.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 px-2 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-5 mt-4">
+          <div className="grid grid-cols-1  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 px-2 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-5 ">
             {benevoles.length > 0 ? (
               benevoles.map((benevole, index) => (
                 <motion.div
@@ -77,12 +117,12 @@ function Benevole() {
                 >
                   <div>
                     <div className='flex justify-center items-center'>
-                        <img src={`http://localhost:5000/${benevole.image}`} alt={benevole.nom} className="rounded-full w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 object-cover" />
+                      <img src={`http://localhost:5000/${benevole.image}`} alt={benevole.nom} className="rounded-full w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 object-cover" />
                     </div>
 
                     <div>
                       <span className='absolute top-2 right-2 sm:top-3 sm:right-3 border border-purple-400 p-1 font-semibold text-gray-600 bg-orange-50 text-[8px] sm:text-[10px] rounded-3xl'>
-                        {benevole.annoncesCpt} annonce{benevole.annoncesCpt !==1 ?'s':''}
+                        {benevole.annoncesCpt} annonce{benevole.annoncesCpt !== 1 ? 's' : ''}
                       </span>
                     </div>
 
@@ -114,6 +154,7 @@ function Benevole() {
                     </button>
                   </div>
                 </motion.div>
+
               ))
             ) : (
               <div className="col-span-full text-center py-6 sm:py-10">
@@ -121,6 +162,10 @@ function Benevole() {
               </div>
             )}
           </div>
+          {/* Pagination */}
+          {benevoles.length > 0 &&
+            (<Pagination page={page} totalPages={totalPages} onChangePage={changePage} />
+            )}
         </>
       )}
     </div>

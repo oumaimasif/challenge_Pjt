@@ -12,10 +12,70 @@ router.get("/me", (req, res) => {
 });
 
 //afficher tt les association
+// router.get("/", async (req, res) => {
+//   try {
+//     const page = parseInt(req.query.page) || 1;
+//     const limit = parseInt(req.query.limit) || 12;
+//     const skip = (page - 1) * limit;
+
+ // Compte le nombre total d'associations
+//  const totalAssociations = await Association.countDocuments();
+//     const data = await Association.find()
+//      .skip(skip).limit(limit).sort({createdAt:-1});
+//     res.json({associations:data,totalPages:Math.ceil(totalAssociations/limit),currentPage:page});
+//   } catch (error) {
+//     res.status(500).json({ message: "Erreur lors de la récupération des associations", error });
+
+//   }
+// });
+
+//cpt annonces
 router.get("/", async (req, res) => {
-  const data = await Association.find();
-  res.json(data);
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 12;
+    const skip = (page - 1) * limit;
+
+    const associations = await Association.aggregate([
+      {
+        //lookup pr joindre les annonces liées a chaque association
+        $lookup: {
+          from: "annonces",
+          localField: "_id",
+          foreignField: "associationID",
+          as: "annonces",
+        },
+      },
+      {
+        $addFields: { annoncesCpt: { $size: "$annonces" } },
+      },
+      { $project: { annonces: 0 } },
+      //tri par date de cration
+      {$sort:{createdAt:-1}},
+      //pagination
+      {$skip:skip},
+      {$limit:limit}
+    ]);
+
+    // Compte le nombre total d'associations
+    const totalAssociations = await Association.countDocuments();
+
+    // const data = await Association.find().skip(skip).limit(limit).sort({ createdAt: -1 });
+    res.json({
+      associations: associations,
+      totalPages: Math.ceil(totalAssociations / limit),
+      currentPage: page
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({
+        message: "Erreur lors de la récupération des associations",
+        error,
+      });
+  }
 });
+
 
 //ajouter une association
 router.post("/add", async (req, res) => {
@@ -36,7 +96,7 @@ router.post("/add_association", upload.single("image"), async (req, res) => {
 
     const pathImage = req.file
       ? req.file.path
-      : "uploadsAssociation/avatar_association.png";
+      : "uploads/uploadsAssociation/avatar_association.png";
     let categories = [];
     if (req.body.categorie) {
       try {

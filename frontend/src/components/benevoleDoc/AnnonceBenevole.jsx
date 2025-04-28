@@ -15,14 +15,17 @@ const AnnonceBenevole = () => {
       try {
         console.log("benevoleId :", id);
         const res = await axios.get(`http://localhost:5000/annonces/benevoleProfil/${id}`)
+        console.log( "annonce benevole info : ", res.data)
         setAnnonces(res.data);
         console.log("Annonces récupérées: ", res.data);
+        console.log("les info ", annonces)
+
       } catch (error) {
         console.log("Erreur lors de la récupération des annnonces:", error)
       }
     }
     fetchData();
-  }, [id])
+  }, [])
   console.log("les info ", annonces)
   return (
     <div className='bg-zinc-100 mt-4 border-2 shadow-xl w-[340px] md:w-[800px] relative -top-2 rounded-lg p-6'>

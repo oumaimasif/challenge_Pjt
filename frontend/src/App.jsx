@@ -54,7 +54,7 @@ function App() {
           <Route path="/" element={<Acceuil />} />
           <Route path="/about" element={<Apropos />} />
 
-          <Route path="/association" element={<Associations />} />
+          <Route path="/associations" element={<Associations />} />
           <Route path="/formAssociation" element={<FormAssociation />} />
           <Route path="/association/:id" element={<Association />} />
 

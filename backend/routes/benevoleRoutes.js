@@ -22,8 +22,6 @@ router.get("/", async (req, res) => {
     const limit = parseInt(req.query.limit) || 12; //nbr de benevoles par page
     const skip = (page - 1) * limit; //element à sauter
 
-    const totalBen = await Benevole.countDocuments();
-
     const benevoles = await Benevole.aggregate([
       {
         $lookup: {
@@ -41,11 +39,21 @@ router.get("/", async (req, res) => {
       {
         $project: { annonces: 0 },
       },
-
+      //tri par date de cration
+      { $sort: { createdAt: -1 } },
+      //pagination
       { $skip: skip },
       { $limit: limit },
     ]);
-    res.json({ dataBenevole: benevoles, totalBen: Math.ceil( totalBen/ limit),currentPage: page, totalItems:totalBen });
+
+    const totalBen = await Benevole.countDocuments(); //pr calculer nbr de pages
+    // console.log("totalBen: ", totalBen);
+
+    res.json({
+      dataBenevole: benevoles,
+      totalPages: Math.ceil(totalBen / limit),
+      currentPage: page,
+    });
   } catch (error) {
     res.status(500).json({ msg: "Erreur serveur", error });
   }
@@ -121,7 +129,7 @@ router.get("/profileBenevole/:id", async (req, res) => {
   try {
     const profil = await Benevole.findById(req.params.id);
     if (!profil) {
-      console.log("Non trouvée ", profil);
+      console.log("Non trouvée ", profil + " ---------");
     }
     res.status(200).json(profil);
   } catch (error) {

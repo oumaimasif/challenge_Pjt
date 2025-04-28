@@ -16,7 +16,7 @@ import { Building, Eye, EyeOff } from 'lucide-react';
 function FormAssociation() {
   const [formAssociation, setFormAssociation] = useState({
     nomAssociation: "", nomPrenomResponsable: "", description: "", fonctiondsAssociation: "", email: "", password: "",
-    role: "Association", accreditee: false, numeTelephone: "", dateCreation: "", VilleAssociation: "", mission: ""
+    role: "Association", accreditee: false, numeTelephone: "", dateCreation: "", VilleAssociation: ""
   });
 
   const [show, setShow] = useState(null);
@@ -64,6 +64,7 @@ function FormAssociation() {
         formData.append("image", image);
       }
 
+
       const res = await axios.post("http://localhost:5000/associations/add_association", formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
@@ -80,7 +81,7 @@ function FormAssociation() {
       setFormAssociation({
         nomAssociation: "", nomPrenomResponsable: "", description: "", password: "",
         fonctiondsAssociation: "", email: "", role: "Association", accreditee: false, numeTelephone: "", dateCreation: "",
-        VilleAssociation: "", mission: ""
+        VilleAssociation: ""
       });
 
       setSelectedCtg([]);
@@ -131,18 +132,15 @@ function FormAssociation() {
           <GroupChamps >
             {/* Nom de l'association */}
             <FormInput label="Nom de l'association" name="nomAssociation" value={formAssociation.nomAssociation} onChange={handleChange} placeholder="Nom de votre association" required={true} />
-            {/* Accréditation */}
-            <div className="flex items-center space-x-3 pt-4 ">
-              <input type="checkbox" name="accreditee" checked={formAssociation.accreditee} onChange={handleChange} className="w-3 h-3" />
-              <label className="text-gray-700 text-xl font-semibold ">
-                Association accréditée
-              </label>
-            </div>
+            {/* Contact */}
+            <FormInput label="Email" name="email" type="email" value={formAssociation.email} onChange={handleChange} placeholder="email@association.com" required={true} />
           </GroupChamps>
-          {/* Responsable & Contact */}
+
+          {/* Responsable */}
           <GroupChamps>
             <FormInput label="Nom et prénom du responsable" name="nomPrenomResponsable" value={formAssociation.nomPrenomResponsable} onChange={handleChange} placeholder="Nom et prénom du responsable" required={true} />
-            <FormInput label="Email" name="email" type="email" value={formAssociation.email} onChange={handleChange} placeholder="email@association.com" required={true} />
+            {/* Sa fonction dans l'association */}
+            <FormInput label="Fonction du responsable" name="fonctiondsAssociation" value={formAssociation.fonctiondsAssociation} placeholder="Ex: Présidente, Responsable HR, Chargée de projets..." onChange={handleChange} required={true} />
           </GroupChamps>
 
           <GroupChamps>
@@ -151,10 +149,16 @@ function FormAssociation() {
               value={formAssociation.VilleAssociation} onChange={handleChange} placeholder="Ville, adresse exacte" required={true} />
           </GroupChamps>
 
-          {/* Date de création & Fonction */}
+          {/* Date de création & Accréditation */}
           <GroupChamps>
             <FormInput label="Date de création" name="dateCreation" type="date" value={formAssociation.dateCreation} onChange={handleChange} required={true} />
-            <FormInput label="Fonction de l'association" name="fonctiondsAssociation"  value={formAssociation.fonctiondsAssociation} placeholder="Fonction principale de l'association" onChange={handleChange} required={true} />
+            {/* Accréditation */}
+            <div className="flex items-center space-x-3 pt-4 ">
+              <input type="checkbox" name="accreditee" checked={formAssociation.accreditee} onChange={handleChange} className="w-3 h-3" />
+              <label className="text-gray-700 text-xl font-semibold ">
+                Association accréditée
+              </label>
+            </div>
           </GroupChamps>
 
           {/* Catégories */}
@@ -180,16 +184,13 @@ function FormAssociation() {
             </div>
           </GroupChamps>
 
-          {/* Description & Mission */}
+          {/* Description  */}
           <TextArea
             label="Description de l'association"
             name="description"
             value={formAssociation.description} onChange={handleChange} placeholder="Décrivez votre association"
-          required/>
+            required />
 
-          <TextArea
-            label="Mission principale" name="mission" value={formAssociation.mission}
-            onChange={handleChange} placeholder="Objectif ou mission principale de l'association" required={true} />
 
           {/* Submit button */}
           <BtnSubmit text="Inscrire l'Association" locationf="association" />

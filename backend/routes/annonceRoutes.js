@@ -17,21 +17,43 @@ router.get("/lists", async (req, res) => {
   res.json(data);
 });
 
+// router.get("/benevoleProfil/:benevoleID", async (req, res) => {
+//   try {
+//     const Id = new mongoose.Types.ObjectId(req.params.benevoleID);
+//     const annonces = await Annonce.find({ benevoleID: Id });
+//     console.log("Requête reçue pour benevoleID:", req.params.benevoleID);
+//     console.log("Annonces trouvées:", annonces);
+//     res.json(annonces);
+//     console.log("Annonces  nbr: ", annonces.length);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// });
+
+// list des annonces avec les ceateur
+// afficher annonces par benevoleID
+
 router.get("/benevoleProfil/:benevoleID", async (req, res) => {
   try {
     const Id = new mongoose.Types.ObjectId(req.params.benevoleID);
-    const annonces = await Annonce.find({ benevoleID: Id });
-    console.log("Requête reçue pour benevoleID:", req.params.benevoleID);
-    console.log("Annonces trouvées:", annonces);
+    const annonces = await Annonce.aggregate([
+      { $match: { benevoleID: Id } },
+      {$lookup:{
+        from:"benevoles",
+        localField:"benevoleID",
+        foreignField:"_id",
+        as:"Benevoles"
+      }},
+    ]);
+    // console.log("benevoleID: ", req.params.benevoleID);
+    // console.log("Annonces trouvées av info benevole backend:", annonces);
     res.json(annonces);
-    console.log("Annonces  nbr: ", annonces.length);
+    // console.log("Annonces  nbr: ", annonces.length);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
-// list des annonces avec les ceateur
-// afficher annonces par benevoleID
 router.get("/benevole/:id", async (req, res) => {
   try {
     const Id = new mongoose.Types.ObjectId(req.params.id); //convertire l'id en objectId
@@ -70,6 +92,10 @@ router.get("/annonceDetail/:id", async (req, res) => {
 //afficher les annonces avec leur associations et benevoles en utilise aggregate
 
 router.get("/", async (req, res) => {
+  const page = parseInt(req.query.page) || 1; //page actuelle (pr defaut:1)
+  const limit = parseInt(req.query.limit) || 6; //nbr de benevoles par page
+  const skip = (page - 1) * limit; //element à sauter
+
   const result = await Annonce.aggregate([
     {
       $lookup: {
@@ -87,8 +113,20 @@ router.get("/", async (req, res) => {
         as: "Benevoles",
       },
     },
+    //tri par date de cration
+    { $sort: { createdAt: -1 } },
+    //pagination
+    { $skip: skip },
+    { $limit: limit },
   ]);
-  res.json(result);
+
+  const totaleAnnonce = await Annonce.countDocuments();
+
+  res.json({
+    data: result,
+    totalPages: Math.ceil(totaleAnnonce / limit),
+    currentPage: page,
+  });
   // console.log("la list des annonces publier par les associations : ", result);
 });
 

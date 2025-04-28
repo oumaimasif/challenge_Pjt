@@ -6,7 +6,7 @@ const benevoleSchema = new mongoose.Schema({
     enum: ["Femme", "Homme"], // Liste des valeurs autorisées(les valeur possible)
     required: true,
   },
-  image: { type: String }, // chemin d'img (non stockée directement)
+  image: { type: String  }, // chemin d'img (non stockée directement)
   role: { type: String, default: "Benevole", enum: ["Benevole"] }, // Rôle fixé pour les bénévoles
   nom: { type: String, required: true },
   prenom: { type: String, required: true },
@@ -29,7 +29,7 @@ const benevoleSchema = new mongoose.Schema({
 
   disponible: { type: String, default: "Flexible" }, // default: true
   heure: { type: String ,required:false},
-});
+} ,{timestamps: true});
 //modele moogoose
 const Benevole = mongoose.model("Benevole", benevoleSchema);
 module.exports = Benevole;
