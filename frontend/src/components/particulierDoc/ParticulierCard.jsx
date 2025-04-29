@@ -2,33 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { User, Phone, Mail, MapPin, Calendar, Briefcase, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+// import { DateString, calculerAge } from '../dateAgeFormat';
+
 
 export default function ParticulierCard({ particulier }) {
 
-
-  // Format de la date de naissance
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return new Intl.DateTimeFormat('fr-FR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric'
-    }).format(date);
-  };
-
-  // Calcul de l'âge
-  const calculerAge = (dateNaissance) => {
-    const aujourdhui = new Date();
-    const dateDeNaissance = new Date(dateNaissance);
-    let age = aujourdhui.getFullYear() - dateDeNaissance.getFullYear();
-    const mois = aujourdhui.getMonth() - dateDeNaissance.getMonth();
-
-    if (mois < 0 || (mois === 0 && aujourdhui.getDate() < dateDeNaissance.getDate())) {
-      age--;
-    }
-
-    return age;
-  };
 
   return (
     <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
@@ -54,28 +32,27 @@ export default function ParticulierCard({ particulier }) {
           <h2 className="text-2xl font-bold text-purple-900">
             {particulier.civilite === "Femme" ? "Mme" : "M."} {particulier.prenom} {particulier.nom}
           </h2>
-          <p className="text-gray-600">{calculerAge(particulier.dateDeNaissance)} ans</p>
         </div>
 
         <div className="space-y-2 mt-4">
           <div className="flex items-center gap-3">
             <Briefcase className="text-violet-500 w-5 h-5" />
-            <span>{particulier.profession}</span>
+            <span>{particulier.profession || "Non renseigné"}</span>
           </div>
 
           <div className="flex items-center gap-3">
             <MapPin className="text-violet-500 w-5 h-5" />
-            <span>{particulier.ville}</span>
+            <span>{particulier.ville || "Non renseigné"}</span>
           </div>
 
           <div className="flex items-center gap-3">
             <Mail className="text-violet-500 w-5 h-5" />
-            <span className="text-sm truncate">{particulier.email}</span>
+            <span className="text-sm truncate">{particulier.email || "Non renseigné"}</span>
           </div>
 
           <div className="flex items-center gap-3">
             <Phone className="text-violet-500 w-5 h-5" />
-            <span>{particulier.numeTelephone}</span>
+            <span>{particulier.numeTelephone || "Non renseigné"}</span>
           </div>
         </div>
 

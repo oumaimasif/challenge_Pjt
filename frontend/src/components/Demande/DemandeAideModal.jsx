@@ -126,7 +126,7 @@ export default function DemandeAideModal({ demandeId, onClose }) {
                                 <div>
                                     <h3 className="text-md font-medium text-gray-700 mb-2">Date du besoin</h3>
                                     <div className="flex items-center gap-2">
-                                        <Calendar className="w-5 h-5 text-purple-500" />
+                                        <Calendar className="w-5 h-5 text-[#fece0e]" />
                                         <span>{formatDate(demande.dateBesoin)}</span>
                                     </div>
                                 </div>
@@ -135,7 +135,7 @@ export default function DemandeAideModal({ demandeId, onClose }) {
                                 <div>
                                     <h3 className="text-md font-medium text-gray-700 mb-2">Lieu</h3>
                                     <div className="flex items-center gap-2">
-                                        <MapPin className="w-5 h-5 text-purple-500" />
+                                        <MapPin className="w-5 h-5 text-[#fece0e]" />
                                         <span>{demande.lieu || "Non spécifié"}</span>
                                     </div>
                                 </div>
@@ -144,7 +144,7 @@ export default function DemandeAideModal({ demandeId, onClose }) {
                                 <div>
                                     <h3 className="text-md font-medium text-gray-700 mb-2">Bénéficiaires</h3>
                                     <div className="flex items-center gap-2">
-                                        <Users className="w-5 h-5 text-purple-500" />
+                                        <Users className="w-5 h-5 text-[#fece0e]" />
                                         <span>{demande.nombrebeneficiaires || 1} personne(s)</span>
                                     </div>
                                 </div>
@@ -165,7 +165,7 @@ export default function DemandeAideModal({ demandeId, onClose }) {
 
                             {/* Bouton d'action en bas */}
                             <div className="flex justify-center pt-4">
-                                <button className="bg-violet-500 text-white py-2 px-6 rounded-full hover:bg-violet-600 transition-all duration-300 hover:shadow-lg">
+                                <button className="bg-[#fece0e] text-white py-2 px-6 rounded-full hover:bg-violet-600 transition-all duration-300 hover:shadow-lg">
                                     Proposer mon aide
                                 </button>
                             </div>

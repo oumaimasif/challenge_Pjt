@@ -4,7 +4,7 @@ const ProfilAss = ({ association }) => {
   return (
     <div>
       <h2 className="text-xl font-bold mb-4">Description de l'Association</h2>
-      <p>{association.description || "Aucune description disponible."}</p>
+      <p>{association.description || "Aucune description disponible." }</p>
       
       <div className="mt-4 space-y-2">
         <div>

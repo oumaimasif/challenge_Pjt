@@ -3,12 +3,17 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { User, Phone, Mail, MapPin, Calendar, Briefcase, ChevronLeft, AlertTriangle, Info, CheckCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { DateString } from '../dateAgeFormat';
+import CategoriesCard from '../formComponents/CategoriesCard';
+import DemandeAideModal from '../Demande/DemandeAideModal';
+
 
 export default function ProfileParticulier() {
     const { id } = useParams();
     const [particulier, setParticulier] = useState(null);
     const [demandes, setDemandes] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [selected,setSelected] = useState(null);// btn voire plus de detail d une demandes d'aide selectionner
 
     useEffect(() => {
         const fetchParticulierData = async () => {
@@ -49,29 +54,13 @@ export default function ProfileParticulier() {
         fetchParticulierData();
     }, [id]);
 
-    // Format de la date
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        return new Intl.DateTimeFormat('fr-FR', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric'
-        }).format(date);
-    };
+const OpenModal= (demandeID)=>{
+    setSelected(demandeID);
+}
 
-    // Calcul de l'âge
-    const calculerAge = (dateNaissance) => {
-        const aujourdhui = new Date();
-        const dateDeNaissance = new Date(dateNaissance);
-        let age = aujourdhui.getFullYear() - dateDeNaissance.getFullYear();
-        const mois = aujourdhui.getMonth() - dateDeNaissance.getMonth();
-
-        if (mois < 0 || (mois === 0 && aujourdhui.getDate() < dateDeNaissance.getDate())) {
-            age--;
-        }
-
-        return age;
-    };
+const CloseModal= ()=>{
+    setSelected(null);
+}
 
     // Définir les styles selon la priorité pour les demandes
     const prioriteStyle = {
@@ -102,8 +91,8 @@ export default function ProfileParticulier() {
     }
 
     return (
-        <div className="pt-24 min-h-screen bg-purple-100 pb-12">
-            <div className="container mx-auto px-4">
+        <div className="pt-32  min-h-screen pb-14">
+            <div className=" mx-auto px-4 lg:p-10">
                 <div className="mb-6">
                     <Link to="/particuliers" className="inline-flex items-center text-violet-600 hover:text-violet-800">
                         <ChevronLeft className="w-5 h-5 mr-1" />
@@ -113,9 +102,9 @@ export default function ProfileParticulier() {
 
                 <div className="bg-white rounded-xl shadow-lg overflow-hidden">
                     {/* En-tête avec image */}
-                    <div className="h-48 bg-gradient-to-r from-violet-500 to-purple-600 relative">
-                        <div className="absolute bottom-0 left-0 w-full transform translate-y-1/2 flex justify-center">
-                            <div className="rounded-full border-4 border-white overflow-hidden w-32 h-32">
+                    <div className="h-48 bg-gradient-to-tr from-violet-500 to-yellow-200 relative">
+                        <div className="absolute bottom-0 left-0 w-full transform translate-y-1/2 ml-6">
+                            <div className="rounded-full border-4 border-yellow-400 overflow-hidden w-36 h-36">
                                 <img
                                     src={particulier.image ? `http://localhost:5000/${particulier.image}` : "uploads/uploadsParticulier/avatar_particulier.jpg"}
                                     alt={`${particulier.prenom} ${particulier.nom}`}
@@ -129,9 +118,8 @@ export default function ProfileParticulier() {
                     <div className="mt-20 px-6 py-4">
                         <div className="text-center mb-8">
                             <h1 className="text-3xl font-bold text-gray-800">
-                                {particulier.civilite === "Femme" ? "Mme" : "M."} {particulier.prenom} {particulier.nom}
+                                {particulier.civilite === "Femme" ? "Mme" : "M."} {particulier.prenom || ''} {particulier.nom || ''}
                             </h1>
-                            <p className="text-gray-500">{calculerAge(particulier.dateDeNaissance)} ans</p>
                         </div>
 
                         <div className="grid md:grid-cols-2 gap-6 mb-8">
@@ -139,15 +127,15 @@ export default function ProfileParticulier() {
                                 <h2 className="text-xl font-semibold text-violet-700 border-b pb-2">Informations personnelles</h2>
 
                                 <div className="flex items-center gap-3">
-                                    <Briefcase className="text-violet-500 w-5 h-5 flex-shrink-0" />
+                                    <Briefcase className="text-[#fece0e] w-5 h-5  " />
                                     <div>
                                         <span className="text-gray-600 font-medium">Profession:</span>
-                                        <span className="ml-2">{particulier.profession}</span>
+                                        <span className="ml-2">{particulier.profession || "Non renseigné "}</span>
                                     </div>
                                 </div>
 
                                 <div className="flex items-center gap-3">
-                                    <MapPin className="text-violet-500 w-5 h-5 flex-shrink-0" />
+                                    <MapPin className="text-[#fece0e] w-5 h-5 " />
                                     <div>
                                         <span className="text-gray-600 font-medium">Ville:</span>
                                         <span className="ml-2">{particulier.ville}</span>
@@ -155,10 +143,10 @@ export default function ProfileParticulier() {
                                 </div>
 
                                 <div className="flex items-center gap-3">
-                                    <Calendar className="text-violet-500 w-5 h-5 flex-shrink-0" />
+                                    <Calendar className="text-[#fece0e] w-5 h-5 " />
                                     <div>
                                         <span className="text-gray-600 font-medium">Date de naissance:</span>
-                                        <span className="ml-2">{formatDate(particulier.dateDeNaissance)}</span>
+                                        <span className="ml-2">{DateString(particulier.dateDeNaissance)}</span>
                                     </div>
                                 </div>
                             </div>
@@ -167,7 +155,7 @@ export default function ProfileParticulier() {
                                 <h2 className="text-xl font-semibold text-violet-700 border-b pb-2">Contact</h2>
 
                                 <div className="flex items-center gap-3">
-                                    <Mail className="text-violet-500 w-5 h-5 flex-shrink-0" />
+                                    <Mail className="text-[#fece0e] w-5 h-5 " />{/* flex-shrink-0 */}
                                     <div>
                                         <span className="text-gray-600 font-medium">Email:</span>
                                         <span className="ml-2">{particulier.email}</span>
@@ -175,7 +163,7 @@ export default function ProfileParticulier() {
                                 </div>
 
                                 <div className="flex items-center gap-3">
-                                    <Phone className="text-violet-500 w-5 h-5 flex-shrink-0" />
+                                    <Phone className="text-[#fece0e] w-5 h-5 " />
                                     <div>
                                         <span className="text-gray-600 font-medium">Téléphone:</span>
                                         <span className="ml-2">{particulier.numeTelephone}</span>
@@ -189,13 +177,13 @@ export default function ProfileParticulier() {
                             <h2 className="text-2xl font-bold text-gray-800 mb-4">Demandes d'aide</h2>
 
                             {demandes.length > 0 ? (
-                                <div className="space-y-4">
+                                <div className="space-y-4 ">
                                     {demandes.map(demande => {
                                         console.log("Affichage de la demande:", demande);
                                         const PrioriteIcon = prioriteStyle[demande.priorite]?.icon || Info;
 
                                         return (
-                                            <div key={demande._id} className="border rounded-lg shadow-sm hover:shadow-md transition-shadow p-4">
+                                            <div key={demande._id}  onClick={()=> OpenModal(demande._id)} className="border rounded-lg shadow-sm hover:shadow-md bg-[#f2f2d755] transition-shadow p-4">
                                                 <div className="flex justify-between items-start">
                                                     <h3 className="text-lg font-semibold text-violet-700">{demande.titre}</h3>
                                                     <div className={`flex items-center gap-1 py-1 px-2 rounded-full text-sm ${prioriteStyle[demande.priorite]?.bg || "bg-gray-200"}`}>
@@ -204,35 +192,24 @@ export default function ProfileParticulier() {
                                                     </div>
                                                 </div>
 
-                                                <p className="text-gray-600 mt-2">{demande.description}</p>
+                                                <p className="text-gray-600 mt-2">{demande.description || "Aucune description n'est disponible."}</p>
 
                                                 <div className="mt-3 flex flex-wrap gap-2">
-                                                    {demande.categorie && (typeof demande.categorie === 'string'
-                                                        ? JSON.parse(demande.categorie).map((cat, index) => (
-                                                            <span key={index} className="bg-violet-100 text-violet-800 px-2 py-1 rounded-full text-xs">
-                                                                {cat}
-                                                            </span>
-                                                        ))
-                                                        : demande.categorie.map((cat, index) => (
-                                                            <span key={index} className="bg-violet-100 text-violet-800 px-2 py-1 rounded-full text-xs">
-                                                                {cat}
-                                                            </span>
-                                                        ))
-                                                    )}
+                                                    <CategoriesCard categories={demande.categorie} />
                                                 </div>
 
                                                 <div className="mt-4 flex justify-between items-center">
-                                                    <div className="text-sm text-gray-500">
-                                                        {demande.dateBesoin && `Besoin le: ${formatDate(demande.dateBesoin)}`}
-                                                        {!demande.dateBesoin && demande.createdAt && `Créée le: ${formatDate(demande.createdAt)}`}
+                                                    <div className="text-sm flex flex-col space-y-2 text-gray-500">
+                                                        <span> {demande.dateBesoin && `Besoin le: ${DateString(demande.dateBesoin)}`}</span>
+                                                        <span>{demande.createdAt && `Créée le: ${DateString(demande.createdAt)}`}</span>
                                                     </div>
 
-                                                    <Link
-                                                        to={`/demandeDetail/${demande._id}`}
+                                                    <button
+                                                        onClick={()=> OpenModal(demande._id)}
                                                         className="text-violet-600 hover:text-violet-800 text-sm font-medium"
                                                     >
                                                         Voir les détails
-                                                    </Link>
+                                                    </button>
                                                 </div>
                                             </div>
                                         );
@@ -244,6 +221,9 @@ export default function ProfileParticulier() {
                                 </div>
                             )}
                         </div>
+                        {selected && (
+                            <DemandeAideModal demandeId={selected} onClose={CloseModal}/>
+                        )}
                     </div>
                 </div>
             </div>

@@ -74,7 +74,7 @@ export default function Association() {
                 <span className='text-sm'>{association.VilleAssociation}</span>
               </div>
               <div className="bg-orange-300 ">
-                {association.accreditée}
+                {association.accreditee}
               </div>
             </div>
           </div>

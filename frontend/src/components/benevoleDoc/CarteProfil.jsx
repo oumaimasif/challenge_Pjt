@@ -8,12 +8,12 @@ export default function CarteProfil({ profil }) {
         <img src={`http://localhost:5000/${profil.image}`}  alt="Photo de profil" className= 'h-auto w-full  md:border-none border-white shadow-lg md:rounded-tl-lg  md:rounded-none md:rounded-tr-lg  ' />
 
         <div className='flex  text-white px-5 pb-5 pt-2 flex-col space-y-2 '>
-          <span className='flex items-center justify-center  text-xl py-2 font-semibold gap-2'>{profil.nom} {profil.prenom}</span>
-          <span className='flex items-center text-base gap-2'> <Briefcase />{profil.profession}</span>
-          <span className='flex items-center  text-base gap-2'><MapPinned /> {profil.ville}</span>
-          <span className='flex items-center  text-base gap-2'><UserRoundCheck /> {profil.disponible}</span>
-          <span className='flex items-center  text-base gap-2'><Clock3 />{profil.heure}</span>
-          <span className='flex items-center  text-base gap-2'><CalendarHeart />{profil.categorie}</span>
+          <span className='flex items-center justify-center  text-xl py-2 font-semibold gap-2'>{profil.nom || ""} {profil.prenom || ""}</span>
+          <span className='flex items-center text-base gap-2'> <Briefcase />{profil.profession || "Non renseigné"}</span>
+          <span className='flex items-center  text-base gap-2'><MapPinned /> {profil.ville || "Non renseigné"}</span>
+          <span className='flex items-center  text-base gap-2'><UserRoundCheck /> {profil.disponible || "Non renseigné"}</span>
+          <span className='flex items-center  text-base gap-2'><Clock3 />{profil.heure || "Non renseigné"}</span>
+          <span className='flex items-center  text-base gap-2'><CalendarHeart />{profil.categories || "Non renseigné"}</span>
         </div>
 
       </div>
