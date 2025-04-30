@@ -16,23 +16,7 @@ router.get("/lists", async (req, res) => {
   const data = await Annonce.find();
   res.json(data);
 });
-
-// router.get("/benevoleProfil/:benevoleID", async (req, res) => {
-//   try {
-//     const Id = new mongoose.Types.ObjectId(req.params.benevoleID);
-//     const annonces = await Annonce.find({ benevoleID: Id });
-//     console.log("Requête reçue pour benevoleID:", req.params.benevoleID);
-//     console.log("Annonces trouvées:", annonces);
-//     res.json(annonces);
-//     console.log("Annonces  nbr: ", annonces.length);
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// });
-
-// list des annonces avec les ceateur
-// afficher annonces par benevoleID
-
+//*1
 router.get("/benevoleProfil/:benevoleID", async (req, res) => {
   try {
     const Id = new mongoose.Types.ObjectId(req.params.benevoleID);
@@ -53,7 +37,30 @@ router.get("/benevoleProfil/:benevoleID", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+//*2
+//Pour récuperer les annonces d'une association spécifique
+router.get("/associationProfil/:associationID", async (req, res) => {
+  try {
+    const Id = new mongoose.Types.ObjectId(req.params.associationID);
+    const annonces = await Annonce.aggregate([
+      { $match: { associationID: Id } },
+      {$lookup:{
+        from:"associations",
+        localField:"associationID",
+        foreignField:"_id",
+        as:"Association"
+      }},
+    ]);
+     console.log("associationID: ", annonces);
+    // console.log("Annonces trouvées av info benevole backend:", annonces);
+    res.json(annonces);
+    // console.log("Annonces  nbr: ", annonces.length);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
+//affichet les info du benevole dans annonceDetail
 router.get("/benevole/:id", async (req, res) => {
   try {
     const Id = new mongoose.Types.ObjectId(req.params.id); //convertire l'id en objectId
@@ -77,6 +84,7 @@ router.get("/association/:id", async (req, res) => {
   }
 });
 
+//annoncesDoc Plus D'information sur annonce
 router.get("/annonceDetail/:id", async (req, res) => {
   try {
     const annonceId = await Annonce.findById(req.params.id);
@@ -128,17 +136,6 @@ router.get("/", async (req, res) => {
     currentPage: page,
   });
   // console.log("la list des annonces publier par les associations : ", result);
-});
-
-//ajouter une association
-router.post("/add", async (req, res) => {
-  try {
-    const newAnnonce = new Annonce(req.body);
-    await newAnnonce.save();
-    res.status(200).json({ message: "Bien ajoutée" }, newAnnonce);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
 });
 
 //Route pour ajouter une annonce (av image stock partie serveur)

@@ -146,7 +146,7 @@ function FormBenevol() {
 
           <GroupChamps>
             <FormInput label="Email" name="email" type="email" value={formbenevole.email} onChange={handleChange} placeholder="votre.email@exemple.com" required />
-            <FormInput label="Numéro de téléphone" name="numeTelephone" type="tel" value={formbenevole.numeTelephone} onChange={handleChange} placeholder="0600000000 & 0700000000" required />
+            <FormInput label="Numéro de téléphone" name="numeTelephone" type="tel" value={formbenevole.numeTelephone} onChange={handleChange} placeholder="0600000000" required />
             {/* Password hash */}
             <div className='relative '>
               <FormInput

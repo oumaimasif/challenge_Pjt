@@ -51,7 +51,6 @@ export default function Annoncelist() {
     <>
       <div className=' bg-purple-100 pb-2 min-h-screen '>
 
-
         <div className='px-6 pt-24  md:pt-26  md:px-12 min-h-screen '>
           {loading === true ? (
             <div className='flex items-center mt-20 md:mt-40 lg:mt-52 justify-center '>
@@ -69,7 +68,7 @@ export default function Annoncelist() {
                 {annonces.length > 0 ? (
                   //afficher les cartes des annonces
 
-                  <div className=' mb-8 grid grid-cols-1 mt-12 gap-6 mx-2 md: md:grid-cols-3  auto-rows-fr md:gap-8'>
+                  <div className=' mb-8 grid grid-cols-1 mt-12 gap-6 mx-2 md:grid-cols-3  auto-rows-fr md:gap-8'>
                     {annonces.map((annonce) =>
                     (
                       <AnnonceCard key={annonce._id} annonce={annonce} />

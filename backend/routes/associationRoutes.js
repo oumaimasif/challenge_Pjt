@@ -11,25 +11,7 @@ router.get("/me", (req, res) => {
   console.log("liste des associaton ici console");
 });
 
-//afficher tt les association
-// router.get("/", async (req, res) => {
-//   try {
-//     const page = parseInt(req.query.page) || 1;
-//     const limit = parseInt(req.query.limit) || 12;
-//     const skip = (page - 1) * limit;
-
- // Compte le nombre total d'associations
-//  const totalAssociations = await Association.countDocuments();
-//     const data = await Association.find()
-//      .skip(skip).limit(limit).sort({createdAt:-1});
-//     res.json({associations:data,totalPages:Math.ceil(totalAssociations/limit),currentPage:page});
-//   } catch (error) {
-//     res.status(500).json({ message: "Erreur lors de la récupération des associations", error });
-
-//   }
-// });
-
-//cpt annonces
+//afficher tt les associations
 router.get("/", async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
@@ -76,6 +58,19 @@ router.get("/", async (req, res) => {
   }
 });
 
+//afficher profile
+router.get("/association/:id", async (req, res) => {
+  try {
+    const Id = new mongoose.Types.ObjectId(req.params.id);
+    const association = await Association.findOne({_id:Id});
+    if (!association) {
+      return res.status(404).json({ message: "association non trouvée" });
+    }
+    res.json(association);
+  } catch (error) {
+    res.status(500).json({ message: "Erreur serveur", error });
+  }
+});
 
 //ajouter une association
 router.post("/add", async (req, res) => {
@@ -140,19 +135,7 @@ router.post("/add_association", upload.single("image"), async (req, res) => {
   }
 });
 
-//afficher profile
-router.get("/association/:id", async (req, res) => {
-  try {
-    const Id = new mongoose.Types.ObjectId(req.params.id);
-    const association = await Association.findOne(Id);
-    if (!association) {
-      return res.status(404).json({ message: "association non trouvée" });
-    }
-    res.json(association);
-  } catch (error) {
-    res.status(500).json({ message: "Erreur serveur", error });
-  }
-});
+
 
 //supprimer une association
 router.delete("/:id", async (req, res) => {

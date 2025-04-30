@@ -17,7 +17,7 @@ import RecomendationBenevole from "./components/benevoleDoc/RecomendationBenevol
 import InfoProfile from "./components/benevoleDoc/InfoProfile"
 import Annonces from "./mespages/Annonces"
 import PlusInfo from "./components/annonceDoc/PlusInfo"
-import Association from "./components/associationDoc/Association"
+// import Association from "./components/associationDoc/Association"
 import FormAnnonce from "./components/annonceDoc/FormAnnonce"
 import FormDemandeAide from "./components/Demande/FormDemandeAide"
 import DemandeAide from "./mespages/DemandeAide"
@@ -32,7 +32,10 @@ import { AuthProvider } from "./context/Auth"
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AuthCheck from "./components/AuthCheck"
-
+import ProfileAss from "./components/associationDoc/ProfileAss"
+import InfoAssociation from "./components/associationDoc/InfoAssociation"
+import AnnonceAssociation from "./components/associationDoc/AnnonceAssociation"
+import RecomendationAssociation from "./components/associationDoc/RecomendationAssociation"
 
 
 
@@ -56,7 +59,7 @@ function App() {
 
           <Route path="/associations" element={<Associations />} />
           <Route path="/formAssociation" element={<FormAssociation />} />
-          <Route path="/association/:id" element={<Association />} />
+          {/* <Route path="/association/:id" element={<Association />} /> */}
 
           <Route path="/formBenevole" element={<FormBenevol />} />
 
@@ -77,6 +80,12 @@ function App() {
             <Route index element={<InfoProfile />} />
             <Route path="annonces" element={<AnnonceBenevole />} />
             <Route path="recomendation" element={<RecomendationBenevole />} />
+          </Route>
+
+          <Route path="/association/:id" element={<ProfileAss />} >
+            <Route index element={<InfoAssociation />} />
+            <Route path="annonces" element={<AnnonceAssociation />} />
+            <Route path="recomendation" element={<RecomendationAssociation />} />
           </Route>
 
           <Route path="/particuliers" element={<Particulier />} />

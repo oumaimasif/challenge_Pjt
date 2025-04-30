@@ -4,7 +4,10 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Pagination from '../components/Pagination';
+import { MapPin } from 'lucide-react';
+import CategoriesCard from '../components/formComponents/CategoriesCard';
 // import Notification from '../components/Notification';
+CategoriesCard
 
 
 
@@ -35,7 +38,7 @@ function Benevole() {
         const response = await axios.get(`http://localhost:5000/benevoles?page=${page}&limit=${limit}`);
         console.log(response.data.dataBenevole);
 
-        setBenevoles(response.data.dataBenevole||[]);
+        setBenevoles(response.data.dataBenevole || []);
         setTotalPages(response.data.totalPages);
         setLoading(false);
 
@@ -60,32 +63,8 @@ function Benevole() {
     }
   }
 
-  // useEffect(() => {
-  //   let isMounted = true;
-  //   const fetchBenevoles = async () => {
-  //     try {
-  //       const response = await axios.get("http://localhost:5000/benevoles");
-  //       console.log(response.data.dataBenevole);
-
-  //       if (isMounted) {
-
-  //         setBenevoles(response.data.dataBenevole);
-  //         setLoading(false);
-  //       }
-  //     } catch (error) {
-  //       console.log("Erreur lors du chargement des bénévoles :", error);
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchBenevoles();
-  //   return () => {
-  //     isMounted = false;
-  //   };
-  // }, []);
-
   return (
-    <div className="pt-24  bg-purple-200 px-6  md:px-12  md:pt-26  min-h-screen">
+    <div className="pt-24  bg-[#f7ece1] px-6  md:px-12  md:pt-26  min-h-screen">
 
       {/* <Notification/> */}
 
@@ -115,34 +94,44 @@ function Benevole() {
                 // whileHover={{ scale: 1.03 }}//ci en hover sur la carte
                 // whileTap={{ scale: 0.95 }}// si en click il n ouvre pas mais il fair un mouvement
                 >
-                  <div>
-                    <div className='flex justify-center items-center'>
-                      <img src={`http://localhost:5000/${benevole.image}`} alt={benevole.nom} className="rounded-full w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 object-cover" />
+                  <div className=' '>
+                    <div className='flex justify-between'>
+                      <div className=''>
+                        <img src={`http://localhost:5000/${benevole.image}`} alt={benevole.nom} className="rounded-full w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 border-4 border-purple-600 object-cover" />
+                      </div>
+
+                      <div>
+                        <span className=' border-2 border-purple-500 p-1 font-semibold text-gray-600 bg-orange-100 text-[8px] sm:text-[10px] rounded-3xl'>
+                          {benevole.annoncesCpt} annonce{benevole.annoncesCpt !== 1 ? 's' : ''}
+                        </span>
+                      </div>
                     </div>
 
-                    <div>
-                      <span className='absolute top-2 right-2 sm:top-3 sm:right-3 border border-purple-400 p-1 font-semibold text-gray-600 bg-orange-50 text-[8px] sm:text-[10px] rounded-3xl'>
-                        {benevole.annoncesCpt} annonce{benevole.annoncesCpt !== 1 ? 's' : ''}
-                      </span>
+                    <div className=' space-x-2 '>
+                      <h2 className="text-lg mt-2 sm:text-xl font-bold text-left text-gray-700">{benevole.nom || ''} {benevole.prenom || ''}</h2>
+                      <div className='flex items-center gap-2 '>
+                        <MapPin className='h-4 w-4 flex-shrink-0 text-orange-500' /> {benevole.ville && (<p className=" text-xs sm:text-sm">{benevole.ville}</p>)}
+                      </div>
                     </div>
 
-                    <div>
-                      <h2 className="text-lg sm:text-xl font-bold text-center truncate">{benevole.nom} {benevole.prenom}</h2>
-                      {benevole.ville && (<p className="text-center text-xs sm:text-sm">{benevole.ville}</p>)}
+                    <div className=' mt-1 py-1 text-gray-700'>
+                      {benevole.description && (
+                        <p className="text-xs sm:text-sm line-clamp-2">
+                          {benevole.description}
+                        </p>
+                      ) || 'Aucune description disponible.'}
                     </div>
 
-                    {benevole.description && (
-                      <p className="text-xs sm:text-sm text-gray-800 text-center line-clamp-2">
-                        {benevole.description}
-                      </p>
-                    )}
+                    <div className='pb-2'>
+                      <CategoriesCard categories={benevole.categorie} />
+                    </div>
 
-                    <div className="justify-center flex flex-wrap gap-2 sm:gap-3 md:gap-4 lg:gap-8 text-xs sm:text-sm">
+                    <div className=" flex flex-wrap items-center gap-2 text-xs lg:text-xs">
                       {benevole.disponible && (
-                        <span className="border border-orange-400 p-1 sm:p-2 rounded-3xl text-center">{benevole.disponible}</span>
+                        <span className="border border-orange-400 p-2 rounded-3xl ">{benevole.disponible}</span>
                       )}
                       {benevole.heure && (
-                        <span className="border border-orange-400 p-1 sm:p-2 rounded-3xl text-center">{benevole.heure}</span>
+                        <span className="border border-orange-400 p-2 rounded-3xl ">{benevole.heure}</span>
                       )}
                     </div>
 

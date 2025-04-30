@@ -1,4 +1,4 @@
-import React, {useState } from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { MdMenu, MdClose } from "react-icons/md";
 
@@ -24,12 +24,13 @@ function Header() {
                 </li>
 
                 <li className="relative group">
-                    <Link to="/associations" className={`text-xl lg:text-2xl font-semibold  py-2 ${location.pathname === "/associations" ? "text-purple-700" : "text-gray-700 hover:text-purple-700"}`}>
+                    <Link to="/associations" className={`text-xl lg:text-2xl font-semibold  py-2 ${location.pathname.includes("/associations") || location.pathname.includes("/association/")
+                        ? "text-purple-700" : "text-gray-700 hover:text-purple-700"}`}>
                         Associations
                         <span className={`absolute left-0 top-9 w-full  h-1 bg-[#f7932e] 
                           transition-transform duration-200 rounded-full origin-left
-                          ${location.pathname === "/associations" ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"} `}></span>
-
+                          ${location.pathname.includes("/associations") || location.pathname.includes("/association/")
+                                ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"} `}></span>
                     </Link>
                 </li>
 
@@ -48,18 +49,18 @@ function Header() {
                         Particuliers
                         <span className={`absolute left-0 top-9 w-full  h-1 bg-[#f7932e] 
                           transition-transform duration-200 rounded-full origin-left
-                          ${location.pathname === "/particuliers" || location.pathname.includes("/demandeAide") || location.pathname.includes("/particulier/")? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"} `}></span>
+                          ${location.pathname === "/particuliers" || location.pathname.includes("/demandeAide") || location.pathname.includes("/particulier/") ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"} `}></span>
 
                     </Link>
                 </li >
 
                 <li className="relative group">
-                    <Link to="/annonces" className={`text-xl lg:text-2xl font-semibold  py-2 ${location.pathname === "/annonces" ? "text-purple-700" : "text-gray-700 hover:text-purple-700"}`}>
+                    <Link to="/annonces" className={`text-xl lg:text-2xl font-semibold  py-2 ${location.pathname === "/annonces" || location.pathname.includes("/annonceDetail/") ? "text-purple-700" : "text-gray-700 hover:text-purple-700"}`}>
                         Annonces
                         <span className={`absolute left-0 top-9 w-full  h-1 bg-[#f7932e] 
                           transition-transform duration-200 rounded-full origin-left
-                          ${location.pathname === "/annonces" ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"} `}></span>
-
+                          ${location.pathname === "/annonces" || location.pathname.includes("/annonceDetail/")
+                          ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"} `}></span>
                     </Link>
                 </li >
 
@@ -76,7 +77,7 @@ function Header() {
                 <button
                     onClick={() => setIsOpen(!isOpen)}
                     className="md:hidden   text-gray-700 text-3xl focus:outline-none"
-                aria-expanded={isOpen}>
+                    aria-expanded={isOpen}>
                     {isOpen ? (
                         <MdClose className="h-8 w-8 text-purple-700" />
                     ) : (

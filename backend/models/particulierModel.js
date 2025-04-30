@@ -16,7 +16,7 @@ const particulierSchema = new mongoose.Schema({
       ville: { type: String, required: true },
       image: { type: String }, 
       role:{type:String, default:"Particulier",enum:["Particulier"]}
-})
+},{timestamps: true})
 
 const Particulier = mongoose.model("Particulier",particulierSchema);
 module.exports=Particulier;

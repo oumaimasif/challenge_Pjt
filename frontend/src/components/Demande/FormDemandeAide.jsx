@@ -11,9 +11,7 @@ import { HeartHandshake } from 'lucide-react';
 function FormDemandeAide() {
   const [formDemande, setFormDemande] = useState({
     particulier: "", titre: "",description: "",
-    dateBesoin: "", dateFin: "",
-    lieu: "", priorite: "Normale",
-    etreContacter: true,nombrebeneficiaires: 1
+    dateBesoin: "", dateFin: "",lieu: "", priorite: "Normale",etreContacter: true,nombrebeneficiaires: 1
   });
 
   const [selectedCtg, setSelectedCtg] = useState([]);
@@ -22,22 +20,23 @@ function FormDemandeAide() {
   const [isConfirme, setIsConfirme] = useState(false);
   const [particuliers, setParticuliers] = useState([]);
 
-  useEffect(() => {
-    const fetchParticuliers = async () => {
-      try {
-        const response = await axios.get('http://localhost:5000/particuliers');
-        setParticuliers(response.data);
-      } catch (error) {
-        console.error("Erreur lors de la récupération des particuliers", error);
-        setNotification({
-          type: 'error',
-          msg: "Impossible de charger la liste des particuliers"
-        });
-      }
-    };
+  // useEffect(() => {
+  //   const fetchParticuliers = async () => {
+  //     try {
+  //       const response = await axios.get('http://localhost:5000/particuliers/all');
+  //       console.log('tt particulier :',response.data)
+  //       setParticuliers(response.data);
+  //     } catch (error) {
+  //       console.error("Erreur lors de la récupération des particuliers", error);
+  //       setNotification({
+  //         type: 'error',
+  //         msg: "Impossible de charger la liste des particuliers"
+  //       });
+  //     }
+  //   };
 
-    fetchParticuliers();
-  }, []);
+  //   fetchParticuliers();
+  // }, []);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -90,15 +89,8 @@ function FormDemandeAide() {
       });
 
       setFormDemande({
-        particulier: "",
-        titre: "",
-        description: "",
-        dateBesoin: "",
-        dateFin: "",
-        lieu: "",
-        priorite: "Normale",
-        etreContacter: true,
-        nombrebeneficiaires: 1
+        particulier: "", titre: "", description: "",
+        dateBesoin: "",dateFin: "",lieu: "",priorite: "Normale",etreContacter: true,nombrebeneficiaires: 1
       });
       setSelectedCtg([]);
       setImage(null);
@@ -138,7 +130,7 @@ function FormDemandeAide() {
 
         <form onSubmit={(e) => { e.preventDefault(); setIsConfirme(true); }}
           className="space-y-6" encType="multipart/form-data" >
-          {/* Particulier */}
+          {/* Particulier
           <div className="mb-6 bg-blue-50 p-4 rounded-lg border-l-4 border-blue-400">
             <label className="block text-gray-700 font-medium mb-2">Sélectionnez votre profil</label>
             <select name="particulier" value={formDemande.particulier}
@@ -151,7 +143,7 @@ function FormDemandeAide() {
                 </option>
               ))}
             </select>
-          </div>
+          </div> */}
 
           {/* Titre */}
           <div className="mb-6">
@@ -203,19 +195,19 @@ function FormDemandeAide() {
           {/* Lieu et Priorité */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             <div>
-              <label className="block text-gray-700 font-medium mb-2">Lieu</label>
-              <input
-                type="text" name="lieu" value={formDemande.lieu}
+            <label className="block text-gray-700 font-medium mb-2" >Lieu
+            </label>
+              <input type="text" name="lieu" value={formDemande.lieu}
                 onChange={handleChange} placeholder="Adresse ou lieu concerné"
                 className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-              />
+                required /> 
+
             </div>
             <div>
               <label className="block text-gray-700 font-medium mb-2">Priorité</label>
               <select
                 name="priorite" value={formDemande.priorite} onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-              >
+                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all" >
                 <option value="Faible">Faible</option>
                 <option value="Normale">Normale</option>
                 <option value="Urgent">Urgent</option>
@@ -247,7 +239,7 @@ function FormDemandeAide() {
 
           {/* Image Upload - Déplacé avant le bouton */}
           <div className="mb-8 p-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border border-dashed border-gray-300">
-            <h3 className="text-lg font-medium text-center mb-4">Image illustrative (optionnelle)</h3>
+            <h3 className="text-lg font-medium text-center mb-4">Image (optionnelle)</h3>
             <ImageUploads onChange={setImage} />
           </div>
           
