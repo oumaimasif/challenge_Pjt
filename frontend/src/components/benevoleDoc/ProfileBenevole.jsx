@@ -41,8 +41,8 @@ const ProfileBenevole = () => {
             </div>
             
             {/* contenu principale */}
-            <div className='md:flex md:items-start gap-8 ml-6 pb-8 md:ml-44'>
-              <CarteProfil profil={profil} className="self-center " />
+            <div className='flex justify-center items-start flex-wrap gap-6 pb-8 '>
+              <CarteProfil profil={profil}  />
               <Outlet context={{ profil }} />
             </div>
 

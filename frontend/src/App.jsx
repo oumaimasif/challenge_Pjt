@@ -54,6 +54,7 @@ function App() {
 
         <Routes>
 
+          <Route path="/login" element={<Login />} />
           <Route path="/" element={<Acceuil />} />
           <Route path="/about" element={<Apropos />} />
 
@@ -97,16 +98,16 @@ function App() {
           <Route path="/demandeAide" element={<DemandeAide />} />
           <Route path="/demandeDetail/:id" element={<DemandeAideModal />} />
 
-          <Route path="/login" element={<Login />} />
+
 
           {/* routes protegees avec ProtectdRoute en indique le role */}
 
-          {/* <Route path="/adminDashboard" element={<AdminDashboard />} /> */}
-          <Route path="/adminDashboard" element={
+          <Route path="/adminDashboard" element={<AdminDashboard />} />
+          {/* <Route path="/adminDashboard" element={
             <ProtectedRoutes allowedRoles={["admin"]}>
               <AdminDashboard />
             </ProtectedRoutes>
-          } />
+          } /> */}
 
           <Route path="/assocaitionDashboard" element={
             <ProtectedRoutes allowedRoles={["association"]}>

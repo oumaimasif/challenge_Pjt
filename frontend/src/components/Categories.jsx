@@ -43,13 +43,13 @@ export default function Categories() {
 
     return (
         <>
-            <section className='p-8 bg-white relative -top-11 w-1/2  m-auto rounded-md shadow-md'>
-                <h1 className=" font-bold text-center mb-4 text-[#252525] text-3xl">Explorez par catégorie</h1>
-                <p className="text-center text-gray-600 mb-12">
+            <section className='py-8 px-2 bg-white relative -top-11 lg:w-1/2 w-8/12 m-auto rounded-md shadow-md'>
+                <h1 className=" font-bold lg:text-center mb-2 text-[#252525] text-xl lg:text-3xl">Explorez par catégorie</h1>
+                <p className="lg:text-center px-1 text-left text-gray-600 mb-12">
                     Découvrez des opportunités de bénévolat selon vos centres d'intérêt et vos compétences
                 </p>
 
-                <div className="flex flex-wrap justify-center gap-4 p-4  m-18">
+                <div className=" flex flex-wrap justify-center gap-2 lg:gap-5 ">
 
                     {categories && categories.length > 0 ? (
                         categories.map((categorie) => {
@@ -58,7 +58,7 @@ export default function Categories() {
                                 <div key={categorie._id} className="relative group ">
                                     <button
                                         onClick={() => navigate(`/annonces/categorie/${categorie._id}`)}
-                                        className="bg-[#18b710] text-white px-4 py-2 rounded-lg hover:bg-white  hover:text-gray-600 hover:border-green-600 hover:border-2 hover:py-1.5 "
+                                        className="bg-[#18b710] text-white lg:px-4 text-xs lg:text-xl lg:py-2 p-2 rounded-lg hover:bg-white  hover:text-gray-600 hover:border-green-600 hover:border-2 hover:py-1.5 "
                                     >
                                         {categorie.nom}
                                     </button>

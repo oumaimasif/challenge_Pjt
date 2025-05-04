@@ -9,6 +9,12 @@ router.get('/adminDashboard',verifierToken,checkRole(["admin"]),async(req,res)=>
     // console.log("adminnnn: ",admin[0].nom)+
     res.send(`Bienvenu sur le dashboard de l'admin : ${admin[0].nom}`)
 })
+router.get('/admin/benevoles',verifierToken,checkRole(["admin"]),async(req,res)=>{
+    // console.log("page Admin")
+    const admin = await Admin.find()
+    // console.log("adminnnn: ",admin[0].nom)+
+    res.send(`Bienvenu sur le dashboard de l'admin : ${admin[0].nom}`)
+})
 
 //test 
 

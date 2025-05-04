@@ -24,14 +24,3 @@ export default function GoHome() {
     )
 }
 
-/*
-import { ArrowLeftIcon } from 'lucide-react'
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-
-export default function Btnflech() {
-
-}
-
-
-*/

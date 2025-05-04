@@ -76,7 +76,7 @@ export default function ContactForm() {
 
   return (
     <>
-      <div className=' mx-12  py-10 mt-10 bg-[#530e4722] rounded-tl-3xl  rounded-tr-3xl  '>
+      <div className=' mx-4  lg:mx-12  py-10 lg:mt-24 mt-10 bg-[#530e4722] rounded-tl-3xl  rounded-tr-3xl  '>
 
         <div className='flex flex-col items-center space-y-4 text-center mb-10'>
           <div>
@@ -85,7 +85,7 @@ export default function ContactForm() {
           </div>
         </div>
 
-        <div className='grid grid-cols-1 mx-8 md:grid-cols-2 gap-10'>
+        <div className='grid grid-cols-1 mx-4 lg:mx-8 md:grid-cols-2 gap-10'>
           {/* -----------1------------ */}
           <div className='bg-white border-2 border-gray-400 rounded-lg p-6 '>
             <h2 className='text-2xl font-semibold mb-4'>Formulaire de contact

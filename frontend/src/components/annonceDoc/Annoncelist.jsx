@@ -18,25 +18,32 @@ export default function Annoncelist() {
   const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
+    let isMounted = true;//éviter de mettre à jour l'état après démontage
     const fetchAnnoces = async () => {
+      setLoading(true)
       try {
         const res = await axios.get(`http://localhost:5000/annonces?page=${page}&limit=${limit}`)
-        console.log("Annonces av info benevoles//associations", res.data.data)
-        setAnnonces(res.data.data || [])
-        setTotalPages(res.data.totalPages);
-        setLoading(false);
+        if (isMounted) {
+          console.log("Annonces av info benevoles//associations", res.data.data)
+          setAnnonces(res.data.data || [])
+          setTotalPages(res.data.totalPages);
+          setLoading(false);
+        }
       } catch (error) {
-        console.log("Erreur lors de chargement des annonces: ", error)
-        toast.error("Erreur lors du chargement des données. Veuillez réessayer.")
-        setLoading(false);
-
+        if (isMounted) {
+          console.log("Erreur lors de chargement des annonces: ", error)
+          toast.error("Erreur lors du chargement des données. Veuillez réessayer.")
+          setLoading(false);
+        }
       }
-
     }
     fetchAnnoces();
-  }, [page,limit])
 
-  
+    return () => { isMounted = false }// gerer le démontage(a nettoyer)
+    
+  }, [page, limit])
+
+
   //changement des pages
   const changePage = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages) {
@@ -51,9 +58,9 @@ export default function Annoncelist() {
     <>
       <div className=' bg-purple-100 pb-2 min-h-screen '>
 
-        <div className='px-6 pt-24  md:pt-26  md:px-12 min-h-screen '>
+        <div className='px-6 pt-24  md:pt-26  md:px-12 min-h-screen  '>
           {loading === true ? (
-            <div className='flex items-center mt-20 md:mt-40 lg:mt-52 justify-center '>
+            <div className='flex items-center mt-20 md:mt-40 lg:mt-52 mb-28  justify-center '>
               <img src="images/Spinner.svg" alt="Chargement des annonces..." className='w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-40 lg:h-40' />
             </div>
           ) :
@@ -82,13 +89,13 @@ export default function Annoncelist() {
                       <p className='text-lg md:text-xl text-gray-600'>Aucune annonce Trouvée.</p>
                     </div>
                   )
-                  
-                  }
-                 {/* Pagination */}
-                 {annonces.length > 0 &&
-                        (<Pagination page={page} totalPages={totalPages} onChangePage={changePage} />
-                        )}
-              </>        
+
+                }
+                {/* Pagination */}
+                {annonces.length > 0 &&
+                  (<Pagination page={page} totalPages={totalPages} onChangePage={changePage} />
+                  )}
+              </>
             )}
 
         </div>

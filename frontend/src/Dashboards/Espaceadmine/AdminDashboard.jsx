@@ -1,4 +1,5 @@
 import React from 'react'
+import PagePrincipal from './PagePrincipal'
 
 
 
@@ -6,7 +7,10 @@ export default function AdminDashboard() {
 
   return (
     <div>
-     <h2>Hello admine </h2>
+       <PagePrincipal />
+
+      
+      
     </div>
   )
 }

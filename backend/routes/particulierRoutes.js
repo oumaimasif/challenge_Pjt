@@ -125,7 +125,8 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-// // Récupérer les demandes d'aide d'un particulier spécifique
+// Récupérer les demandes d'aide d'un particulier spécifique
+//api profileparticulier (demandeCpt)
 router.get("/:id", async (req, res) => {
   try {
     const particulier = await Particulier.aggregate([
@@ -138,7 +139,7 @@ router.get("/:id", async (req, res) => {
         as:"demandes"
       }},{
         $addFields:{
-          demandesCpt :{$size :"$demandes"}
+          demandeCpt :{$size :"$demandes"}
         }
       },{
         $project:{ demandes:0}

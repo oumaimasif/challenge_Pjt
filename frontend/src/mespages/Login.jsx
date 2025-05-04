@@ -89,21 +89,21 @@ function Login() {
         }
     }
     return (
-        <div className=" bg-purple-300 text-white flex  justify-center max-w-full items-center min-h-screen ">
-            <div className="flex  flex-wrap text-gray-900 max-w-5xl my-20 py-6 shadow-sm overflow-hidden bg-white rounded-xl">
+        <div className=" bg-purple-300 text-white flex   justify-center max-w-full items-center min-h-screen ">
+            <div className="flex  flex-wrap text-gray-900 max-w-5xl my-20 py-6 shadow-sm overflow-hidden mx-6 bg-white rounded-xl">
 
-                <div className=" md:w-1/2 p-5 w-full md:flex  md:justify-center">
-                    <img src="/images/log.jpg" alt="logIn" className='w-full rounded-2xl shadow-md' />
+                <div className=" md:w-1/2  p-5 w-full flex justify-center">
+                    <img src="/images/log.jpg" alt="logIn" className='lg:w-full  rounded-2xl w-32 shadow-md' />
                 </div>
 
-                <div className=' md:w-[500px] py-4 px-5 m-auto'>
+                <div className='  py-4 px-5 m-auto'>
                     <h1 className='text-3xl font-bold text-center'>Connectez-vous</h1>
-                    <p className=' text-lx text-center text-gray-500 mt-4'>Entrez vos identifiants pour accéder à votre compte.</p>
+                    <p className='  break-all text-gray-500 mt-1'>Entrez vos identifiants pour accéder à votre compte.</p>
 
                     {/* ---------Partie Notification--------- */}
                     <Notification type={notification.type} msg={notification.msg} onClose={() => setNotification({ type: "", msg: "" })} />
 
-                    <form onSubmit={handleSubmit} className='mt-6 mr-5  space-y-4'>
+                    <form onSubmit={handleSubmit} className='mt-6  space-y-4'>
 
                         <div>
                             <label className=" block text-lg font-medium text-gray-700">Voter email </label>
@@ -122,7 +122,7 @@ function Login() {
                         </div>
 
 
-                        <div className=' flex justify-between items-center text-sm'>
+                        <div className=' flex justify-between items-center text-xs lg:text-sm'>
                             <label className='flex items-center '>
                                 <input type="checkbox" id='remenber' className='mr-2' />
                                 Se souvenir de moi !
@@ -137,13 +137,14 @@ function Login() {
                     </form>
 
                     <div className='m-6'>
-                        <p className='text-centre flex items-center justify-center space-y-8 text-gray-600'>Pas encore de compte ?</p>
-                        <div className='flex justify-center gap-3 mt-3'>
-                            <button onClick={() => navigate('/formBenevole')} className='px-4 py-2 rounded-md bg-blue-500 text-white font-medium hover:bg-blue-600  transition-all duration-200'>
-                                Bénévole
-                            </button>
+                        <p className='text-centre flex items-center  justify-center space-y-8 text-gray-600'>Pas encore de compte ?</p>
+                        <div className='flex justify-center flex-wrap gap-3 mt-3'>
+
                             <button onClick={() => navigate('/formAssociation')} className='px-4 py-2  rounded-md bg-orange-500 font-medium text-white hover:bg-orange-600 transition-all duration-200'>
                                 Association
+                            </button>
+                            <button onClick={() => navigate('/formBenevole')} className='px-4 py-2 rounded-md bg-blue-500 text-white font-medium hover:bg-blue-600  transition-all duration-200'>
+                                Bénévole
                             </button>
                             <button onClick={() => navigate('/formParticulier')} className='px-4 py-2  rounded-md bg-yellow-500 font-medium text-white hover:bg-yellow-500  transition-all duration-200'>
                                 Particulier

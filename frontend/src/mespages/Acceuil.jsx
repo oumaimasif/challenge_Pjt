@@ -17,7 +17,7 @@ function Acceuil() {
             <NoorWays />
             {/* <Numbers/>  */}
             <Categories />
-            <div className='grid md:grid-cols-2 md:gap-8'>
+            <div className='grid m-4 lg:m-12  gap-8 md:grid-cols-2 md:gap-8'>
                 <BtnAddannonce />
                 <BtnDemandeAide />
             </div>

@@ -9,7 +9,7 @@ export default function BtnDemandeAide() {
         navigate('/formDemandeAide');
     }
     return (
-        <div className=' flex flex-col mr-12 items-center justify-center p-6 my-12 bg-gradient-to-b from-blue-50 to-white rounded-xl shadow-md'>
+        <div className=' flex flex-col   items-center justify-center p-6  bg-gradient-to-b from-blue-50 to-white rounded-xl shadow-md'>
             <div className='text-centre mb-4'>
                 <h2 className="mb-3 text-xl md:text-2xl font-bold text-orange-600 ">Bession d'un coup de main</h2>
                 <p className='text-gray-600 mb-5 max-w-2xl mx-auto'>

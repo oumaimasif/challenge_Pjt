@@ -6,132 +6,141 @@ function Header() {
     const [isOpen, setIsOpen] = useState(false);
     const location = useLocation();
     return (
-        <nav className="bg-white z-50 fixed w-full flex justify-around py-6 gap-8 items-center shadow-custom ">
-            {/* //!responcive logo et btn connexion */}
-            <Link to="/">
-                <img src="/images/logorange.png" alt="NoorWays Logo" className="w-52" />
-            </Link>
+        <>
+            <nav className="bg-white z-50 fixed w-full  -top-0.5 py-6 flex gap-6 lg:gap-12 justify-center  items-center shadow-custom ">
+                {/* //!responcive logo et btn connexion */}
+                <Link to="/" >
+                    <img src="/images/logorange.png" alt="NoorWays Logo" className="hidden  md:block lg:w-52 md:w-40 sm:hidden w-32 ml-5 " />
+                </Link>
 
-            {/* Menu Prinsipale */}
-            <ul className="hidden md:flex space-x-4 lg:space-x-9">
-                <li className="relative group">
-                    <Link to="/" className={`text-xl lg:text-2xl font-semibold px-1 py-2 ${location.pathname === "/" ? "text-purple-700" : "text-gray-700 hover:text-purple-700"}`}>
-                        Accueil
-                        <span className={`absolute left-0 top-9 w-full  h-1 bg-[#f7932e] transition-transform duration-200 rounded-full origin-left ${location.pathname === "/" ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"} `}></span>
+                {/* Menu Prinsipale */}
+                <ul className="hidden md:flex space-x-4 lg:space-x-9">
+                    <li className="relative group">
+                        <Link to="/" className={`text-sm lg:text-xl font-semibold  py-2 ${location.pathname === "/" ? "text-purple-700" : "text-gray-700 hover:text-purple-700"}`}>
+                            Accueil
+                            <span className={`absolute left-0 top-6 lg:top-9 w-full  h-1 bg-[#f7932e] transition-transform duration-200 rounded-full origin-left ${location.pathname === "/" ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"} `}></span>
 
 
-                    </Link>
-                </li>
+                        </Link>
+                    </li>
 
-                <li className="relative group">
-                    <Link to="/associations" className={`text-xl lg:text-2xl font-semibold  py-2 ${location.pathname.includes("/associations") || location.pathname.includes("/association/")
-                        ? "text-purple-700" : "text-gray-700 hover:text-purple-700"}`}>
-                        Associations
-                        <span className={`absolute left-0 top-9 w-full  h-1 bg-[#f7932e] 
+                    <li className="relative group">
+                        <Link to="/associations" className={`text-sm lg:text-xl font-semibold  py-2 ${location.pathname.includes("/associations") || location.pathname.includes("/association/")
+                            ? "text-purple-700" : "text-gray-700 hover:text-purple-700"}`}>
+                            Associations
+                            <span className={`absolute left-0 top-6 lg:top-9 w-full  h-1 bg-[#f7932e] 
                           transition-transform duration-200 rounded-full origin-left
                           ${location.pathname.includes("/associations") || location.pathname.includes("/association/")
-                                ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"} `}></span>
-                    </Link>
-                </li>
+                                    ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"} `}></span>
+                        </Link>
+                    </li>
 
-                <li className="relative group">
-                    <Link to="/benevoles" className={`text-xl lg:text-2xl font-semibold  py-2 ${location.pathname.includes("/benevoles") || location.pathname.includes("/profileBenevole/") ? "text-purple-700" : "text-gray-700 hover:text-purple-700"}`}>
-                        Bénévoles
-                        <span className={`absolute left-0 top-9 w-full  h-1 bg-[#f7932e] 
+                    <li className="relative group">
+                        <Link to="/benevoles" className={`text-sm lg:text-xl font-semibold  py-2 ${location.pathname.includes("/benevoles") || location.pathname.includes("/profileBenevole/") ? "text-purple-700" : "text-gray-700 hover:text-purple-700"}`}>
+                            Bénévoles
+                            <span className={`absolute left-0 top-6 lg:top-9 w-full  h-1 bg-[#f7932e] 
                           transition-transform duration-200 rounded-full origin-left
                           ${location.pathname.includes("/benevoles") || location.pathname.includes("/profileBenevole/") ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"} `}></span>
 
-                    </Link>
-                </li >
+                        </Link>
+                    </li >
 
-                <li className="relative group">
-                    <Link to="/particuliers" className={`text-xl lg:text-2xl font-semibold  py-2 ${location.pathname === "/particuliers" || location.pathname.includes("/demandeAide") || location.pathname.includes("/particulier/") ? "text-purple-700" : "text-gray-700 hover:text-purple-700"}`}>
-                        Particuliers
-                        <span className={`absolute left-0 top-9 w-full  h-1 bg-[#f7932e] 
+                    <li className="relative group">
+                        <Link to="/particuliers" className={`text-sm lg:text-xl font-semibold  py-2 ${location.pathname === "/particuliers" || location.pathname.includes("/demandeAide") || location.pathname.includes("/particulier/") ? "text-purple-700" : "text-gray-700 hover:text-purple-700"}`}>
+                            Particuliers
+                            <span className={`absolute left-0 top-6 lg:top-9 w-full  h-1 bg-[#f7932e] 
                           transition-transform duration-200 rounded-full origin-left
                           ${location.pathname === "/particuliers" || location.pathname.includes("/demandeAide") || location.pathname.includes("/particulier/") ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"} `}></span>
 
-                    </Link>
-                </li >
+                        </Link>
+                    </li >
 
-                <li className="relative group">
-                    <Link to="/annonces" className={`text-xl lg:text-2xl font-semibold  py-2 ${location.pathname === "/annonces" || location.pathname.includes("/annonceDetail/") ? "text-purple-700" : "text-gray-700 hover:text-purple-700"}`}>
-                        Annonces
-                        <span className={`absolute left-0 top-9 w-full  h-1 bg-[#f7932e] 
+                    <li className="relative group">
+                        <Link to="/annonces" className={`text-sm lg:text-xl font-semibold  py-2 ${location.pathname === "/annonces" || location.pathname.includes("/annonceDetail/") ? "text-purple-700" : "text-gray-700 hover:text-purple-700"}`}>
+                            Annonces
+                            <span className={`absolute left-0 top-6 lg:top-9 w-full  h-1 bg-[#f7932e] 
                           transition-transform duration-200 rounded-full origin-left
                           ${location.pathname === "/annonces" || location.pathname.includes("/annonceDetail/")
-                          ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"} `}></span>
+                                    ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"} `}></span>
+                        </Link>
+                    </li >
+
+                </ul >
+                <div className=" hidden md:block">
+                    <Link to="/login" className="bg-purple-700 text-white px-2 py-2 lg:px-4 text-sm lg:text-xl font-bold rounded-full hover:bg-[#841f75] duration-500">
+                        Connexion
                     </Link>
-                </li >
+                </div>
 
-            </ul >
-            <div className="md:ml-4 hidden md:block">
-                <Link to="/login" className="bg-purple-700 text-white px-4 py-2 text-base lg:text-xl font-bold rounded-full hover:bg-[#841f75] duration-500">
-                    Connexion
+
+                <div className=" py-2 ">
+                <Link to="/" >
+                    <img src="/images/minilogorange.png" alt="NoorWays Logo" className=" w-8 h-8  md:hidden absolute left-6 top-4 " />
                 </Link>
-            </div>
+                    {/* btn icone menu mobile */}
+                    <div className="absolute top-3 right-3 ">
+                        <button
+                            onClick={() => setIsOpen(!isOpen)}
+                            className="md:hidden   text-gray-700 text-3xl  focus:outline-none"
+                           >
+                            {isOpen ? (
+                                <MdClose className="h-8 w-8 text-purple-700" />
+                            ) : (
+                                <MdMenu className="h-8 w-8 text-purple-700" />
+                            )}            
+                            </button>
+                    </div>
 
+                    {/*menu responsive */}
 
-            <div>
-                {/* btn icone menu mobile */}
-                <button
-                    onClick={() => setIsOpen(!isOpen)}
-                    className="md:hidden   text-gray-700 text-3xl focus:outline-none"
-                    aria-expanded={isOpen}>
-                    {isOpen ? (
-                        <MdClose className="h-8 w-8 text-purple-700" />
-                    ) : (
-                        <MdMenu className="h-8 w-8" />
-                    )}            </button>
+                    {
+                        isOpen && (
+                            <div className="absolute w-4/5 mt-6 top-10 bg-opacity-95 sm:top-[40px] right-0  bg-white rounded-b-2xl shadow-lg md:hidden z-40">
 
-                {/*menu responsive */}
+                                <ul className="flex flex-col p-4 ">
+                                    <li className="border-b border-purple-500 pb-2">
+                                        <Link to="/" className={`block text-lg font-semibold py-2 ${location.pathname === "/" ? "text-[#f7932e]" : "text-purple-700 hover:text-[#f7932e]"}`} onClick={() => setIsOpen(false)}>
+                                            Accueil
+                                        </Link>
+                                    </li>
+                                    <li className="border-b  border-purple-500 py-2">
+                                        <Link to="/associations" className={`block text-lg font-semibold py-2 ${location.pathname === "/associations" ? "text-[#f7932e]" : "text-purple-700 hover:text-[#f7932e]"}`}
+                                            onClick={() => setIsOpen(false)}> Associations
+                                        </Link>
+                                    </li>
+                                    <li className="border-b border-purple-500 py-2">
+                                        <Link to="/benevoles" className={`block text-lg font-semibold py-2 ${location.pathname === "/benevoles" ? "text-[#f7932e]" : "text-purple-700 hover:text-[#f7932e]"}`}
+                                            onClick={() => setIsOpen(false)}> Bénévoles
+                                        </Link>
+                                    </li>
+                                    <li className="border-b border-purple-500 py-2">
+                                        <Link to="/particuliers" className={`block text-lg font-semibold py-2 ${location.pathname === "/particuliers" ? "text-[#f7932e]" : "text-purple-700 hover:text-[#f7932e]"}`}
+                                            onClick={() => setIsOpen(false)}> Particuliers
+                                        </Link>
+                                    </li>
 
-                {
-                    isOpen && (
-                        <div className="absolute w-4/5 mt-6 sm:-mt-5 sm:top-24 right-0  bg-white rounded-b-2xl shadow-lg md:hidden z-40">
-
-                            <ul className="flex flex-col p-4 ">
-                                <li className="border-b border-purple-500 py-2">
-                                    <Link to="/" className={`block text-lg font-semibold py-2 ${location.pathname === "/" ? "text-[#f7932e]" : "text-purple-700 hover:text-[#f7932e]"}`} onClick={() => setIsOpen(false)}>
-                                        Accueil
-                                    </Link>
-                                </li>
-                                <li className="border-b border-purple-500 py-2">
-                                    <Link to="/associations" className={`block text-lg font-semibold py-2 ${location.pathname === "/associations" ? "text-[#f7932e]" : "text-purple-700 hover:text-[#f7932e]"}`}
-                                        onClick={() => setIsOpen(false)}> Associations
-                                    </Link>
-                                </li>
-                                <li className="border-b border-purple-500 py-2">
-                                    <Link to="/benevoles" className={`block text-lg font-semibold py-2 ${location.pathname === "/benevoles" ? "text-[#f7932e]" : "text-purple-700 hover:text-[#f7932e]"}`}
-                                        onClick={() => setIsOpen(false)}> Bénévoles
-                                    </Link>
-                                </li>
-                                <li className="border-b border-purple-500 py-2">
-                                    <Link to="/particuliers" className={`block text-lg font-semibold py-2 ${location.pathname === "/particuliers" ? "text-[#f7932e]" : "text-purple-700 hover:text-[#f7932e]"}`}
-                                        onClick={() => setIsOpen(false)}> Particuliers
-                                    </Link>
-                                </li>
-
-                                <li className="border-b border-purple-500 py-2">
-                                    <Link to="/annonces" className={`block text-lg font-semibold py-2 ${location.pathname === "/annones" ? "text-[#f7932e]" : "text-purple-700 hover:text-[#f7932e]"}`}
-                                        onClick={() => setIsOpen(false)}> Annonces
-                                    </Link>
-                                </li>
-                                <li className=" p-6 border-t ">
-                                    <Link
-                                        to="/login"
-                                        className="block w-full bg-purple-700 text-center text-white px-4 py-3 text-lg font-bold rounded-full hover:bg-[#872078] transition-colors duration-300 shadow-md"
-                                        onClick={() => setIsOpen(false)}
-                                    >
-                                        Connexion
-                                    </Link>
-                                </li>
-                            </ul>
-                        </div>
-                    )
-                }
-            </div>
-        </nav >
+                                    <li className="border-b border-purple-500 py-2">
+                                        <Link to="/annonces" className={`block text-lg font-semibold py-2 ${location.pathname === "/annonces" ? "text-[#f7932e]" : "text-purple-700 hover:text-[#f7932e]"}`}
+                                            onClick={() => setIsOpen(false)}> Annonces
+                                        </Link>
+                                    </li>
+                                    <li className=" p-6 border-t ">
+                                        <Link
+                                            to="/login"
+                                            className="block w-full bg-purple-700 text-center text-white px-4 py-3 text-lg font-bold rounded-full hover:bg-[#872078] transition-colors duration-300 shadow-md"
+                                            onClick={() => setIsOpen(false)}
+                                        >
+                                            Connexion
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </div>
+                        )
+                    }
+                </div>
+            </nav >
+            
+        </>
     )
 }
 export default Header;

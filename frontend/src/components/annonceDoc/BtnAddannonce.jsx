@@ -9,7 +9,7 @@ function BtnAddannonce() {
     }
 
   return (
-    <div className=' flex flex-col ml-12 items-center justify-center p-6 my-12 bg-gradient-to-b from-blue-50 to-white rounded-xl shadow-md'>
+    <div className=' flex flex-col items-center justify-center p-6  bg-gradient-to-b from-blue-50 to-white rounded-xl shadow-md'>
         <div className='text-centre mb-4'>
         <h2 className="mb-3 text-xl md:text-2xl font-bold text-orange-600">Vous avez un projet ou un besoin en bénévoles ?
         </h2>

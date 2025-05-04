@@ -1,3 +1,4 @@
+import { CalendarDays, CalendarDaysIcon } from "lucide-react";
 
 export const DateString = (date) => {
     const dateFormatee = new Date(date).toLocaleDateString("fr-FR", {
@@ -21,3 +22,16 @@ export const DateString = (date) => {
 //    }
 //     return age;
 // }
+
+export const TodayDate = () => {
+    const today = new Date().toLocaleDateString('fr-FR', {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+    })
+    return (
+        <div className="text-sm text-gray-600 flex items-center">
+            <CalendarDays className=" size-5 mr-2"/>
+            {today.charAt(0).toUpperCase() + today.slice(1)}
+
+        </div>
+    )
+}

@@ -29,7 +29,7 @@ export default function ProfileParticulier() {
 
                 setParticulier(particulierResponse.data || []);
 
-                //on va recuperer tt les demandes d'aide du particulier
+                //on va recuperer tt les demandes d'aide du particulier damandecpt
                 try {
                     const demandesResponse = await axios.get(`http://localhost:5000/demandeAide/particulier/${id}`);
                     console.log("Demandes ", demandesResponse.data);
@@ -111,7 +111,7 @@ export default function ProfileParticulier() {
 
                         {/* Nbt demande d'aide  */}
                         <div className='absolute top-0 left-0 z-30 bg-yellow-600 text-white py-1 px-3 rounded-br-xl'>
-                            {particulier.demandesCpt || 0} demande{particulier.demandesCpt === 1 ? '' : 's'}
+                            {particulier.demandeCpt || 0} demande{particulier.demandeCpt === 1 ? '' : 's'}
                         </div>
 
                     </div>
