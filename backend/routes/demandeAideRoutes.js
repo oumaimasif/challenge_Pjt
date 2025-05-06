@@ -4,14 +4,23 @@ const DemandeAide = require("../models/demandeAideModel");
 const upload = require("../multerconfig");
 const mongoose = require("mongoose");
 const Particulier = require("../models/particulierModel");
+const { enregistrerActiviter } = require("./activiteUtils");
+const { verifierToken } = require("../auth");
 
 router.get("/me", (req, res) => {
   res.send(" Demandes d'aide ");
 });
 
 // Ajouter une nouvelle demande d'aide av image
-router.post("/add", upload.single("image"), async (req, res) => {
+router.post("/add", verifierToken, upload.single("image"), async (req, res) => {
   try {
+
+    
+    if (req.user.role === "particulier") {
+      req.body.particulier = req.user.id;
+    } else {
+      return res.status(403).json({ error: "Seuls les particuliers peuvent créer des demandes d'aide" });
+    }
     // Vérifier si le particulier existe
     const particulier = await Particulier.findById(req.body.particulier);
     if (!particulier) {
@@ -36,6 +45,14 @@ router.post("/add", upload.single("image"), async (req, res) => {
     const nouvelleDemande = new DemandeAide(demandeData);
     await nouvelleDemande.save();
 
+    await enregistrerActiviter(
+      "demande",
+      "Nouvelle demande d'aide",
+      `Demande créée: ${nouvelleDemande.titre}`,
+      "demande",
+      req.user.id,
+      req.user.role // 'particulier'
+    );
     res.status(201).json({
       message: "Demande d'aide créée avec succès",
       demande: nouvelleDemande,
@@ -78,7 +95,7 @@ router.get("/", async (req, res) => {
     res.status(200).json({
       demandes: demandes,
       totalPages: Math.ceil(totalDemandesAide / limit),
-      currentPage: page
+      currentPage: page,
     });
   } catch (error) {
     res.status(500).json({ error: error.message });

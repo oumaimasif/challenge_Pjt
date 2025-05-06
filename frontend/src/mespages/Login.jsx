@@ -19,21 +19,27 @@ function Login() {
     const { login } = useContext(Auth);
     const navigate = useNavigate();
 
-    useEffect(()=>{
+    useEffect(() => {
         const queryPrams = new URLSearchParams(window.location.search);// ! acceder a url apres ? 
         const expired = queryPrams.get('expired')// / extraire value expired => login?exipred=true
-        if(expired==="true"){
-         toast.error('Votre session a expiré, veuillez vous reconnecter.')
-        //nettoyager url+ indicateur wasLoggedIn apres msg affiche
-         localStorage.removeItem('wasLoggedIn')
-         window.history.replaceState({}, document.title, '/login');
+        if (expired === "true") {
+            toast.error('Votre session a expiré, veuillez vous reconnecter.')
+            //nettoyager url+ indicateur wasLoggedIn apres msg affiche
+            localStorage.removeItem('wasLoggedIn')
+            window.history.replaceState({}, document.title, '/login');
         }
-    },[])
+    }, [])
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            const response = await axios.post(`http://localhost:5000/login`, { email, password })
+            // const response = await axios.post(`http://localhost:5000/login`, { email, password })
+            const response = await axios.post(`http://localhost:5000/login`, { email, password }, {
+                // Désactivez temporairement la vérification SSL pour le développement local
+                httpsAgent: {
+                    rejectUnauthorized: false
+                }
+            });
             console.log(`email : ${email}, password :${password} `)
             const { token, user } = response.data;
 
@@ -52,16 +58,16 @@ function Login() {
                     if (decoded.role === "admin") {
                         navigate("/adminDashboard");
                     } else if (decoded.role === "association") {
-                        navigate("/associationDashboard")
+                        navigate(`/association/${user.id || decoded.id}`)
                     } else if (decoded.role === "benevole") {
-                        navigate("/benevoleDashboard")
+                        navigate(`/profileBenevole/${user.id || decoded.id}`)
                     } else if (decoded.role === "particulier") {
-                        navigate("/particulierDashboard")
+                        navigate(`/particulier/${user.id || decoded.id}`)
                     } else {
                         // Par défaut, on redirige vers la page d'accueil
                         navigate('/');
                     }
-                }, 1500);
+                }, 1000);
             }
             else {
                 console.log("Token non reçu !")
@@ -154,7 +160,7 @@ function Login() {
 
                 </div>
             </div>
-            <GoHome/>
+            <GoHome />
         </div>
 
     )

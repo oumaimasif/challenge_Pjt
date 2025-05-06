@@ -6,8 +6,11 @@ import { toast } from 'react-toastify';
 import Pagination from '../components/Pagination';
 import { MapPin } from 'lucide-react';
 import CategoriesCard from '../components/formComponents/CategoriesCard';
+import SearchBar from '../components/formComponents/SearchBar';
+
+
 // import Notification from '../components/Notification';
-CategoriesCard
+
 
 
 
@@ -17,25 +20,27 @@ function Benevole() {
   const [benevoles, setBenevoles] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const [search,setSearch] =useState('');
+
 
   // États pour la pagination
   const [limit] = useState(12) //nbr elements par page
   const [page, setPage] = useState(1);//current page
   const [totalPages, setTotalPages] = useState(1);
 
-  // Animation pour les cartes
-  const cardVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: (index) => ({
-      opacity: 1,
-      y: 0,
-      transition: { delay: index * 0.2, duration: 0.4 },
-    })
-  };
+  // // Animation pour les cartes
+  // const cardVariants = {
+  //   hidden: { opacity: 0, y: 50 },
+  //   visible: (index) => ({
+  //     opacity: 1,
+  //     y: 0,
+  //     transition: { delay: index * 0.2, duration: 0.4 },
+  //   })
+  // };
   useEffect(() => {
     const fetchBenevoles = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/benevoles?page=${page}&limit=${limit}`);
+        const response = await axios.get(`http://localhost:5000/benevoles?page=${page}&limit=${limit}&search=${search}`);
         console.log(response.data.dataBenevole);
 
         setBenevoles(response.data.dataBenevole || []);
@@ -51,7 +56,7 @@ function Benevole() {
 
     fetchBenevoles();
 
-  }, [page, limit]);
+  }, [page, limit,search]);
 
   //changement des pages
   const changePage = (newPage) => {
@@ -81,15 +86,16 @@ function Benevole() {
         </div>
       ) : (
         <>
+        <SearchBar search={search} setSearch={setSearch}/>
           <div className="grid grid-cols-1  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 px-2 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-5 ">
             {benevoles.length > 0 ? (
               benevoles.map((benevole, index) => (
-                <motion.div
+                <div
                   key={benevole._id}
                   className="relative hover:scale-[1.01] bg-white space-y-2 sm:space-y-3 mb-4 sm:mb-5 border rounded-lg shadow-lg p-3 sm:p-4 flex flex-col justify-between"
-                  variants={cardVariants}
-                  initial="hidden"
-                  animate="visible"
+                  // variants={cardVariants}
+                  // initial="hidden"
+                  // animate="visible"
                 // custom={index}// affiche les cartes une apret l'autre
                 // whileHover={{ scale: 1.03 }}//ci en hover sur la carte
                 // whileTap={{ scale: 0.95 }}// si en click il n ouvre pas mais il fair un mouvement
@@ -142,7 +148,7 @@ function Benevole() {
                       Voir le profil
                     </button>
                   </div>
-                </motion.div>
+                </div>
 
               ))
             ) : (

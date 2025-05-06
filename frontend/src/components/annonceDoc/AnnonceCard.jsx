@@ -1,4 +1,4 @@
-import { AlertCircle, AlertTriangle, CheckCircle, ChevronDown, Info, Tag } from 'lucide-react'
+import { AlertCircle, AlertTriangle, CheckCircle, ChevronDown, Clock, Info, Tag } from 'lucide-react'
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -29,6 +29,11 @@ export default function AnnonceCard({ annonce }) {
         <TypeIcon className='w-5 h-5 flex-shrink-0' />
         <span className={` text-gray-700 font-semibold  w-min py-1 px-2 rounded-br-2xl`}>{annonce.type || "Type inconnu"}</span>
       </div>
+      {annonce.terminer && (<div className="absolute bg-indigo-300 top-0 right-0 z-10 text-white  font-semibold  py-1 px-2 rounded-bl-xl flex items-center ">
+        <Clock className="h-4 w-4 text-white mr-1" />
+        <span>{annonce.terminer }</span>
+      </div>)}
+
 
 
       {/* image des association (serveur) */}
@@ -64,13 +69,13 @@ export default function AnnonceCard({ annonce }) {
           </div>
         </div>
         {/* Bouton de détails avec effet */}
-          <Link
-            to={`/annonceDetail/${annonce._id}`}
-            className=' flex items-center justify-center text-center bg-violet-500 text-white py-3 my-4  rounded-full 
+        <Link
+          to={`/annonceDetail/${annonce._id}`}
+          className=' flex items-center justify-center text-center bg-violet-500 text-white py-3 my-4  rounded-full 
           hover:bg-violet-600 transition-all duration-300  hover:shadow-lg'
-          >
-            Voir les détails <ChevronDown size={18} />
-          </Link>
+        >
+          Voir les détails <ChevronDown size={18} />
+        </Link>
       </div>
     </div>
   )

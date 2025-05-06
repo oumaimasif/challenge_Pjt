@@ -36,6 +36,8 @@ import ProfileAss from "./components/associationDoc/ProfileAss"
 import InfoAssociation from "./components/associationDoc/InfoAssociation"
 import AnnonceAssociation from "./components/associationDoc/AnnonceAssociation"
 import RecomendationAssociation from "./components/associationDoc/RecomendationAssociation"
+import GestionAssociation from "./components/associationDoc/GestionAssociation"
+
 
 
 
@@ -63,12 +65,13 @@ function App() {
           {/* <Route path="/association/:id" element={<Association />} /> */}
 
           <Route path="/formBenevole" element={<FormBenevol />} />
+          <Route path="/formAnnonce" element={<FormAnnonce />} />
 
-          <Route path="/formAnnonce" element={
+          {/* <Route path="/formAnnonce" element={
             <ProtectedRoutes allowedRoles={["association", "benevole"]}>
               <FormAnnonce />
             </ProtectedRoutes>
-          } />
+          } /> */}
 
           <Route path="/add_annonces" element={<FormAnnonce />} />
 
@@ -102,13 +105,32 @@ function App() {
 
           {/* routes protegees avec ProtectdRoute en indique le role */}
 
-          <Route path="/adminDashboard" element={<AdminDashboard />} />
-          {/* <Route path="/adminDashboard" element={
+          {/* <Route path="/adminDashboard" element={<AdminDashboard />} /> */}
+          {/* <Route path="/admin/benevoles" element={<AdminBenevoles />} /> */}
+          <Route path="/adminDashboard" element={
             <ProtectedRoutes allowedRoles={["admin"]}>
               <AdminDashboard />
             </ProtectedRoutes>
-          } /> */}
+          } />
 
+          <Route path="/association/:id/gestion" element={
+            <ProtectedRoutes allowedRoles={["association"]}>
+              <GestionAssociation />
+            </ProtectedRoutes>
+          } />
+
+          <Route path="/editAnnonce/:id" element={
+            <ProtectedRoutes allowedRoles={["association", "benevole"]}>
+              <FormAnnonce />
+            </ProtectedRoutes>
+          } />
+
+          <Route path="/editAssociation/:id" element={
+            <ProtectedRoutes allowedRoles={["association", "admin"]}>
+              <FormAssociation  />
+            </ProtectedRoutes>
+          } />
+          {/* 
           <Route path="/assocaitionDashboard" element={
             <ProtectedRoutes allowedRoles={["association"]}>
               <AssocaitionDashboard />
@@ -121,7 +143,7 @@ function App() {
 
             </ProtectedRoutes>
 
-          } />
+          } /> */}
 
           <Route path="/particulierDashboard" element={<ParticulierDashboard />} />
 

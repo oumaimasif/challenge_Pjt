@@ -4,6 +4,8 @@ const Association = require("../models/associationModel");
 const upload = require("../multerconfig");
 const { default: mongoose } = require("mongoose");
 const bcrypt = require("bcryptjs");
+const { enregistrerActiviter } = require("./activiteUtils");
+const { verifierToken } = require("../auth");
 
 //test
 router.get("/me", (req, res) => {
@@ -23,8 +25,17 @@ router.get("/", async (req, res) => {
         //lookup pr joindre les annonces liées a chaque association
         $lookup: {
           from: "annonces",
-          localField: "_id",
-          foreignField: "associationID",
+          // localField: "_id",
+          // foreignField: "associationID",
+          let: { associationID: "$_id" },
+          pipeline: [
+            {
+              $match: {
+                $expr: { $eq: ["$associationID", "$$associationID"] },
+                statut: "Publié", // Filtrer uniquement les annonces publiées
+              },
+            },
+          ],
           as: "annonces",
         },
       },
@@ -33,10 +44,10 @@ router.get("/", async (req, res) => {
       },
       { $project: { annonces: 0 } },
       //tri par date de cration
-      {$sort:{createdAt:-1}},
+      { $sort: { createdAt: -1 } },
       //pagination
-      {$skip:skip},
-      {$limit:limit}
+      { $skip: skip },
+      { $limit: limit },
     ]);
 
     // Compte le nombre total d'associations
@@ -46,15 +57,13 @@ router.get("/", async (req, res) => {
     res.json({
       associations: associations,
       totalPages: Math.ceil(totalAssociations / limit),
-      currentPage: page
+      currentPage: page,
     });
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        message: "Erreur lors de la récupération des associations",
-        error,
-      });
+    res.status(500).json({
+      message: "Erreur lors de la récupération des associations",
+      error,
+    });
   }
 });
 
@@ -62,7 +71,7 @@ router.get("/", async (req, res) => {
 router.get("/association/:id", async (req, res) => {
   try {
     const Id = new mongoose.Types.ObjectId(req.params.id);
-    const association = await Association.findOne({_id:Id});
+    const association = await Association.findOne({ _id: Id });
     if (!association) {
       return res.status(404).json({ message: "association non trouvée" });
     }
@@ -135,8 +144,6 @@ router.post("/add_association", upload.single("image"), async (req, res) => {
   }
 });
 
-
-
 //supprimer une association
 router.delete("/:id", async (req, res) => {
   try {
@@ -150,6 +157,72 @@ router.delete("/:id", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       message: "Erreur lors de la suppression de l'association",
+      error: error.message,
+    });
+  }
+});
+
+router.put("/update/:id",verifierToken, upload.single("image"), async (req, res) => {
+  try {
+    const assID = req.params.id;
+    const existe = await Association.findById(assID);
+    if (!existe) {
+      return res.status(404).json({ message: "Association non trouvée" });
+    }
+
+    // Préparer les données à mettre à jour
+    const updateData = { ...req.body };
+
+    if (req.file) {
+      updateData.image = req.file.path;
+    }
+
+    if (req.body.categorie) {
+      try {
+        updateData.categorie = JSON.parse(req.body.categorie);
+      } catch (e) {
+        updateData.categorie = [req.body.categorie];
+      }
+    }
+
+    //Etat accrédité
+    let accrediteeValue = req.body.accreditee;
+    if (Array.isArray(accrediteeValue)) {
+      accrediteeValue = accrediteeValue[0];
+    }
+    updateData.accreditee = accrediteeValue === "true";
+
+    // a modifier sauf s'il est fourni)
+    if (req.body.password && req.body.password.trim() !== "") {
+      const salt = await bcrypt.genSalt(10);
+      updateData.password = await bcrypt.hash(req.body.password, salt);
+    } else {
+      // ne pas modifier s il n'est pas fourni
+      delete updateData.password;
+    }
+
+    const updatedAssociation = await Association.findByIdAndUpdate(
+      assID,
+      updateData,
+      { new: true } // Retourner l'objet mis à jour
+    );
+    // Enregistrer l'activité
+    await enregistrerActiviter(
+      "modification",//type activiter
+      "Modification d'association",//titre
+      `Association modifiée: ${updatedAssociation.nomAssociation}`,//description
+      "association",//categorie
+      req.user.id,//id de user
+      req.user.role//role de user 
+    );
+    res.status(200).json({
+      message: "Association mise à jour avec succès",
+      association: updatedAssociation,
+    });
+  } catch (error) {
+    console.error("Erreur lors de la mise à jour:", error);
+    res.status(500).json({
+      message: "Erreur lors de la mise à jour de l'association",
       error: error.message,
     });
   }

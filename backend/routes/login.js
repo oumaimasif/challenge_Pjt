@@ -59,7 +59,7 @@ if(!user.password){
       },
       process.env.JWT_SECRET,
       {
-        expiresIn: "2m",
+        expiresIn: "24h",
       }
     );
 

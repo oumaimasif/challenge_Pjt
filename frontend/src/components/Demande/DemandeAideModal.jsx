@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { AlertTriangle, CheckCircle, Info, MapPin, Calendar, Users, X, Tag } from 'lucide-react';
+import { AlertTriangle, CheckCircle, Info, MapPin, Calendar, Users, X, Tag, ExternalLink } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function DemandeAideModal({ demandeId, onClose }) {
     const [demande, setDemande] = useState(null);
@@ -87,6 +88,12 @@ export default function DemandeAideModal({ demandeId, onClose }) {
                                         <Tag className="w-5 h-5 text-purple-500" />
                                         <span className="text-gray-700">Nom: {demande.particulier.nom} {demande.particulier.prenom}</span>
                                     </div>
+                                                         <Link
+                                                           to={`/particulier/${demande.particulier._id}`}
+                                                           className='text-purple-600 hover:text-purple-800 inline-flex items-center mt-2 text-sm'
+                                                         >
+                                                           Voir le profil <ExternalLink className='h-3 w-3 ml-1' />
+                                                      </Link>
                                     {demande.etreContacter && (
                                         <p className="text-green-600 text-sm font-medium mt-1">
                                             ✓ Ce particulier souhaite être contacté pour sa demande

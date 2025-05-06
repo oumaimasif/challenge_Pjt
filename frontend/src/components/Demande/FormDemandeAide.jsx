@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import Notification from '../Notification';
 import Confirmation from '../Confirmation';
@@ -7,13 +7,14 @@ import CategoriesDropDown from '../CategoriesDropDown';
 // Form Components
 import ImageUploads from '../formComponents/ImageUploads';
 import { HeartHandshake } from 'lucide-react';
+import { Auth } from '../../context/Auth';
 
 function FormDemandeAide() {
   const [formDemande, setFormDemande] = useState({
     particulier: "", titre: "",description: "",
     dateBesoin: "", dateFin: "",lieu: "", priorite: "Normale",etreContacter: true,nombrebeneficiaires: 1
   });
-
+  const {user}= useContext(Auth)
   const [selectedCtg, setSelectedCtg] = useState([]);
   const [image, setImage] = useState(null);
   const [notification, setNotification] = useState({ type: '', msg: '' });
@@ -52,6 +53,23 @@ function FormDemandeAide() {
     setNotification({ type: '', msg: '' });
   };
 
+    useEffect(()=>{
+      if (!user) {
+        setNotification({
+          type: 'error',
+          msg: "Vous devez etre connecté pour créer une demande d'aide (particulier) "
+        })
+  
+  
+        window.scrollTo({ top: 1, behavior: 'smooth' })//remonter en haut de la page
+        setTimeout(() => {
+          // setNotification({ type: '', msg: '' });
+          navigate('/login')
+  
+        },8000 );
+      }
+    },[user,navigate])
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsConfirme(false);
@@ -76,9 +94,11 @@ function FormDemandeAide() {
         formData.append("image", image);
       }
 
+      const token = localStorage.getItem('token');
+
       const res = await axios.post("http://localhost:5000/demandeAide/add", formData, {
         headers: {
-          'Content-Type': 'multipart/form-data'
+          'Content-Type': 'multipart/form-data','Authorization':`Bearer ${token}`
         }
       });
 
@@ -104,9 +124,12 @@ function FormDemandeAide() {
 
     } catch (error) {
       console.error("Erreur lors de l'ajout de la demande", error);
+
+      const errormsg = error.response?.data?.error || error.response?.data?.msg || error.response?.data?.message ||
+      "Erreur lors de l'envoi de la demande d'aide. Veuillez réessayer.";
       setNotification({
         type: 'error',
-        msg: "Erreur lors de l'envoi de la demande d'aide. Veuillez réessayer."
+        msg: errormsg
       });
 
       setTimeout(() => {
@@ -176,8 +199,7 @@ function FormDemandeAide() {
             <div>
               <label className="block text-gray-700 font-medium mb-2">Date de besoin</label>
               <input
-                type="date"
-                name="dateBesoin"
+                type="date" name="dateBesoin"
                 value={formDemande.dateBesoin} onChange={handleChange} className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                 required
               />
@@ -185,8 +207,7 @@ function FormDemandeAide() {
             <div>
               <label className="block text-gray-700 font-medium mb-2">Date limite (optionnelle)</label>
               <input type="date"
-                name="dateFin"
-                value={formDemande.dateFin} onChange={handleChange}
+                name="dateFin" value={formDemande.dateFin} onChange={handleChange}
                 className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
               />
             </div>

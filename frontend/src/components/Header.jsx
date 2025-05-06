@@ -1,10 +1,16 @@
-import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { MdMenu, MdClose } from "react-icons/md";
+import { Auth } from "../context/Auth";
+import EspaceMenu from "./EspaceMenu";
+
 
 function Header() {
     const [isOpen, setIsOpen] = useState(false);
     const location = useLocation();
+    const navigate = useNavigate();
+
+    const { user } = useContext(Auth);
     return (
         <>
             <nav className="bg-white z-50 fixed w-full  -top-0.5 py-6 flex gap-6 lg:gap-12 justify-center  items-center shadow-custom ">
@@ -67,28 +73,34 @@ function Header() {
 
                 </ul >
                 <div className=" hidden md:block">
-                    <Link to="/login" className="bg-purple-700 text-white px-2 py-2 lg:px-4 text-sm lg:text-xl font-bold rounded-full hover:bg-[#841f75] duration-500">
-                        Connexion
-                    </Link>
+                    {
+                        user ? (
+                            <EspaceMenu />
+                        ) : (
+                            <Link to="/login" className="bg-purple-700 text-white px-2 py-2 lg:px-4 text-sm lg:text-xl font-bold rounded-full hover:bg-[#841f75] duration-500">
+                                Connexion
+                            </Link>
+                        )
+                    }
                 </div>
 
 
                 <div className=" py-2 ">
-                <Link to="/" >
-                    <img src="/images/minilogorange.png" alt="NoorWays Logo" className=" w-8 h-8  md:hidden absolute left-6 top-4 " />
-                </Link>
+                    <Link to="/" >
+                        <img src="/images/minilogorange.png" alt="NoorWays Logo" className=" w-8 h-8  md:hidden absolute left-6 top-4 " />
+                    </Link>
                     {/* btn icone menu mobile */}
                     <div className="absolute top-3 right-3 ">
                         <button
                             onClick={() => setIsOpen(!isOpen)}
                             className="md:hidden   text-gray-700 text-3xl  focus:outline-none"
-                           >
+                        >
                             {isOpen ? (
                                 <MdClose className="h-8 w-8 text-purple-700" />
                             ) : (
                                 <MdMenu className="h-8 w-8 text-purple-700" />
-                            )}            
-                            </button>
+                            )}
+                        </button>
                     </div>
 
                     {/*menu responsive */}
@@ -125,13 +137,41 @@ function Header() {
                                         </Link>
                                     </li>
                                     <li className=" p-6 border-t ">
-                                        <Link
-                                            to="/login"
-                                            className="block w-full bg-purple-700 text-center text-white px-4 py-3 text-lg font-bold rounded-full hover:bg-[#872078] transition-colors duration-300 shadow-md"
-                                            onClick={() => setIsOpen(false)}
-                                        >
-                                            Connexion
-                                        </Link>
+                                        {
+                                            user ? (
+                                                <div className="space-y-2">
+                                                    <button className="bg-purple-700 text-center text-white px-4 py-3 text-lg font-bold rounded-full hover:bg-[#872078] transition-colors duration-300 shadow-md"
+                                                        onClick={() => {
+                                                            setIsOpen(false);
+                                                            const { role } = user;
+                                                            if (role === "admin") navigate('/adminDashboard')
+                                                            else if (role === "association") navigate(`/association/${user._id}`)
+                                                            else if (role === "benevole") navigate(`/profileBenevole/${user._id}`);
+                                                            else if (role === 'particulier') navigate(`/particulier/${user._id}`);
+                                                        }}>
+
+                                                        Mon espace
+                                                    </button>
+                                                    <button onClick={() => {
+                                                        logout();
+                                                        navigate('/');
+                                                        setIsOpen(false)
+                                                    }} className="block w-full bg-gray-200 text-centre text-purple-700 px-4 py-3 text-lg font-bold rounded-full hover:bg-gray-300 transition-colors duration-300 shadow-md">
+                                                        Déconnexion
+                                                    </button>
+
+                                                </div>
+                                            ) : (
+                                                <Link
+                                                    to="/login"
+                                                    className="block w-full bg-purple-700 text-center text-white px-4 py-3 text-lg font-bold rounded-full hover:bg-[#872078] transition-colors duration-300 shadow-md"
+                                                    onClick={() => setIsOpen(false)}
+                                                >
+                                                    Connexion
+                                                </Link>
+                                            )
+                                        }
+
                                     </li>
                                 </ul>
                             </div>
@@ -139,7 +179,7 @@ function Header() {
                     }
                 </div>
             </nav >
-            
+
         </>
     )
 }

@@ -3,6 +3,11 @@ const router = express.Router();
 const Benevole = require("../models/benevoleModel");
 const upload = require("../multerconfig");
 const bcrypt = require("bcryptjs");
+const { enregistrerActiviter } = require("./activiteUtils");
+const {verifierToken, checkRole}= require("../auth");
+const { mquery } = require("mongoose");
+
+
 
 //test
 router.get("/me", async (req, res) => {
@@ -22,12 +27,40 @@ router.get("/", async (req, res) => {
     const limit = parseInt(req.query.limit) || 12; //nbr de benevoles par page
     const skip = (page - 1) * limit; //element à sauter
 
+    //partie recherche
+    const search =req.query.search||"";
+    const querySearch = search?{
+      $or :[
+        {nom:{$regex :search,$options:"i"}},
+        {prenom:{$regex :search,$options:"i"}},
+        {ville:{$regex :search,$options:"i"}},
+        {description:{$regex :search,$options:"i"}},
+        {disponible:{$regex :search,$options:"i"}},
+        {heure:{$regex :search,$options:"i"}},
+        {disponible:{$regex :search,$options:"i"}},
+        // {"categorie.label":{$regex :search,$options:"i"}},
+        // { categorie: { $elemMatch: { label: { $regex: search, $options: "i" } } } },
+        { categorie: { $regex: search, $options: "i" } }
+
+      ]
+
+    }:{};
     const benevoles = await Benevole.aggregate([
+      {$match :querySearch},
       {
         $lookup: {
           from: "annonces",
-          localField: "_id",
-          foreignField: "benevoleID",
+          // localField: "_id",
+          // foreignField: "benevoleID",
+          let: { benevoleId: "$_id" },
+          pipeline: [
+            { 
+              $match: { 
+                $expr: { $eq: ["$benevoleID", "$$benevoleId"] },
+                statut: "Publié" // Filtrer uniquement les annonces publiées
+              } 
+            }
+          ],
           as: "annonces",
         },
       },
@@ -46,7 +79,7 @@ router.get("/", async (req, res) => {
       { $limit: limit },
     ]);
 
-    const totalBen = await Benevole.countDocuments(); //pr calculer nbr de pages
+    const totalBen = await Benevole.countDocuments(querySearch); //pr calculer nbr de pages &condition
     // console.log("totalBen: ", totalBen);
 
     res.json({
@@ -72,7 +105,7 @@ router.get("/", async (req, res) => {
 //   }
 // });
 
-//ajouter avec image (=> uploadsBenevole)
+//ajouter avec image (=> uploadsBenevole) + enregistrerActiviter
 router.post("/add", upload.single("image"), async (req, res) => {
   try {
     const pathImage = req.file
@@ -101,6 +134,11 @@ router.post("/add", upload.single("image"), async (req, res) => {
       password: hashePassword,
     });
     await newBenevole.save();
+    await enregistrerActiviter(
+      'inscription','Nouvelle inscription',`${newBenevole.nom} ${newBenevole.prenom} (Bénévole)`,
+      'benevole', newBenevole._id,
+      'benevole'
+    )
     res
       .status(201)
       .json({ message: "Benevole enregistré avec succès ", newBenevole });

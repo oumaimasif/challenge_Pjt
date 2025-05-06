@@ -82,8 +82,17 @@ router.get("/", async (req, res) => {
         //lookup pr joindre les annonces liées a chaque association
         $lookup: {
           from: "demandeaides",
-          localField: "_id",
-          foreignField: "particulier",
+          // localField: "_id",
+          // foreignField: "particulier",
+          let: { particulier: "$_id" },
+          pipeline: [
+            { 
+              $match: { 
+                $expr: { $eq: ["$particulier", "$$particulier"] },
+                statut: "Accepté" // Filtrer uniquement les annonces publiées
+              } 
+            }
+          ],
           as: "demandes",
         },
       },
@@ -134,8 +143,17 @@ router.get("/:id", async (req, res) => {
       {$match:{_id:new mongoose.Types.ObjectId(req.params.id)}},
       {$lookup:{
         from:"demandeaides",
-        localField:"_id",
-        foreignField:"particulier",
+        // localField:"_id",
+        // foreignField:"particulier",
+        let: { particulier: "$_id" },
+        pipeline: [
+          { 
+            $match: { 
+              $expr: { $eq: ["$particulier", "$$particulier"] },
+              statut: "Accepté" // Filtrer uniquement les annonces publiées
+            } 
+          }
+        ],
         as:"demandes"
       }},{
         $addFields:{

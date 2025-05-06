@@ -5,7 +5,8 @@ const adminSchema = new mongoose.Schema({
   password: { type: String, required: true },
   nom: { type: String, required: true },
   role: { type: String, default: "Admin", enum: ["Admin"] },
-});
+  
+},{ timestamps: true });
 
 const Admin = mongoose.model("Admin", adminSchema);
 module.exports = Admin;

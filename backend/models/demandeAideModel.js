@@ -11,9 +11,11 @@ const demandeSchema = new mongoose.Schema({
       description:{type:String,required:true},
       dateBesoin:{type:Date} ,
       dateFin:{type:Date, required:false},
-      statute:{type :String,enum:["En attente", "Accepté", "Refusé", "Rasolu"],
+      statute:{type :String,enum:["En attente", "Accepté", "Refusé"],
         default:"En attente"
       },
+      terminer:{type :String,enum:["En cours", "Terminé"],
+        default:"En cours"},
       lieu:{type:String, requierd: false},
       priorite: { type: String,
         enum: [ "Faible", "Normale","Urgent"], default: "Normale" }, // Priorité de la demande

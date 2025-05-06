@@ -14,7 +14,7 @@ export default function ModalContact({ association, benevole, onClose }) {
                     <X />
                 </button>
                 <div className=' space-x-4'>
-                    <h2 className='text-xl p-2 font-bold text-purple-900 mb-4'>N'hésitez pas à contacter l'association </h2>
+                    <h2 className='text-xl p-2 font-bold text-purple-900 mb-4'>N'hésitez pas à nous Contactez </h2>
                     {benevole && (
                         <div className=' space-y-3'>
                             <div>
