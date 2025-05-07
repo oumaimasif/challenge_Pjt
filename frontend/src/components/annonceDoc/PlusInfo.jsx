@@ -241,13 +241,13 @@ export default function PlusInfo() {
           <div className='flex items-center gap-4 justify-center m-8  '>
 
             {/* gerer les btns */}
-            <button
+            {/* <button
               className='p-4  w-full bg-purple-500  text-white py-3 rounded-lg flex items-center justify-center 
           hover:bg-violet-600 transition-all duration-300  hover:shadow-lg'
             >
               <User className="mr-2" />
               <Ccomment annonceId={detail._id}/>
-            </button>
+            </button> */}
 
             <button
               onClick={() => { setShowContactModal(true) }}
@@ -273,6 +273,14 @@ export default function PlusInfo() {
               <Share2 />
             </button> */}
           </div>
+
+          <div className='p-6'>
+  <h2 className='text-xl font-semibold text-purple-700 mb-4'>Commentaires</h2>
+  <Ccomment 
+    Type="annonce" 
+    typeId={detail._id} 
+  />
+</div>
         </div>
         <div className='my-8 text-center'>
           <Link to="/annonces" className='text-purple-600 hover:text-purple-800'>

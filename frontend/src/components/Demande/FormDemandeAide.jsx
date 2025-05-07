@@ -8,6 +8,7 @@ import CategoriesDropDown from '../CategoriesDropDown';
 import ImageUploads from '../formComponents/ImageUploads';
 import { HeartHandshake } from 'lucide-react';
 import { Auth } from '../../context/Auth';
+import { useNavigate } from 'react-router-dom';
 
 function FormDemandeAide() {
   const [formDemande, setFormDemande] = useState({
@@ -20,6 +21,7 @@ function FormDemandeAide() {
   const [notification, setNotification] = useState({ type: '', msg: '' });
   const [isConfirme, setIsConfirme] = useState(false);
   const [particuliers, setParticuliers] = useState([]);
+  const navigate = useNavigate();
 
   // useEffect(() => {
   //   const fetchParticuliers = async () => {
@@ -57,16 +59,24 @@ function FormDemandeAide() {
       if (!user) {
         setNotification({
           type: 'error',
-          msg: "Vous devez etre connecté pour créer une demande d'aide (particulier) "
+          msg: "Vous devez être connecté en tant que particulier pour créer une demande d'aide."
         })
-  
-  
         window.scrollTo({ top: 1, behavior: 'smooth' })//remonter en haut de la page
         setTimeout(() => {
           // setNotification({ type: '', msg: '' });
           navigate('/login')
   
-        },8000 );
+        },6000 );
+      } else if(user.role ==='benevole' || user.role ==="association"){
+        setNotification({
+          type: 'error',
+          msg:`En tant que ${user.role}, vous pouvez uniquement créer des annonces.`
+        })
+        window.scrollTo({ top: 1, behavior: 'smooth' })//remonter en haut de la page
+        setTimeout(() => {
+          navigate('/formAnnonce')
+        },6000 );
+
       }
     },[user,navigate])
 

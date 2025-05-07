@@ -73,7 +73,6 @@ export default function RecomendationAssociation() {
   // a supprimer
   const handleDelete = async () => {
     if (!userRecommendation) return;
-
     try {
       const token = localStorage.getItem('token');
       await axios.delete(

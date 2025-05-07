@@ -12,7 +12,8 @@ const activiteSchema = new mongoose.Schema(
         "suppression",
         "annonce",
         "demande",
-        "ajouter"
+        "ajouter",//recommender
+        "comment"
 
       ],
     },
@@ -28,7 +29,8 @@ const activiteSchema = new mongoose.Schema(
         "annonce",
         "demande",
         "admin",
-        "recommendation"
+        "recommendation",
+        "commentaire",
       ],
     },
     utilisateurId: {
@@ -48,5 +50,4 @@ const activiteSchema = new mongoose.Schema(
 );
 
 const Activite = mongoose.model('Activite', activiteSchema);
-
 module.exports = Activite;

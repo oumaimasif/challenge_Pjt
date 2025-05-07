@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { AlertTriangle, CheckCircle, Info, MapPin, Calendar, Users, X, Tag, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import Ccomment from '../formComponents/Ccomment';
 
 export default function DemandeAideModal({ demandeId, onClose }) {
     const [demande, setDemande] = useState(null);
@@ -88,12 +89,12 @@ export default function DemandeAideModal({ demandeId, onClose }) {
                                         <Tag className="w-5 h-5 text-purple-500" />
                                         <span className="text-gray-700">Nom: {demande.particulier.nom} {demande.particulier.prenom}</span>
                                     </div>
-                                                         <Link
-                                                           to={`/particulier/${demande.particulier._id}`}
-                                                           className='text-purple-600 hover:text-purple-800 inline-flex items-center mt-2 text-sm'
-                                                         >
-                                                           Voir le profil <ExternalLink className='h-3 w-3 ml-1' />
-                                                      </Link>
+                                    <Link
+                                        to={`/particulier/${demande.particulier._id}`}
+                                        className='text-purple-600 hover:text-purple-800 inline-flex items-center mt-2 text-sm'
+                                    >
+                                        Voir le profil <ExternalLink className='h-3 w-3 ml-1' />
+                                    </Link>
                                     {demande.etreContacter && (
                                         <p className="text-green-600 text-sm font-medium mt-1">
                                             ✓ Ce particulier souhaite être contacté pour sa demande
@@ -171,11 +172,18 @@ export default function DemandeAideModal({ demandeId, onClose }) {
                             </div>
 
                             {/* Bouton d'action en bas */}
-                            <div className="flex justify-center pt-4">
+                            <div className="mt-6 border-t pt-4">
+                                <h2 className="text-lg font-semibold text-gray-800 mb-3">Commentaires</h2>
+                                <Ccomment
+                                    Type="demande"
+                                    typeId={demandeId}
+                                />
+                            </div>
+                            {/* <div className="flex justify-center pt-4">
                                 <button className="bg-[#fece0e] text-white py-2 px-6 rounded-full hover:bg-violet-600 transition-all duration-300 hover:shadow-lg">
                                     Proposer mon aide
                                 </button>
-                            </div>
+                            </div> */}
                         </div>
                     </>
                 ) : (

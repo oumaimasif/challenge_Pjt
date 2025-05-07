@@ -15,11 +15,7 @@ router.get("/me", async (req, res) => {
   console.log("voila la route du test");
 });
 
-// afficher la lists les bénévoles
-// router.get("/", async (req, res) => {
-//   const dataBenevole = await Benevole.find();
-//   res.json({ message: "Voila la list des benevoles ", dataBenevole });
-// });
+
 
 router.get("/", async (req, res) => {
   try {
@@ -91,19 +87,6 @@ router.get("/", async (req, res) => {
     res.status(500).json({ msg: "Erreur serveur", error });
   }
 });
-
-// //ajouter Benevole
-// router.post("/add_benevole", async (req, res) => {
-//   try {
-//     const newBenevole = new Benevole(req.body);
-//     await newBenevole.save();
-//     res
-//       .status(201)
-//       .json({ message: "Benevole enregistré avec succès ", newBenevole });
-//   } catch (error) {
-//     res.status(400).json({ message: "Erreur lors de l'ajout", error });
-//   }
-// });
 
 //ajouter avec image (=> uploadsBenevole) + enregistrerActiviter
 router.post("/add", upload.single("image"), async (req, res) => {
