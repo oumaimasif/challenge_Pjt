@@ -12,6 +12,7 @@ const activiteSchema = new mongoose.Schema(
         "suppression",
         "annonce",
         "demande",
+        "ajouter"
 
       ],
     },
@@ -27,6 +28,7 @@ const activiteSchema = new mongoose.Schema(
         "annonce",
         "demande",
         "admin",
+        "recommendation"
       ],
     },
     utilisateurId: {

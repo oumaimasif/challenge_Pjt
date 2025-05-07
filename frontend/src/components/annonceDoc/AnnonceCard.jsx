@@ -1,7 +1,6 @@
 import { AlertCircle, AlertTriangle, CheckCircle, ChevronDown, Clock, Info, Tag } from 'lucide-react'
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-
 export default function AnnonceCard({ annonce }) {
 
 
