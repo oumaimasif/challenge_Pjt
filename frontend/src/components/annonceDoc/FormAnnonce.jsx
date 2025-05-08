@@ -137,11 +137,10 @@ function FormAnnonce() {
       const formData = new FormData();
 
       for (const key in formAnnonce) {
-        if (key === "statut" && user.role !== "admin")
-        {
+        if (key === "statut" && user.role !== "admin") {
           continue;
         }
-          formData.append(key, formAnnonce[key]);
+        formData.append(key, formAnnonce[key]);
       }
 
       formData.append("categories", JSON.stringify(selectedCategories));
@@ -203,14 +202,14 @@ function FormAnnonce() {
       // Redirection vers la page des annonces après un délai selon le role
       setTimeout(() => {
         // navigate(modeEdition ? `` : '/annonces');
-          if (user.role === "association") {
-            navigate(`/association/${user.id}/gestion`)
-          } else if (user.role === "benevole") {
-            navigate(`/profileBenevole/${user.id}/gestion`)
-          } else {
-            navigate("/annonceDetail/${id}")
-          }
-        
+        if (user.role === "association") {
+          navigate(`/association/${user.id}/gestion`)
+        } else if (user.role === "benevole") {
+          navigate(`/profileBenevole/${user.id}/gestion`)
+        } else {
+          navigate("/annonceDetail/${id}")
+        }
+
 
       }, 2000);
 
@@ -379,17 +378,23 @@ function FormAnnonce() {
           {/* Statut de publication */}
           <div className="flex items-center mb-6 bg-gray-50 p-4 rounded-md">
             <label className="block text-gray-700 font-medium mb-2 mr-4">Statut</label>
+            {/* <select
+              name="statut"
+              value={formAnnonce.statut}
+              onChange={handleChange}
+              // disabled={user.role !== "admin"}
+              className={`w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all 
+                ${user.role !== "admin" ? "bg-gray-100 cursor-not-allowed" : ""}`}
+            > */}
             <select
               name="statut"
               value={formAnnonce.statut}
               onChange={handleChange}
-              disabled={user.role !== "admin"}
-              className={`w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all 
-                ${user.role !== "admin" ? "bg-gray-100 cursor-not-allowed" : ""}`}
+              className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
             >
               <option value="brouillon">Brouillon</option>
               <option value="publie">Publier immédiatement</option>
-              {user.role === "admin" && <option value="Rejeté">Rejeter</option>}
+              {/* {user.role === "admin" && <option value="Rejeté">Rejeter</option>} */}
             </select>
             {user.role !== "admin" && (
               <p className='text-xs text-gray-500 mt-1'>

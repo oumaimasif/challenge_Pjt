@@ -39,12 +39,20 @@ router.post("/", async (req, res) => {
     console.log("User 4444: ", user);
 
     //compare password envoyé & password hashé
-if(!user.password){
-
-  return res.status(400).json({msg:"Problème avec le compte utilisateur."})
-}
+    if (!user.password) {
+      return res
+        .status(400)
+        .json({ msg: "Problème avec le compte utilisateur." });
+    }
     const IsMtach = await bcrypt.compare(password, user.password);
-    console.log("IsMtach for password:",IsMtach , " ,password:",password, " ,user.password",user.password);
+    console.log(
+      "IsMtach for password:",
+      IsMtach,
+      " ,password:",
+      password,
+      " ,user.password",
+      user.password
+    );
     if (!IsMtach)
       return res.status(400).json({ msg: "Mot de passe incorrect" });
 
@@ -59,7 +67,7 @@ if(!user.password){
       },
       process.env.JWT_SECRET,
       {
-        expiresIn: "24h",
+        expiresIn: "24h", //50s,
       }
     );
 
@@ -74,7 +82,6 @@ if(!user.password){
         role: role,
       },
     });
-
   } catch (error) {
     res.status(500).json({ msg: error.message });
   }

@@ -130,7 +130,7 @@ const GestionBenevole = () => {
           <TodayDate />
         </div>
         <Link
-          to={`/benevole/${id}`}
+          to={`/profileBenevole/${id}`}
           className="text-purple-600 hover:text-purple-800 flex items-center"
         >
           ← Retour au profil

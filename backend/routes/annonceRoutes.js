@@ -359,4 +359,33 @@ router.delete("/:id", verifierToken,async (req, res) => {
     }
   });
 
+  // Route pour récupérer toutes les annonces liées à un bénévole
+router.get("/allAnnoncesByBenevole/:benevoleID", verifierToken, async (req, res) => {
+  try {
+    // Vérifier si l'utilisateur est admin ou le bénévole concerné
+    if (req.user.role !== "admin" && req.user.id !== req.params.benevoleID) {
+      return res.status(403).json({ message: "Accès non autorisé" });
+    }
+
+    const Id = new mongoose.Types.ObjectId(req.params.benevoleID);
+    const annonces = await Annonce.aggregate([
+      { $match: { benevoleID: Id } },
+      {
+        $lookup: {
+          from: "benevoles",
+          localField: "benevoleID",
+          foreignField: "_id",
+          as: "Benevole",
+        },
+      },
+      // Tri par date de création (plus récentes d'abord)
+      { $sort: { createdAt: -1 } }
+    ]);
+    
+    res.json(annonces);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 module.exports = router;

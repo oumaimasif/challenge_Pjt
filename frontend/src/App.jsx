@@ -37,6 +37,7 @@ import InfoAssociation from "./components/associationDoc/InfoAssociation"
 import AnnonceAssociation from "./components/associationDoc/AnnonceAssociation"
 import RecomendationAssociation from "./components/associationDoc/RecomendationAssociation"
 import GestionAssociation from "./components/associationDoc/GestionAssociation"
+import GestionBenevole from "./components/benevoleDoc/GestionBenevole"
 
 
 
@@ -118,6 +119,11 @@ function App() {
               <GestionAssociation />
             </ProtectedRoutes>
           } />
+          <Route path="/profileBenevole/:id/gestion" element={
+            <ProtectedRoutes allowedRoles={["benevole"]}>
+              <GestionBenevole />
+            </ProtectedRoutes>
+          } />
 
           <Route path="/editAnnonce/:id" element={
             <ProtectedRoutes allowedRoles={["association", "benevole"]}>
@@ -127,9 +133,16 @@ function App() {
 
           <Route path="/editAssociation/:id" element={
             <ProtectedRoutes allowedRoles={["association", "admin"]}>
-              <FormAssociation  />
+              <FormAssociation />
             </ProtectedRoutes>
           } />
+
+          <Route path="/editBenevole/:id" element={
+            <ProtectedRoutes allowedRoles={["benevole", "admin"]}>
+              <FormBenevol />
+            </ProtectedRoutes>
+          } />
+
           {/* 
           <Route path="/assocaitionDashboard" element={
             <ProtectedRoutes allowedRoles={["association"]}>

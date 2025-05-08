@@ -158,4 +158,75 @@ router.get("/profileBenevole/:id", async (req, res) => {
   }
 });
 
+router.put("/update/:id", verifierToken, upload.single("image"), async (req, res) => {
+  try {
+    const benevoleId = req.params.id;
+    
+    // Vérifier si l'utilisateur est admin ou le bénévole concerné
+    if (req.user.role !== "admin" && req.user.id !== benevoleId) {
+      return res.status(403).json({ message: "Accès non autorisé" });
+    }
+    
+    // Vérifier si le bénévole existe
+    const existe = await Benevole.findById(benevoleId);
+    if (!existe) {
+      return res.status(404).json({ message: "Bénévole non trouvé" });
+    }
+    
+    // Préparer les données à mettre à jour
+    const updateData = { ...req.body };
+    
+    // Traiter l'image si elle est fournie
+    if (req.file) {
+      updateData.image = req.file.path;
+    }
+    
+    // Traiter les catégories
+    if (req.body.categorie) {
+      try {
+        updateData.categorie = JSON.parse(req.body.categorie);
+      } catch (e) {
+        updateData.categorie = [req.body.categorie];
+      }
+    }
+    
+    // Traiter le mot de passe s'il est fourni
+    if (req.body.password && req.body.password.trim() !== "") {
+      const salt = await bcrypt.genSalt(10);
+      updateData.password = await bcrypt.hash(req.body.password, salt);
+    } else {
+      // Ne pas modifier le mot de passe s'il n'est pas fourni
+      delete updateData.password;
+    }
+    
+    // Mettre à jour le bénévole
+    const updatedBenevole = await Benevole.findByIdAndUpdate(
+      benevoleId,
+      updateData,
+      { new: true } // Retourner l'objet mis à jour
+    );
+    
+    // Enregistrer l'activité
+    await enregistrerActiviter(
+      "modification",
+      "Modification de profil bénévole",
+      `Profil modifié: ${updatedBenevole.prenom} ${updatedBenevole.nom}`,
+      "benevole",
+      req.user.id,
+      req.user.role
+    );
+    
+    res.status(200).json({
+      message: "Profil bénévole mis à jour avec succès",
+      benevole: updatedBenevole,
+    });
+  } catch (error) {
+    console.error("Erreur lors de la mise à jour:", error);
+    res.status(500).json({
+      message: "Erreur lors de la mise à jour du profil bénévole",
+      error: error.message,
+    });
+  }
+});
+
 module.exports = router;
